@@ -1,9 +1,11 @@
 package cryptomarket.eoinahern.ie.cryptomarket.UI.base
 
 
- interface Presenter<in V : MvpView> {
+interface Presenter<V : MvpView> {
 
-	fun attachView(view : V)
+	fun attachView(view: V)
 
-	fun detachView(view : V)
+	fun detachView(view: V)
+
+	fun getView(): V?
 }

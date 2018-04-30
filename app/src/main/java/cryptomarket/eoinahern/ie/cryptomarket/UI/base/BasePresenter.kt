@@ -15,4 +15,6 @@ open class BasePresenter<V : MvpView> : Presenter<V> {
             myView = null
 		}
 	}
+
+	override fun getView() : V? = myView
 }
