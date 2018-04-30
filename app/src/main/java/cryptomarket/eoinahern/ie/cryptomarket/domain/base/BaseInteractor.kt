@@ -1,10 +1,8 @@
-package cryptomarket.eoinahern.ie.cryptomarket.domain
+package cryptomarket.eoinahern.ie.cryptomarket.domain.base
 
-import io.reactivex.Observable
-import io.reactivex.Observer
+import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 
 
@@ -14,15 +12,19 @@ open abstract class BaseInteractor<T> {
 
 	abstract fun buildObservable(): Observable<T>
 
-	fun execute(disp: DisposableObserver<T>) {
+	fun execute(disp: BaseDisposableObserver<T>) {
+
+		disposeObs()
 
 		disposables.add(buildObservable()
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribeWith(disp))
+
+
 	}
 
-	fun execute(disp: Observer<T>) {
+	fun execute(disp: BaseSubscriber<T>) {
 
 		buildObservable()
 				.subscribeOn(Schedulers.io())
@@ -33,7 +35,7 @@ open abstract class BaseInteractor<T> {
 
 	fun disposeObs() {
 
-		if (disposables.size() != 0)
+		if (disposables.size() != 0 && !disposables.isDisposed)
 			disposables.dispose()
 	}
 }

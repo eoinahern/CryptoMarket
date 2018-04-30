@@ -7,11 +7,12 @@ open abstract class BaseActivity : AppCompatActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-
+        setContentView(getLayoutView())
 
 		//inject all injected dependencies into child if required
 		inject()
 	}
 
 	abstract fun inject()
+	abstract fun getLayoutView() :Int
 }
