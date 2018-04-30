@@ -3,11 +3,18 @@ package cryptomarket.eoinahern.ie.cryptomarket.UI.views.main
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import cryptomarket.eoinahern.ie.cryptomarket.R
+import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BaseActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_main)
+	}
+
+	override fun inject() {
+	}
+
+	override fun getLayoutView(): Int {
+		return R.layout.activity_main
 	}
 }

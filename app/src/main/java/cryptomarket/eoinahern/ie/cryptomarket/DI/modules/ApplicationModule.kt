@@ -8,10 +8,8 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-
 @Module
 class ApplicationModule constructor(var myApp : MyApp) {
-
 
 	@Singleton
 	@Provides
@@ -20,7 +18,4 @@ class ApplicationModule constructor(var myApp : MyApp) {
 	@Singleton
 	@Provides
     fun getSharedPrefs(cont : Context) : SharedPreferences = getDefaultSharedPreferences(cont)
-
-
-
 }

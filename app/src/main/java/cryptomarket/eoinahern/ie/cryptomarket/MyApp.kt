@@ -2,8 +2,8 @@ package cryptomarket.eoinahern.ie.cryptomarket
 
 import android.app.Application
 import cryptomarket.eoinahern.ie.cryptomarket.DI.components.ApplicationComponent
+import cryptomarket.eoinahern.ie.cryptomarket.DI.components.DaggerApplicationComponent
 import cryptomarket.eoinahern.ie.cryptomarket.DI.modules.ApplicationModule
-
 
 class MyApp : Application() {
 
@@ -11,13 +11,13 @@ class MyApp : Application() {
 
 	override fun onCreate() {
 		super.onCreate()
-
-		appComponent = DaggerApplicationComponent.builder()
-				.applicationModule(ApplicationModule(this)).build()
-
+		initComponent()
 	}
 
-	companion object {
-		fun getAppComponent(): ApplicationComponent = getAppComponent()
+	private fun initComponent() {
+		appComponent = DaggerApplicationComponent.builder().applicationModule(ApplicationModule(this)).build()
 	}
+
+	fun getAppComponent(): ApplicationComponent = appComponent
+
 }

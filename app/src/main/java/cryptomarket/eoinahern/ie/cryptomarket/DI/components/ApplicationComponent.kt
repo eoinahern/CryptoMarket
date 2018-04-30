@@ -7,8 +7,7 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [ApplicationModule::class])
- interface ApplicationComponent {
-
+interface ApplicationComponent {
 
 	fun plus(module : AlertsActivityComponent.AlertsActivityModule) : AlertsActivityComponent
 }
