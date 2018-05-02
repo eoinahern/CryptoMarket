@@ -1,14 +1,21 @@
 package cryptomarket.eoinahern.ie.cryptomarket.UI.views.main
 
-import android.support.v7.app.AppCompatActivity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import cryptomarket.eoinahern.ie.cryptomarket.R
-import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BaseActivity
+import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerActivity
 
-class MainActivity : BaseActivity() {
+class MainActivity : NavigationDrawerActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+	}
+
+	companion object {
+		fun getStartIntent(cont : Context) : Intent {
+			return Intent(cont, MainActivity::class.java)
+		}
 	}
 
 	override fun inject() {

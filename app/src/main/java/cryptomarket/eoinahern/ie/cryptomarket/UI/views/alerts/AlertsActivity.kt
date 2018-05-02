@@ -1,14 +1,18 @@
 package cryptomarket.eoinahern.ie.cryptomarket.UI.views.alerts
 
 
+import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BaseActivity
+import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerActivity
+import cryptomarket.eoinahern.ie.cryptomarket.UI.views.main.MainActivity
 import javax.inject.Inject
 
-class AlertsActivity : BaseActivity(), AlertsView {
+class AlertsActivity : NavigationDrawerActivity(), AlertsView {
 
 	@Inject lateinit var  sharedPrefs : SharedPreferences
 
@@ -26,6 +30,13 @@ class AlertsActivity : BaseActivity(), AlertsView {
 	override fun getLayoutView(): Int {
 		return R.layout.activity_alerts
 
+	}
+
+
+	companion object {
+		fun getStartIntent(cont : Context) : Intent {
+			return Intent(cont, AlertsActivity::class.java)
+		}
 	}
 
 	override fun showLoading() {
