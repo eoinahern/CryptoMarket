@@ -3,4 +3,6 @@
 	<string name="main">Main</string>
 	<string name="favourites">Favourites</string>
 	<string name="alerts">Alerts</string>
+	<string name="open_drawer">Open Drawer</string>
+	<string name="close_drawer">Close Drawer</string>
 </resources>

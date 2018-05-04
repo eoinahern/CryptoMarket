@@ -29,7 +29,6 @@ class AlertsActivity : NavigationDrawerActivity(), AlertsView {
 
 	override fun getLayoutView(): Int {
 		return R.layout.activity_alerts
-
 	}
 
 
