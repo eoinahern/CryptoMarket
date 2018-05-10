@@ -10,6 +10,7 @@ class MainActivity : NavigationDrawerActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+		main.isSelected = true
 	}
 
 	companion object {

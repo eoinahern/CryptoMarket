@@ -5,7 +5,8 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:id="@+id/drawer_layout"
-	tools:context=".UI.views.alerts.AlertsActivity">
+	tools:context=".UI.views.alerts.AlertsActivity"
+	>
 
 
 	<LinearLayout
@@ -18,13 +19,15 @@
 		android:layout_width="match_parent"
 		android:layout_height="?actionBarSize"
 		android:id="@+id/toolbar"
-		android:color="@color/colorPrimary"/>
+		android:background="@color/light_grey"
+		/>
 
 
 	</LinearLayout>
 
 
-	<include layout="@layout/navigation_drawer"/>
+	<include layout="@layout/navigation_drawer"
+		/>
 
 
 </android.support.v4.widget.DrawerLayout>

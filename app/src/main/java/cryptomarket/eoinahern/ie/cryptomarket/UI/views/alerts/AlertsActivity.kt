@@ -14,11 +14,9 @@ import javax.inject.Inject
 
 class AlertsActivity : NavigationDrawerActivity(), AlertsView {
 
-	@Inject lateinit var  sharedPrefs : SharedPreferences
-
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		println(sharedPrefs.getBoolean("blah", false))
+		alerts.isSelected = true
 	}
 
 	override fun inject() {

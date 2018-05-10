@@ -2,13 +2,14 @@ package cryptomarket.eoinahern.ie.cryptomarket.UI.views.currency
 
 import android.os.Bundle
 import cryptomarket.eoinahern.ie.cryptomarket.R
-import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BaseActivity
+import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerActivity
 
-class CurrencyActivity : BaseActivity() {
+class CurrencyActivity : NavigationDrawerActivity() {
 
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+
 	}
 
 	override fun inject() {
