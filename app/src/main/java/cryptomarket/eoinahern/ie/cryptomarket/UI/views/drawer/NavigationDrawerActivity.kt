@@ -15,7 +15,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.views.alerts.AlertsActivity
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.favourites.FavouritesActivity
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.main.MainActivity
 
-open abstract class NavigationDrawerActivity : BaseActivity() {
+ abstract class NavigationDrawerActivity : BaseActivity() {
 
 	protected val main: View by lazy { findViewById<View>(R.id.drawer_main) }
 	protected val toolbar: Toolbar by lazy { findViewById<Toolbar>(R.id.toolbar) }
@@ -52,9 +52,6 @@ open abstract class NavigationDrawerActivity : BaseActivity() {
 
 		drawerToggle.isDrawerIndicatorEnabled = false
 		drawerToggle.setHomeAsUpIndicator(R.drawable.ic_hamburger_dark)
-		/*drawerToggle.setToolbarNavigationClickListener {
-			drawerLayout.openDrawer(GravityCompat.START)
-		}*/
 
 		toolbar.setNavigationOnClickListener {
 			if (drawerLayout.isDrawerOpen(Gravity.START)) {
