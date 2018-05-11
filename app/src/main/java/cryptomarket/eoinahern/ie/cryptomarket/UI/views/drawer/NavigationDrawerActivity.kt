@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BaseActivity
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.alerts.AlertsActivity
@@ -22,6 +23,11 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.views.main.MainActivity
 	protected val drawerLayout: DrawerLayout by lazy { findViewById<DrawerLayout>(R.id.drawer_layout) }
 	protected val favourites: View by lazy { findViewById<View>(R.id.drawer_favourites) }
 	protected val alerts: View by lazy { findViewById<View>(R.id.drawer_alerts) }
+
+	//have to manually update textview to bold. cant be done via selector?
+	protected val mainTxt: TextView by lazy { findViewById<TextView>(R.id.main_txt) }
+	protected val favouritesTxt: TextView by lazy { findViewById<TextView>(R.id.favourites_txt) }
+	protected val alertsTxt: TextView by lazy { findViewById<TextView>(R.id.alerts_txt) }
 
 	private lateinit var drawerToggle: ActionBarDrawerToggle
 
@@ -65,19 +71,37 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.views.main.MainActivity
 	}
 
 	private fun setListeners() {
-		main.setOnClickListener { startActivity(MainActivity.getStartIntent(this)) }
-		favourites.setOnClickListener { startActivity(FavouritesActivity.getStartIntent(this)) }
-		alerts.setOnClickListener { startActivity(AlertsActivity.getStartIntent(this)) }
+		main.setOnClickListener {
+			startActivity(MainActivity.getStartIntent(this))
+			finish()
+		}
+		favourites.setOnClickListener {
+			startActivity(FavouritesActivity.getStartIntent(this))
+			finish()
+		}
+		alerts.setOnClickListener {
+			startActivity(AlertsActivity.getStartIntent(this))
+			finish()
+		}
 	}
 
 	override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+
 		super.onPostCreate(savedInstanceState, persistentState)
 		drawerToggle.syncState()
 	}
 
 	override fun onConfigurationChanged(newConfig: Configuration?) {
+
 		super.onConfigurationChanged(newConfig)
 		drawerToggle.onConfigurationChanged(newConfig)
+	}
+
+	private fun cancelBoldText() {
+
+		favourites.isSelected = false
+		alerts.isSelected = false
+		alerts.isSelected = false
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -88,5 +112,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.views.main.MainActivity
 		return super.onOptionsItemSelected(item)
 	}
 
-
+	 open fun setDrawerOnState() {
+		 cancelBoldText()
+	 }
 }

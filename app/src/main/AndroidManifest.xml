@@ -22,7 +22,8 @@
 		</activity>
 		<activity android:name=".UI.views.currency.CurrencyActivity" />
 		<activity android:name=".UI.views.favourites.FavouritesActivity" />
-		<activity android:name=".UI.views.drawer.NavigationDrawerActivity"></activity>
+		<activity android:name=".UI.views.drawer.NavigationDrawerActivity"
+			android:launchMode="singleTask"/>
 
 		<meta-data
 			android:name="preloaded_fonts"
