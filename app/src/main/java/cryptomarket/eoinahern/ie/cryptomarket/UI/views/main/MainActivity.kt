@@ -4,10 +4,16 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerActivity
+import javax.inject.Inject
 
 class MainActivity : NavigationDrawerActivity(), MainActivityView{
+
+
+	@Inject lateinit var presenter : MainActivityPresenter
+	@Inject lateinit  var adapter : MainActivityAdapter
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -27,6 +33,7 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView{
 	}
 
 	override fun inject() {
+		(applicationContext as MyApp).getAppComponent().plus(MainActivityComponent.MainActivityModule(this)).inject(this)
 	}
 
 	override fun getLayoutView(): Int {
