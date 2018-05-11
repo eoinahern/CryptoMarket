@@ -7,7 +7,7 @@ import android.os.Bundle
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerActivity
 
-class MainActivity : NavigationDrawerActivity() {
+class MainActivity : NavigationDrawerActivity(), MainActivityView{
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -32,4 +32,21 @@ class MainActivity : NavigationDrawerActivity() {
 	override fun getLayoutView(): Int {
 		return R.layout.activity_main
 	}
+
+	override fun showLoading() {
+
+	}
+
+	override fun hideLoading() {
+
+	}
+
+	override fun updateRecyclerView() {
+
+	}
+
+	override fun showError() {
+
+	}
+
 }
