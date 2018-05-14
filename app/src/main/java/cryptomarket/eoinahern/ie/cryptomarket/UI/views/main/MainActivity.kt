@@ -4,20 +4,26 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.widget.TextView
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerActivity
 import javax.inject.Inject
 
-class MainActivity : NavigationDrawerActivity(), MainActivityView{
-
+class MainActivity : NavigationDrawerActivity(), MainActivityView {
 
 	@Inject lateinit var presenter : MainActivityPresenter
-	@Inject lateinit  var adapter : MainActivityAdapter
+	@Inject lateinit var adapter : MainActivityAdapter
+
+	private val txt : TextView by lazy {
+		findViewById<TextView>(R.id.test_txt)
+	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setDrawerOnState()
+		presenter.attachView(this)
+		presenter.getCurrencyData()
 	}
 
 	override fun setDrawerOnState() {
@@ -48,12 +54,17 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView{
 
 	}
 
-	override fun updateRecyclerView() {
-
+	override fun updateRecyclerView(data : String) {
+		txt.text = data
 	}
 
 	override fun showError() {
 
+	}
+
+	override fun onDestroy() {
+		super.onDestroy()
+		//presenter.detachView()
 	}
 
 }

@@ -8,20 +8,20 @@ import cryptomarket.eoinahern.ie.cryptomarket.R
 import javax.inject.Inject
 
 
-class MainActivityAdapter @Inject constructor(val presenter : MainActivityPresenter) : RecyclerView.Adapter<MainActivityAdapter.ViewHolder>() {
+class MainActivityAdapter @Inject constructor() : RecyclerView.Adapter<MainActivityAdapter.ViewHolder>() {
 
 	private lateinit var cryptoList : List<String>
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-		holder.itemView.setOnClickListener { presenter.navigateToDetail() }
+		holder.itemView.setOnClickListener { }//presenter.navigateToDetail() }
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder{
 
 		val v  = LayoutInflater.from(parent.context).inflate(R.layout.main_recycler_item, parent, false)
 		val vh =  ViewHolder(v)
-		vh.itemView.setOnClickListener { presenter.navigateToDetail() }
+		vh.itemView.setOnClickListener { } //presenter.navigateToDetail() }
 
 		//vh.adapterPosition
 		return vh

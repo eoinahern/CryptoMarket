@@ -5,7 +5,7 @@ interface Presenter<V : MvpView> {
 
 	fun attachView(view: V)
 
-	fun detachView(view: V)
+	fun detachView()
 
 	fun getView(): V?
 }

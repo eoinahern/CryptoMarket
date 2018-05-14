@@ -9,7 +9,7 @@ open class BasePresenter<V : MvpView> : Presenter<V> {
        myView = view
 	}
 
-	override fun detachView(view: V) {
+	override fun detachView() {
 
 		myView?.let{
             myView = null

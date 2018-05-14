@@ -5,8 +5,14 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager.getDefaultSharedPreferences
 import com.google.gson.Gson
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
+import cryptomarket.eoinahern.ie.cryptomarket.data.api.CryptoApi
 import dagger.Module
 import dagger.Provides
+import okhttp3.HttpUrl
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module

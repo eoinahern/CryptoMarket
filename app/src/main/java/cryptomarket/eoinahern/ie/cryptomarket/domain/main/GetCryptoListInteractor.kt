@@ -8,7 +8,7 @@ import io.reactivex.Observable
 import javax.inject.Inject
 
 @PerScreen
-class GetCryptoListInteractor @Inject constructor(val cryptoApi : CryptoApi ) : BaseInteractor<CurrencyData>() {
+class GetCryptoListInteractor @Inject constructor(private val cryptoApi : CryptoApi ) : BaseInteractor<CurrencyData>() {
 
 	override fun buildObservable(): Observable<CurrencyData> {
 		return cryptoApi.getList()

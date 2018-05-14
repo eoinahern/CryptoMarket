@@ -9,7 +9,7 @@ interface MainActivityView : MvpView {
 
 	fun hideLoading()
 
-	fun updateRecyclerView()
+	fun updateRecyclerView(data : String)
 
 	fun showError()
 
