@@ -10,5 +10,9 @@ data class CurrencyData  constructor(
 		@SerializedName("Message")
 		val message : String,
 		@SerializedName("BaseImageUrl")
-		val baseImageUrl : String
+		val baseImageUrl : String,
+		@SerializedName("Data")
+		val cryptoWrapper : Map<String, CryptoCurrency>
+
+
 )
