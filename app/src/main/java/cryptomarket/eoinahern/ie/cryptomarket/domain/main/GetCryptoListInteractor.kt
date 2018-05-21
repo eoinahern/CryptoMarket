@@ -10,11 +10,16 @@ import io.reactivex.functions.BiFunction
 import javax.inject.Inject
 
 @PerScreen
-class GetCryptoListInteractor @Inject constructor(private val cryptoApi : CryptoApi ) : BaseInteractor<Pair<CurrencyData, CryptoCurrency>>() {
+class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoApi) : BaseInteractor<Pair<CurrencyData, CryptoCurrency>>() {
 
 	override fun buildObservable(): Observable<Pair<CurrencyData, CryptoCurrency>> {
-		return Observable.zip(cryptoApi.getList(), cryptoApi.getPricing(),
-				BiFunction<CurrencyData,CryptoCurrency, Pair<CurrencyData,CryptoCurrency>>{ a, b -> Pair(a,b)})
+		return Observable.zip(
+				cryptoApi.getList(),
+				cryptoApi.getPricing(),
+				BiFunction { v1: CurrencyData, v2: CryptoCurrency -> Pair(v1, v2) })
+
+
+		//BiFunction<CurrencyData,CryptoCurrency, Pair<CurrencyData,CryptoCurrency>>{ a, b -> Pair(a,b)})
 	}
 
 }
