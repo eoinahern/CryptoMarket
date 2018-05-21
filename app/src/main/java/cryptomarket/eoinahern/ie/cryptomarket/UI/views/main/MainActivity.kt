@@ -4,26 +4,30 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.support.v7.widget.RecyclerView
 import android.widget.TextView
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
+import cryptomarket.eoinahern.ie.cryptomarket.UI.util.LoadingView
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerActivity
 import javax.inject.Inject
 
 class MainActivity : NavigationDrawerActivity(), MainActivityView {
 
-	@Inject lateinit var presenter : MainActivityPresenter
-	@Inject lateinit var adapter : MainActivityAdapter
+	@Inject
+	lateinit var presenter: MainActivityPresenter
+	@Inject
+	lateinit var adapter: MainActivityAdapter
 
-	private val txt : TextView by lazy {
-		findViewById<TextView>(R.id.test_txt)
-	}
+	private val loadingView: LoadingView by lazy { findViewById<LoadingView>(R.id.loading_view) }
+	private val recycler: RecyclerView by lazy { findViewById<RecyclerView>(R.id.recycler) }
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setDrawerOnState()
-		presenter.attachView(this)
-		presenter.getCurrencyData()
+		//presenter.attachView(this)
+		//presenter.getCurrencyData()
+		showLoading()
 	}
 
 	override fun setDrawerOnState() {
@@ -33,7 +37,7 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	}
 
 	companion object {
-		fun getStartIntent(cont : Context) : Intent {
+		fun getStartIntent(cont: Context): Intent {
 			return Intent(cont, MainActivity::class.java)
 		}
 	}
@@ -47,15 +51,15 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	}
 
 	override fun showLoading() {
-
+		loadingView.setState(LoadingView.State.LOADING)
 	}
 
 	override fun hideLoading() {
-
+		loadingView.hide()
 	}
 
-	override fun updateRecyclerView(data : String) {
-		txt.text = data
+	override fun updateRecyclerView(data: String) {
+
 	}
 
 	override fun showError() {
@@ -64,7 +68,7 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 
 	override fun onDestroy() {
 		super.onDestroy()
-		//presenter.detachView()
+		presenter.detachView()
 	}
 
 }

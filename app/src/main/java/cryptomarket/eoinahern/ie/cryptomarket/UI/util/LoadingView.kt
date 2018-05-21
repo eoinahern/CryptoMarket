@@ -27,7 +27,7 @@ class LoadingView : FrameLayout {
 	}
 
 
-	fun initiateView(cont: Context) {
+	private fun initiateView(cont: Context) {
 
 		var v = inflate(context, R.layout.loading_view_layout, this)
 
