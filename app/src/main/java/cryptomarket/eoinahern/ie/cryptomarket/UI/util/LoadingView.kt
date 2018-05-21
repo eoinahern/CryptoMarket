@@ -31,7 +31,7 @@ class LoadingView : FrameLayout {
 
 		var v = inflate(context, R.layout.loading_view_layout, this)
 
-		progressLayout = v.findViewById(R.id.loading_view)
+		progressLayout = v.findViewById(R.id.loading)
 		errorView = v.findViewById(R.id.error_img)
 	}
 

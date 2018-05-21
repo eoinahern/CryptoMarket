@@ -38,19 +38,11 @@
 			<cryptomarket.eoinahern.ie.cryptomarket.UI.util.LoadingView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_gravity="center"
 				android:id="@+id/loading_view"/>
 
 
-
-
-
-
-
-
 		</FrameLayout>
-
-
-
 	</LinearLayout>
 
 
