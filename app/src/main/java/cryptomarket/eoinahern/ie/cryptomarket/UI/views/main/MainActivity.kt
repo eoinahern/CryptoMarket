@@ -25,8 +25,8 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setDrawerOnState()
-		//presenter.attachView(this)
-		//presenter.getCurrencyData()
+		presenter.attachView(this)
+		presenter.getCurrencyData()
 		showLoading()
 	}
 

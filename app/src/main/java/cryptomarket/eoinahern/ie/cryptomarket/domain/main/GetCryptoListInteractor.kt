@@ -8,11 +8,12 @@ import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyData
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyPriceConversions
 import cryptomarket.eoinahern.ie.cryptomarket.domain.base.BaseInteractor
 import io.reactivex.Observable
+import io.reactivex.ObservableSource
 import io.reactivex.functions.BiFunction
 import javax.inject.Inject
 
 @PerScreen
-class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoApi, private val minApiCryptoCompare: MinApiCryptoCompare)
+class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoApi)
 	: BaseInteractor<HashMap<String, Pair<CryptoCurrency, CurrencyPriceConversions>>>() {
 
 	override fun buildObservable(): Observable<HashMap<String, Pair<CryptoCurrency, CurrencyPriceConversions>>> {
@@ -20,7 +21,8 @@ class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoA
 		return cryptoApi.getList().flatMap { currencyData ->
 
 			val cryptoInputStr = constructList(currencyData)
-			minApiCryptoCompare.getPriceData(cryptoInputStr, "EUR, USD, BTC,AUD ,HKD, BRL").flatMap { innerMap ->
+			println(cryptoInputStr)
+			cryptoApi.getPriceData(cryptoInputStr, "EUR,USD").map { innerMap ->
 
 				val finalMap = HashMap<String, Pair<CryptoCurrency, CurrencyPriceConversions>>()
 
@@ -29,7 +31,7 @@ class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoA
 						finalMap.put(key, Pair(value, currencyPriceConv))
 					}
 				}
-				Observable.just(finalMap)
+				finalMap
 			}
 		}
 
