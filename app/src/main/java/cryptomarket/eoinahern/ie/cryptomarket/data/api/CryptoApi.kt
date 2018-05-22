@@ -11,7 +11,5 @@ interface CryptoApi {
 	@GET("api/data/coinlist")
 	fun getList() : Observable<CurrencyData>
 
-	@GET()
-	fun getPricing() : Observable<CryptoCurrency>
 
 }

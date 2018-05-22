@@ -3,7 +3,7 @@ package cryptomarket.eoinahern.ie.cryptomarket.data.models
 import com.google.gson.annotations.SerializedName
 
 
-data class CurrencyData  constructor(
+data class CurrencyData (
 
 		@SerializedName("Response")
 		val response : String,
