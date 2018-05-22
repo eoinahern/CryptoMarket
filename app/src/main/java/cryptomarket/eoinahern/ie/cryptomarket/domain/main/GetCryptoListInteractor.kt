@@ -14,39 +14,39 @@ import javax.inject.Inject
 
 @PerScreen
 class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoApi)
-	: BaseInteractor<HashMap<String, Pair<CryptoCurrency, CurrencyPriceConversions>>>() {
+	: BaseInteractor<HashMap<String, Pair<CryptoCurrency?, CurrencyPriceConversions?>>>() {
 
-	override fun buildObservable(): Observable<HashMap<String, Pair<CryptoCurrency, CurrencyPriceConversions>>> {
+	private var offset: Int = -1
+	private var limit: Int = -1
+
+	fun setStartLimir(offset: Int, limit: Int): GetCryptoListInteractor {
+		this.offset = offset
+		this.limit = limit
+		return this
+	}
+
+	override fun buildObservable(): Observable<HashMap<String, Pair<CryptoCurrency?, CurrencyPriceConversions?>>> {
 
 		return cryptoApi.getList().flatMap { currencyData ->
 
-			val cryptoInputStr = constructList(currencyData)
-			println(cryptoInputStr)
-			cryptoApi.getPriceData(cryptoInputStr, "EUR,USD").map { innerMap ->
+			val listOfSymbols = constructList(currencyData)
 
-				val finalMap = HashMap<String, Pair<CryptoCurrency, CurrencyPriceConversions>>()
+			cryptoApi.getPriceData(listOfSymbols.joinToString(","), "EUR,USD,BTC,PLN,INR,KRW").map { innerMap ->
 
-				for ((key, value) in currencyData.cryptoWrapper) {
-					innerMap[key]?.let { currencyPriceConv ->
-						finalMap.put(key, Pair(value, currencyPriceConv))
+				val finalMap = HashMap<String, Pair<CryptoCurrency?, CurrencyPriceConversions?>>()
+				for (symbol in listOfSymbols) {
+
+
+					if (innerMap.contains(symbol) && currencyData.cryptoWrapper.containsKey(symbol)) {
+						finalMap[symbol] = Pair(currencyData.cryptoWrapper[symbol], innerMap[symbol])
 					}
 				}
+
 				finalMap
 			}
 		}
-
-
-		/*Observable.zip(
-				cryptoApi.getList(),
-				cryptoApi.getPricing(),
-				BiFunction { v1: CurrencyData, v2: CryptoCurrency -> Pair(v1, v2) })*/
-
-
-		//BiFunction<CurrencyData,CryptoCurrency, Pair<CurrencyData,CryptoCurrency>>{ a, b -> Pair(a,b)})
 	}
 
-
-	private fun constructList(currencyData: CurrencyData) = currencyData.cryptoWrapper.map { it.value.Symbol }.joinToString(",")
-
+	private fun constructList(currencyData: CurrencyData) = currencyData.cryptoWrapper.map { it.value.Symbol }.subList(offset, limit)
 
 }

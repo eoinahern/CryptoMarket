@@ -15,9 +15,9 @@ class NetworkModule {
 
 	@Singleton
 	@Provides
-    fun getCryptoApi() : CryptoApi {
+	fun getCryptoApi(): CryptoApi {
 
-		return  Retrofit.Builder()
+		return Retrofit.Builder()
 				.baseUrl("https://min-api.cryptocompare.com/data/")
 				.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 				.addConverterFactory(GsonConverterFactory.create())

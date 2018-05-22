@@ -10,7 +10,7 @@ import retrofit2.http.Query
 interface CryptoApi {
 
 	@GET("all/coinlist")
-	fun getList(): Observable<CurrencyData>
+	fun getList(): Observable<CurrencyData?>
 
 	@GET("pricemulti")
 	@Headers("Content-Type: application/json")

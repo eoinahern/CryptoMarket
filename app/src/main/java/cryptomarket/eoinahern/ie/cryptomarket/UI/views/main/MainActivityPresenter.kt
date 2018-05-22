@@ -12,14 +12,16 @@ import javax.inject.Inject
 @PerScreen
 class MainActivityPresenter @Inject constructor( val getCryptoListInteractor : GetCryptoListInteractor) : BasePresenter<MainActivityView>() {
 
-	fun getCurrencyData() {
+	//need to handle paging by myself as not implemented in the api
+	fun getCurrencyData(offset : Int = 0, limit : Int = 50) {
 
-		getCryptoListInteractor.execute(object : BaseDisposableObserver<HashMap<String, Pair<CryptoCurrency, CurrencyPriceConversions>>>() {
+		getCryptoListInteractor.setStartLimir(offset,limit).execute(object : BaseDisposableObserver<HashMap<String, Pair<CryptoCurrency?, CurrencyPriceConversions?>>>() {
 
-			override fun onNext(t: HashMap<String, Pair<CryptoCurrency, CurrencyPriceConversions>>) {
+			override fun onNext(t: HashMap<String, Pair<CryptoCurrency?, CurrencyPriceConversions?>>) {
 
 				getView()?.hideLoading()
 				println(t.values.toString())
+				println("lenght is : ${t.values.size}")
 			}
 
 			override fun onError(e: Throwable) {
@@ -33,7 +35,6 @@ class MainActivityPresenter @Inject constructor( val getCryptoListInteractor : G
 		})
 
 	}
-
 
 	fun navigateToDetail() {
 

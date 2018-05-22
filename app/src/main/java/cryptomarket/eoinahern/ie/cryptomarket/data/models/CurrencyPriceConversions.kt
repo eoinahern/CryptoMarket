@@ -10,8 +10,8 @@ data class CurrencyPriceConversions(
 		@SerializedName("EUR")
 		val eur : Float,
 		@SerializedName("USD")
-		val usd : Float
-		/*@SerializedName("SGD")
+		val usd : Float,
+		@SerializedName("SGD")
 		val sgd : Float,
 		@SerializedName("PLN")
 		val pln : Float,
@@ -40,6 +40,6 @@ data class CurrencyPriceConversions(
 		@SerializedName("ETH")
 		val eth : Float,
 		@SerializedName("GBP")
-		val gbp : Float*/
+		val gbp : Float
 )
 
