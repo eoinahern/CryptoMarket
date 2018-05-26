@@ -21,7 +21,7 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	lateinit var presenter: MainActivityPresenter
 	@Inject
 	lateinit var adapter: MainActivityAdapter
-	lateinit var llmanager : LinearLayoutManager
+	lateinit var llmanager: LinearLayoutManager
 
 
 	private val loadingView: LoadingView by lazy { findViewById<LoadingView>(R.id.loading_view) }
@@ -64,7 +64,8 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 		loadingView.hide()
 	}
 
-	override fun updateRecyclerView(dataMap : HashMap<String, Pair<CryptoCurrency?, CurrencyPriceConversions?>>) {
+	override fun updateRecyclerView(dataMap: List<Pair<CryptoCurrency?, CurrencyPriceConversions?>>) {
+
 		recycler.layoutManager = llmanager
 		adapter.updateCryptoData(dataMap)
 		recycler.adapter = adapter

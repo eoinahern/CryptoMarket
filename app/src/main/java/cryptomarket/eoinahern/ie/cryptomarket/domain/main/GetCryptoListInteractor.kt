@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @PerScreen
 class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoApi)
-	: BaseInteractor<HashMap<String, Pair<CryptoCurrency?, CurrencyPriceConversions?>>>() {
+	: BaseInteractor<List<Pair<CryptoCurrency?, CurrencyPriceConversions?>>>() {
 
 	private var offset: Int = -1
 	private var limit: Int = -1
@@ -25,7 +25,7 @@ class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoA
 		return this
 	}
 
-	override fun buildObservable(): Observable<HashMap<String, Pair<CryptoCurrency?, CurrencyPriceConversions?>>> {
+	override fun buildObservable(): Observable<List<Pair<CryptoCurrency?, CurrencyPriceConversions?>>> {
 
 		return cryptoApi.getList().flatMap { currencyData ->
 
@@ -42,7 +42,7 @@ class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoA
 					}
 				}
 
-				finalMap
+				finalMap.values.toList()
 			}
 		}
 	}

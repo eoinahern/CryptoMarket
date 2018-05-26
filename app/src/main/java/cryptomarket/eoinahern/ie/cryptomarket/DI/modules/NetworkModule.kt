@@ -1,5 +1,6 @@
 package cryptomarket.eoinahern.ie.cryptomarket.DI.modules
 
+import cryptomarket.eoinahern.ie.cryptomarket.UI.util.compareApiEndPoint
 import cryptomarket.eoinahern.ie.cryptomarket.data.api.CryptoApi
 import cryptomarket.eoinahern.ie.cryptomarket.data.api.MinApiCryptoCompare
 import dagger.Module
@@ -18,7 +19,7 @@ class NetworkModule {
 	fun getCryptoApi(): CryptoApi {
 
 		return Retrofit.Builder()
-				.baseUrl("https://min-api.cryptocompare.com/data/")
+				.baseUrl(compareApiEndPoint)
 				.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 				.addConverterFactory(GsonConverterFactory.create())
 				.build().create(CryptoApi::class.java)

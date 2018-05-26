@@ -10,24 +10,22 @@ import cryptomarket.eoinahern.ie.cryptomarket.domain.main.GetCryptoListInteracto
 import javax.inject.Inject
 
 @PerScreen
-class MainActivityPresenter @Inject constructor( val getCryptoListInteractor : GetCryptoListInteractor) : BasePresenter<MainActivityView>() {
+class MainActivityPresenter @Inject constructor(private val getCryptoListInteractor : GetCryptoListInteractor) : BasePresenter<MainActivityView>() {
 
 	fun getCurrencyData(offset : Int = 0, limit : Int = 50) {
 
-		getCryptoListInteractor.setStartLimir(offset,limit).execute(object : BaseDisposableObserver<HashMap<String, Pair<CryptoCurrency?, CurrencyPriceConversions?>>>() {
+		getCryptoListInteractor.setStartLimir(offset,limit).execute(object : BaseDisposableObserver<List<Pair<CryptoCurrency?, CurrencyPriceConversions?>>>() {
 
-			override fun onNext(dataMap: HashMap<String, Pair<CryptoCurrency?, CurrencyPriceConversions?>>) {
+			override fun onNext(dataMap: List<Pair<CryptoCurrency?, CurrencyPriceConversions?>>) {
 
 				getView()?.hideLoading()
-				println(dataMap.values.toString())
+				println(dataMap.toString())
 				getView()?.updateRecyclerView(dataMap)
 			}
 
 			override fun onError(e: Throwable) {
 
 				e.printStackTrace()
-				println(e.localizedMessage)
-				println(e.message)
 				getView()?.hideLoading()
 				getView()?.showError()
 			}

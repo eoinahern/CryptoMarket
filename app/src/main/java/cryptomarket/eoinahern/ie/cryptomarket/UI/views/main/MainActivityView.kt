@@ -11,7 +11,7 @@ interface MainActivityView : MvpView {
 
 	fun hideLoading()
 
-	fun updateRecyclerView(dataMap : HashMap<String, Pair<CryptoCurrency?, CurrencyPriceConversions?>>)
+	fun updateRecyclerView(dataMap : List<Pair<CryptoCurrency?, CurrencyPriceConversions?>>)
 
 	fun showError()
 
