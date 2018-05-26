@@ -4,12 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.TextView
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.LoadingView
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerActivity
+import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
+import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyPriceConversions
 import javax.inject.Inject
 
 class MainActivity : NavigationDrawerActivity(), MainActivityView {
@@ -18,6 +21,8 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	lateinit var presenter: MainActivityPresenter
 	@Inject
 	lateinit var adapter: MainActivityAdapter
+	lateinit var llmanager : LinearLayoutManager
+
 
 	private val loadingView: LoadingView by lazy { findViewById<LoadingView>(R.id.loading_view) }
 	private val recycler: RecyclerView by lazy { findViewById<RecyclerView>(R.id.recycler) }
@@ -25,6 +30,7 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setDrawerOnState()
+		llmanager = LinearLayoutManager(this)
 		presenter.attachView(this)
 		presenter.getCurrencyData()
 		showLoading()
@@ -58,8 +64,10 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 		loadingView.hide()
 	}
 
-	override fun updateRecyclerView(data: String) {
-
+	override fun updateRecyclerView(dataMap : HashMap<String, Pair<CryptoCurrency?, CurrencyPriceConversions?>>) {
+		recycler.layoutManager = llmanager
+		adapter.updateCryptoData(dataMap)
+		recycler.adapter = adapter
 	}
 
 	override fun showError() {

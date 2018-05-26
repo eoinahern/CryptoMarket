@@ -37,7 +37,7 @@ class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoA
 				for (symbol in listOfSymbols) {
 
 
-					if (innerMap.contains(symbol) && currencyData.cryptoWrapper.containsKey(symbol)) {
+					if (innerMap.contains(symbol) && currencyData.cryptoWrapper.contains(symbol)) {
 						finalMap[symbol] = Pair(currencyData.cryptoWrapper[symbol], innerMap[symbol])
 					}
 				}
