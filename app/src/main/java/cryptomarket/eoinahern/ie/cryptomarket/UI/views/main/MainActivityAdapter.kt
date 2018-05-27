@@ -21,10 +21,10 @@ class MainActivityAdapter @Inject constructor(val presenter: MainActivityPresent
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
 		holder.name.text = cryptoData[position].first?.Symbol
-
-
+		holder.fullName.text = cryptoData[position].first?.FullName
 		val url =  compareApiDeprecated.plus(cryptoData[position].first?.ImageUrl)
 		println(url)
+
 		holder.icon.setImageURI(url)
 		holder.itemView.setOnClickListener { presenter.navigateToDetail() }
 	}
@@ -55,6 +55,7 @@ class MainActivityAdapter @Inject constructor(val presenter: MainActivityPresent
 	class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
 		val icon: SimpleDraweeView by lazy { item.findViewById<SimpleDraweeView>(R.id.crypto_icon)}
 		val name: TextView by lazy { item.findViewById<TextView>(R.id.name_abbr) }
+		val fullName : TextView by lazy { item.findViewById<TextView>(R.id.full_name)}
 	}
 
 

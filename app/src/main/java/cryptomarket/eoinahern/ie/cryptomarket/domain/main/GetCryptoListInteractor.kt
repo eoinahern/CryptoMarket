@@ -18,6 +18,7 @@ class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoA
 
 	private var offset: Int = -1
 	private var limit: Int = -1
+	private lateinit var currData: CurrencyData
 
 	fun setStartLimir(offset: Int, limit: Int): GetCryptoListInteractor {
 		this.offset = offset
@@ -27,23 +28,32 @@ class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoA
 
 	override fun buildObservable(): Observable<List<Pair<CryptoCurrency?, CurrencyPriceConversions?>>> {
 
-		return cryptoApi.getList().flatMap { currencyData ->
-
-			val listOfSymbols = constructList(currencyData)
-
-			cryptoApi.getPriceData(listOfSymbols.joinToString(","), "EUR,USD,BTC,PLN,INR,KRW").map { innerMap ->
-
-				val finalMap = HashMap<String, Pair<CryptoCurrency?, CurrencyPriceConversions?>>()
-				for (symbol in listOfSymbols) {
-
-
-					if (innerMap.contains(symbol) && currencyData.cryptoWrapper.contains(symbol)) {
-						finalMap[symbol] = Pair(currencyData.cryptoWrapper[symbol], innerMap[symbol])
-					}
-				}
-
-				finalMap.values.toList()
+		return try {
+			getList(currData)
+		} catch (e: UninitializedPropertyAccessException) {
+			cryptoApi.getList().flatMap { currencyData ->
+				currData = currencyData
+				getList(currData)
 			}
+		}
+	}
+
+	private fun getList(currencyData: CurrencyData): Observable<List<Pair<CryptoCurrency?, CurrencyPriceConversions?>>> {
+
+		val listOfSymbols = constructList(currencyData)
+
+		return cryptoApi.getPriceData(listOfSymbols.joinToString(","), "EUR,USD,BTC,PLN,INR,KRW").map { innerMap ->
+
+			val finalMap = HashMap<String, Pair<CryptoCurrency?, CurrencyPriceConversions?>>()
+			for (symbol in listOfSymbols) {
+
+
+				if (innerMap.contains(symbol) && currencyData.cryptoWrapper.contains(symbol)) {
+					finalMap[symbol] = Pair(currencyData.cryptoWrapper[symbol], innerMap[symbol])
+				}
+			}
+
+			finalMap.values.toList()
 		}
 	}
 
