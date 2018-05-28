@@ -22,8 +22,7 @@ class MainActivityAdapter @Inject constructor(val presenter: MainActivityPresent
 
 		holder.name.text = cryptoData[position].first?.Symbol
 		holder.fullName.text = cryptoData[position].first?.FullName
-		val url =  compareApiDeprecated.plus(cryptoData[position].first?.ImageUrl)
-		println(url)
+		val url = compareApiDeprecated.plus(cryptoData[position].first?.ImageUrl)
 
 		holder.icon.setImageURI(url)
 		holder.itemView.setOnClickListener { presenter.navigateToDetail() }
@@ -45,17 +44,18 @@ class MainActivityAdapter @Inject constructor(val presenter: MainActivityPresent
 
 	fun updateCryptoData(dataMap: List<Pair<CryptoCurrency?, CurrencyPriceConversions?>>) {
 
-		if (!cryptoData.isEmpty()) {
+		if (cryptoData.isNotEmpty()) {
 			cryptoData.clear()
 		}
+
 		cryptoData.addAll(dataMap)
 		notifyDataSetChanged()
 	}
 
 	class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
-		val icon: SimpleDraweeView by lazy { item.findViewById<SimpleDraweeView>(R.id.crypto_icon)}
+		val icon: SimpleDraweeView by lazy { item.findViewById<SimpleDraweeView>(R.id.crypto_icon) }
 		val name: TextView by lazy { item.findViewById<TextView>(R.id.name_abbr) }
-		val fullName : TextView by lazy { item.findViewById<TextView>(R.id.full_name)}
+		val fullName: TextView by lazy { item.findViewById<TextView>(R.id.full_name) }
 	}
 
 

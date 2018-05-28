@@ -2,13 +2,17 @@ package cryptomarket.eoinahern.ie.cryptomarket.UI.views.main
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.TextView
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
+import cryptomarket.eoinahern.ie.cryptomarket.UI.util.BottomItemDecoration
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.LoadingView
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerActivity
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
@@ -67,6 +71,7 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	override fun updateRecyclerView(dataMap: List<Pair<CryptoCurrency?, CurrencyPriceConversions?>>) {
 
 		recycler.layoutManager = llmanager
+		recycler.addItemDecoration(BottomItemDecoration(this, R.color.dark_gray, 3f ))
 		adapter.updateCryptoData(dataMap)
 		recycler.adapter = adapter
 	}

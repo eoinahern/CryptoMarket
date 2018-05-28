@@ -20,7 +20,7 @@ class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoA
 	private var limit: Int = -1
 	private lateinit var currData: CurrencyData
 
-	fun setStartLimir(offset: Int, limit: Int): GetCryptoListInteractor {
+	fun setStartLimit(offset: Int, limit: Int): GetCryptoListInteractor {
 		this.offset = offset
 		this.limit = limit
 		return this

@@ -14,7 +14,7 @@ class MainActivityPresenter @Inject constructor(private val getCryptoListInterac
 
 	fun getCurrencyData(offset : Int = 0, limit : Int = 50) {
 
-		getCryptoListInteractor.setStartLimir(offset,limit).execute(object : BaseDisposableObserver<List<Pair<CryptoCurrency?, CurrencyPriceConversions?>>>() {
+		getCryptoListInteractor.setStartLimit(offset,limit).execute(object : BaseDisposableObserver<List<Pair<CryptoCurrency?, CurrencyPriceConversions?>>>() {
 
 			override fun onNext(dataMap: List<Pair<CryptoCurrency?, CurrencyPriceConversions?>>) {
 
@@ -30,7 +30,6 @@ class MainActivityPresenter @Inject constructor(private val getCryptoListInterac
 				getView()?.showError()
 			}
 		})
-
 	}
 
 	fun navigateToDetail() {
