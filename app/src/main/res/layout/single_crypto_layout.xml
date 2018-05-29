@@ -2,10 +2,11 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent" android:layout_height="wrap_content"
-	android:padding="15dp"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
 	android:background="@color/darkest_grey"
-	android:elevation="10dp">
+	android:elevation="10dp"
+	android:padding="15dp">
 
 
 	<com.facebook.drawee.view.SimpleDraweeView
@@ -41,5 +42,37 @@
 		app:layout_constraintStart_toEndOf="@+id/crypto_icon"
 		app:layout_constraintTop_toBottomOf="@+id/name_abbr"
 		tools:text="fullname" />
+
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="5dp"
+		android:orientation="vertical"
+		app:layout_constraintStart_toEndOf="@+id/name_abbr"
+		app:layout_constraintTop_toTopOf="parent">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="10dp"
+			android:fontFamily="@font/abel"
+			android:text="@string/price_title"
+			android:textColor="@color/colorAccent"
+			android:textSize="18dp"
+			app:layout_constraintStart_toEndOf="@+id/name_abbr"
+			app:layout_constraintTop_toTopOf="parent" />
+
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:fontFamily="@font/abel"
+			android:layout_gravity="right"
+			android:id="@+id/price"
+			android:textColor="@color/light_grey"
+			android:textSize="12dp"
+			tools:text="$12.00" />
+
+	</LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

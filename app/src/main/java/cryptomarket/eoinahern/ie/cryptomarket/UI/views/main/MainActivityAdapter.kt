@@ -22,6 +22,7 @@ class MainActivityAdapter @Inject constructor(val presenter: MainActivityPresent
 
 		holder.name.text = cryptoData[position].first?.Symbol
 		holder.fullName.text = cryptoData[position].first?.FullName
+		//holder.price.text = cryptoData[position]
 		val url = compareApiDeprecated.plus(cryptoData[position].first?.ImageUrl)
 
 		holder.icon.setImageURI(url)
@@ -56,6 +57,7 @@ class MainActivityAdapter @Inject constructor(val presenter: MainActivityPresent
 		val icon: SimpleDraweeView by lazy { item.findViewById<SimpleDraweeView>(R.id.crypto_icon) }
 		val name: TextView by lazy { item.findViewById<TextView>(R.id.name_abbr) }
 		val fullName: TextView by lazy { item.findViewById<TextView>(R.id.full_name) }
+		val price: TextView by lazy { item.findViewById<TextView>(R.id.price) }
 	}
 
 
