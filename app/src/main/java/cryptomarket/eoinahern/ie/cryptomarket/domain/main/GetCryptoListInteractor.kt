@@ -10,6 +10,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.domain.base.BaseInteractor
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
 import io.reactivex.functions.BiFunction
+import java.util.*
 import javax.inject.Inject
 
 @PerScreen
@@ -53,10 +54,11 @@ class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoA
 				}
 			}
 
-			finalMap.values.toList()
+			finalMap.values.toList().sortedBy { p -> p.first?.Symbol }
 		}
 	}
 
-	private fun constructList(currencyData: CurrencyData) = currencyData.cryptoWrapper.map { it.value.Symbol }.subList(offset, limit)
+	private fun constructList(currencyData: CurrencyData) = currencyData.cryptoWrapper.toSortedMap().map { it.value.Symbol }
+			.subList(offset, limit)
 
 }

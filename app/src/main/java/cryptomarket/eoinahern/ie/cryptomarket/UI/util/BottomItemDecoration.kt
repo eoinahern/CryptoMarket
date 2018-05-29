@@ -15,6 +15,8 @@ class BottomItemDecoration : RecyclerView.ItemDecoration {
 
 	constructor(context: Context, color: Int, height: Float) {
 		paint.color = ContextCompat.getColor(context, color)
+
+		//dp to pixel conversion
 		val thickness: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, height, context.resources.displayMetrics)
 		paint.strokeWidth = thickness
 	}
@@ -37,9 +39,8 @@ class BottomItemDecoration : RecyclerView.ItemDecoration {
 	override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
 
 		val offset: Int = (paint.strokeWidth / 2).toInt()
-		val count = parent.childCount
 
-		for (i in 0 until count) {
+		for (i in 0 until parent.childCount) {
 			val v = parent.getChildAt(i)
 			val params = v.layoutParams as RecyclerView.LayoutParams
 
