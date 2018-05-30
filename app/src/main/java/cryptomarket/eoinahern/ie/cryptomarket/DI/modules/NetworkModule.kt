@@ -2,10 +2,10 @@ package cryptomarket.eoinahern.ie.cryptomarket.DI.modules
 
 import android.content.Context
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.compareApiEndPoint
 import cryptomarket.eoinahern.ie.cryptomarket.data.api.ConnectionCheckInterceptor
 import cryptomarket.eoinahern.ie.cryptomarket.data.api.CryptoApi
+import cryptomarket.eoinahern.ie.cryptomarket.data.models.FullPriceWrapper
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -21,7 +21,7 @@ class NetworkModule {
 	@Provides
 	@Singleton
 	fun getMoshi(): Moshi {
-		return Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+		return Moshi.Builder().build()
 
 	}
 

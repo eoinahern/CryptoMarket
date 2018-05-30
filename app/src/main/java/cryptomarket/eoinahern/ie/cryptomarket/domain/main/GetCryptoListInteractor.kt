@@ -51,7 +51,7 @@ class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoA
 					for (symbol in listOfSymbols) {
 
 						if (fullPriceWrapper.DISPLAY.contains(symbol) && currencyData.cryptoWrapper.contains(symbol)) {
-							f[symbol] = Pair(currencyData.cryptoWrapper[symbol], fullPriceWrapper.DISPLAY[symbol]?.displayMapToCurrency)
+							f[symbol] = Pair(currencyData.cryptoWrapper[symbol], fullPriceWrapper.DISPLAY[symbol]?.item)
 						}
 					}
 

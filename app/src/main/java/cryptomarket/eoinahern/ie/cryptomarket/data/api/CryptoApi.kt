@@ -16,5 +16,5 @@ interface CryptoApi {
 	fun getPriceData(@Query("fsyms") currencies: String, @Query("tsyms") prices: String): Observable<HashMap<String, CurrencyPriceConversions>>
 
 	@GET("pricemultifull")
-	fun getFullPriceData(@Query("fsyms") currencies : String, @Query("tsyms") conversions : String) : Observable<FullPriceWrapper?>
+	fun getFullPriceData(@Query("fsyms") currencies : String, @Query("tsyms") conversions : String) : Observable<FullPriceWrapper>
 }

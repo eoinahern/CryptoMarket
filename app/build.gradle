@@ -64,6 +64,6 @@ dependencies {
     implementation "com.facebook.fresco:fresco:$FRESCO_VERSION"
 
     implementation 'com.squareup.moshi:moshi:1.6.0'
-    implementation 'com.squareup.moshi:moshi-kotlin:1.6.0'
     implementation 'com.squareup.retrofit2:converter-moshi:2.4.0'
+    kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.6.0'
 }

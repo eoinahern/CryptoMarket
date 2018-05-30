@@ -1,6 +1,7 @@
 package cryptomarket.eoinahern.ie.cryptomarket.data.models
 
+import com.squareup.moshi.JsonClass
 
- class FullPriceWrapperInternalDisplay(
-		val displayMapToCurrency : Map<String,CurrencyFullPriceDataDisplay>
-)
+@JsonClass(generateAdapter = true)
+data class FullPriceWrapperInternalDisplay(
+		val item : Map<String, CurrencyFullPriceDataDisplay>)
