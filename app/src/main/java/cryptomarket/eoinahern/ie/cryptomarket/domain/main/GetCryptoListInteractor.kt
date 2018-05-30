@@ -2,20 +2,15 @@ package cryptomarket.eoinahern.ie.cryptomarket.domain.main
 
 import cryptomarket.eoinahern.ie.cryptomarket.DI.annotation.PerScreen
 import cryptomarket.eoinahern.ie.cryptomarket.data.api.CryptoApi
-import cryptomarket.eoinahern.ie.cryptomarket.data.api.MinApiCryptoCompare
-import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
-import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyData
-import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyPriceConversions
+import cryptomarket.eoinahern.ie.cryptomarket.data.models.*
 import cryptomarket.eoinahern.ie.cryptomarket.domain.base.BaseInteractor
 import io.reactivex.Observable
-import io.reactivex.ObservableSource
-import io.reactivex.functions.BiFunction
 import java.util.*
 import javax.inject.Inject
 
 @PerScreen
-class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoApi)
-	: BaseInteractor<List<Pair<CryptoCurrency?, CurrencyPriceConversions?>>>() {
+class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoApi) :
+		BaseInteractor<List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>>>() {
 
 	private var offset: Int = -1
 	private var limit: Int = -1
@@ -27,8 +22,10 @@ class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoA
 		return this
 	}
 
-	override fun buildObservable(): Observable<List<Pair<CryptoCurrency?, CurrencyPriceConversions?>>> {
+	override fun buildObservable(): Observable<List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>>> {
 
+
+		Observable.just(Unit)
 		return try {
 			getList(currData)
 		} catch (e: UninitializedPropertyAccessException) {
@@ -39,28 +36,30 @@ class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoA
 		}
 	}
 
-	private fun getList(currencyData: CurrencyData): Observable<List<Pair<CryptoCurrency?, CurrencyPriceConversions?>>> {
+	private fun getList(currencyData: CurrencyData): Observable<List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>>> {
 
 		val listOfSymbols = constructList(currencyData)
+		println(listOfSymbols.joinToString(","))
 
 
-		var shit : List<Pair<String, List<String>>>
-		/*return cryptoApi.getPriceData(listOfSymbols.joinToString(","), "EUR,USD,BTC,PLN,INR,KRW").map { innerMap ->
+		return cryptoApi.getFullPriceData(listOfSymbols.joinToString(","), "EUR,USD") //,BTC,PLN,INR,KRW
+				.map { fullPriceWrapper ->
 
-			val finalMap = HashMap<String, Pair<CryptoCurrency?, CurrencyPriceConversions?>>()
-			for (symbol in listOfSymbols) {
+					println(fullPriceWrapper.DISPLAY)
+					val f = HashMap<String, Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>>()
+
+					for (symbol in listOfSymbols) {
+
+						if (fullPriceWrapper.DISPLAY.contains(symbol) && currencyData.cryptoWrapper.contains(symbol)) {
+							f[symbol] = Pair(currencyData.cryptoWrapper[symbol], fullPriceWrapper.DISPLAY[symbol]?.displayMapToCurrency)
+						}
+					}
 
 
-				if (innerMap.contains(symbol) && currencyData.cryptoWrapper.contains(symbol)) {
-					finalMap[symbol] = Pair(currencyData.cryptoWrapper[symbol], innerMap[symbol])
+					f.values.toList().sortedBy { p -> p.first?.Symbol }
 				}
-			}
-
-			finalMap.values.toList().sortedBy { p -> p.first?.Symbol }
-		}*/
 	}
 
-	private fun constructList(currencyData: CurrencyData) = currencyData.cryptoWrapper.toSortedMap().map { it.value.Symbol }
-			.subList(offset, limit)
+	private fun constructList(currencyData: CurrencyData) = currencyData.cryptoWrapper.toSortedMap().map { it.value.Symbol }.subList(offset, limit)
 
 }

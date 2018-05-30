@@ -1,45 +1,45 @@
 package cryptomarket.eoinahern.ie.cryptomarket.data.models
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
 
 
 data class CurrencyPriceConversions(
 
-		@SerializedName("BTC")
-		val btc : Float,
-		@SerializedName("EUR")
-		val eur : Float,
-		@SerializedName("USD")
-		val usd : Float,
-		@SerializedName("SGD")
-		val sgd : Float,
-		@SerializedName("PLN")
-		val pln : Float,
-		@SerializedName("AUD")
-		val aud : Float,
-		@SerializedName("RUB")
-		val rub : Float,
-		@SerializedName("CAD")
-		val cad : Float,
-		@SerializedName("BRL")
-		val brl : Float,
-		@SerializedName("HKD")
-		val hkd : Float,
-		@SerializedName("INR")
-		val inr : Float,
-		@SerializedName("KRW")
-		val krw : Float,
-		@SerializedName("CHF")
+		@Json(name = "BTC")
+		val btc: Float,
+		@Json(name = "EUR")
+		val eur: Float,
+		@Json(name = "USD")
+		val usd: Float,
+		@Json(name = "SGD")
+		val sgd: Float,
+		@Json(name = "PLN")
+		val pln: Float,
+		@Json(name = "AUD")
+		val aud: Float,
+		@Json(name = "RUB")
+		val rub: Float,
+		@Json(name = "CAD")
+		val cad: Float,
+		@Json(name = "BRL")
+		val brl: Float,
+		@Json(name = "HKD")
+		val hkd: Float,
+		@Json(name = "INR")
+		val inr: Float,
+		@Json(name = "KRW")
+		val krw: Float,
+		@Json(name = "CHF")
 		val chf: Float,
-		@SerializedName("ZAR")
-		val zar : Float,
-		@SerializedName("NZD")
-		val nzd : Float,
-		@SerializedName("GOLD")
-		val gold : Float,
-		@SerializedName("ETH")
-		val eth : Float,
-		@SerializedName("GBP")
-		val gbp : Float
+		@Json(name = "ZAR")
+		val zar: Float,
+		@Json(name = "NZD")
+		val nzd: Float,
+		@Json(name = "GOLD")
+		val gold: Float,
+		@Json(name = "ETH")
+		val eth: Float,
+		@Json(name = "GBP")
+		val gbp: Float
 )
 

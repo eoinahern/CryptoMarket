@@ -1,16 +1,17 @@
 package cryptomarket.eoinahern.ie.cryptomarket.data.models
 
 import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
 
 
 data class CurrencyData(
 
-		@SerializedName("Response")
+		@Json(name = "Response")
 		val response: String,
-		@SerializedName("Message")
+		@Json(name = "Message")
 		val message: String,
-		@SerializedName("BaseImageUrl")
+		@Json(name = "BaseImageUrl")
 		val baseImageUrl: String,
-		@SerializedName("Data")
+		@Json(name = "Data")
 		val cryptoWrapper: Map<String, CryptoCurrency>
 )

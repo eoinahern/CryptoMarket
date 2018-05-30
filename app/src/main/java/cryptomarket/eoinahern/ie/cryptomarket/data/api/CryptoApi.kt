@@ -1,8 +1,6 @@
 package cryptomarket.eoinahern.ie.cryptomarket.data.api
 
-import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyData
-import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyFullPriceData
-import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyPriceConversions
+import cryptomarket.eoinahern.ie.cryptomarket.data.models.*
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -18,5 +16,5 @@ interface CryptoApi {
 	fun getPriceData(@Query("fsyms") currencies: String, @Query("tsyms") prices: String): Observable<HashMap<String, CurrencyPriceConversions>>
 
 	@GET("pricemultifull")
-	fun getFullPriceData(@Query("fsyms") currencies : String,@Query("tsyms") conversions : String) : Observable<Map<String, List<CurrencyFullPriceData>>>
+	fun getFullPriceData(@Query("fsyms") currencies : String, @Query("tsyms") conversions : String) : Observable<FullPriceWrapper?>
 }

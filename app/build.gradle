@@ -47,7 +47,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
     implementation "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
 
-    implementation 'com.google.code.gson:gson:2.8.3'
+    //implementation 'com.google.code.gson:gson:2.8.3'
 
 
     implementation "com.google.dagger:dagger-android:$DAGGER_VERSION"
@@ -62,4 +62,8 @@ dependencies {
     implementation 'me.zhanghai.android.materialprogressbar:library:1.4.2'
 
     implementation "com.facebook.fresco:fresco:$FRESCO_VERSION"
+
+    implementation 'com.squareup.moshi:moshi:1.6.0'
+    implementation 'com.squareup.moshi:moshi-kotlin:1.6.0'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.4.0'
 }

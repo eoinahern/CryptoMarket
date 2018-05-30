@@ -10,9 +10,8 @@ class ConnectionCheckInterceptor(private val con: Context) : Interceptor {
 
 	override fun intercept(chain: Interceptor.Chain): Response {
 
-		if (NetworkCheckUtil.isConnected(con))
+		if (!NetworkCheckUtil.isConnected(con))
 			throw NoConnectionException()
-
 
 		val builder = chain.request().newBuilder()
 		return chain.proceed(builder.build())
