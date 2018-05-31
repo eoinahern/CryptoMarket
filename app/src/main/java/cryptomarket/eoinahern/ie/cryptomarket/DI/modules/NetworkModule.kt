@@ -6,6 +6,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.util.compareApiEndPoint
 import cryptomarket.eoinahern.ie.cryptomarket.data.api.ConnectionCheckInterceptor
 import cryptomarket.eoinahern.ie.cryptomarket.data.api.CryptoApi
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.FullPriceWrapper
+import cryptomarket.eoinahern.ie.cryptomarket.data.models.typeadapters.FullPriceWrapperInternalDisplayAdapter
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -21,7 +22,7 @@ class NetworkModule {
 	@Provides
 	@Singleton
 	fun getMoshi(): Moshi {
-		return Moshi.Builder().build()
+		return Moshi.Builder().add(FullPriceWrapperInternalDisplayAdapter()).build()
 
 	}
 
