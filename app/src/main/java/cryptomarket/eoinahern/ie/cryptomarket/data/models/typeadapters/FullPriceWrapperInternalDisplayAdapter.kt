@@ -8,8 +8,8 @@ import cryptomarket.eoinahern.ie.cryptomarket.data.models.FullPriceWrapperIntern
 class FullPriceWrapperInternalDisplayAdapter {
 
 	val toSymbolSyr: String = "TOSYMBOL"
-	val fromSymbolStr = "FROMSYMBOL"
-	val marketStr = "MARKET"
+	val changeStr = "CHANGEPCT24HOUR"
+	val priceStr = "PRICE"
 
 	@FromJson
 	fun fromJson(jsonReader: JsonReader): FullPriceWrapperInternalDisplay {
@@ -24,10 +24,10 @@ class FullPriceWrapperInternalDisplayAdapter {
 			val currencyName = jsonReader.nextName()
 			val currency = jsonReader.readJsonValue() as Map<String, String>
 			val tosymbol = currency[toSymbolSyr] ?: ""
-			val fromsymbol = currency[fromSymbolStr] ?: ""
-			val market = currency[marketStr] ?: ""
+			val price = currency[priceStr] ?: "Unknown"
+			val changePct = currency[changeStr] ?: ""
 
-			val curr = CurrencyFullPriceDataDisplay(fromsymbol, tosymbol, market)
+			val curr = CurrencyFullPriceDataDisplay(tosymbol, price, changePct)
 			itemMap[currencyName] = curr
 		}
 

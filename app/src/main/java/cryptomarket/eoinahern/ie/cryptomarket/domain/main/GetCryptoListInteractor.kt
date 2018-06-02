@@ -42,7 +42,7 @@ class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoA
 		println(listOfSymbols.joinToString(","))
 
 
-		return cryptoApi.getFullPriceData(listOfSymbols.joinToString(","), "EUR,USD") //,BTC,PLN,INR,KRW
+		return cryptoApi.getFullPriceData(listOfSymbols.joinToString(","), "EUR,USD,BTC") //,BTC,PLN,INR,KRW
 				.map { fullPriceWrapper ->
 
 					println(fullPriceWrapper.DISPLAY)

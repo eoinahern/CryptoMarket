@@ -43,36 +43,65 @@
 		app:layout_constraintTop_toBottomOf="@+id/name_abbr"
 		tools:text="fullname" />
 
-	<LinearLayout
+
+	<TextView
+		android:id="@+id/textView"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="5dp"
+		android:fontFamily="@font/abel"
+		android:text="@string/price_title"
+		android:textColor="@color/colorAccent"
+		android:textSize="18dp"
+		app:layout_constraintStart_toEndOf="@+id/crypto_icon"
+		app:layout_constraintTop_toBottomOf="@+id/full_name" />
+
+
+	<TextView
+		android:id="@+id/price"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="right"
+		android:layout_marginStart="8dp"
+		android:fontFamily="@font/abel"
+		android:textColor="@color/light_grey"
+		android:textSize="18dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toEndOf="@+id/textView"
+		tools:text="$12.00" />
+
+
+	<!--<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="8dp"
 		android:orientation="vertical"
-		app:layout_constraintStart_toEndOf="@+id/name_abbr"
+		app:layout_constraintStart_toEndOf="@+id/linearLayout"
 		app:layout_constraintTop_toTopOf="parent">
+
 
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="10dp"
 			android:fontFamily="@font/abel"
-			android:text="@string/price_title"
+			android:text="@string/day_pct"
 			android:textColor="@color/colorAccent"
 			android:textSize="18dp"
-			app:layout_constraintStart_toEndOf="@+id/name_abbr"
-			app:layout_constraintTop_toTopOf="parent" />
 
+			/>
 
 		<TextView
+			android:id="@+id/pct_txt"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:fontFamily="@font/abel"
-			android:layout_gravity="right"
-			android:id="@+id/price"
 			android:textColor="@color/light_grey"
 			android:textSize="12dp"
-			tools:text="$12.00" />
+			android:layout_gravity="right"
+			tools:text="4.90%" />
 
-	</LinearLayout>
+
+	</LinearLayout>-->
 
 </android.support.constraint.ConstraintLayout>

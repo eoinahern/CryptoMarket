@@ -10,20 +10,23 @@ import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.compareApiDeprecated
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.compareApiEndPoint
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
+import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyFullPriceDataDisplay
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyPriceConversions
 import javax.inject.Inject
 
 
 class MainActivityAdapter @Inject constructor(val presenter: MainActivityPresenter) : RecyclerView.Adapter<MainActivityAdapter.ViewHolder>() {
 
-	private var cryptoData: MutableList<Pair<CryptoCurrency?, CurrencyPriceConversions?>> = mutableListOf()
+	private var cryptoData: MutableList<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>> = mutableListOf()
+	private lateinit var currencyStr : String
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
 		holder.name.text = cryptoData[position].first?.Symbol
 		holder.fullName.text = cryptoData[position].first?.FullName
-		//holder.price.text = cryptoData[position]
 		val url = compareApiDeprecated.plus(cryptoData[position].first?.ImageUrl)
+		holder.price.text = cryptoData[position].second?.get(currencyStr)?.PRICE
+		//holder.pctChange.text = cryptoData[position].second?.get("EUR")?.CHANGEPCT24HOUR
 
 		holder.icon.setImageURI(url)
 		holder.itemView.setOnClickListener { presenter.navigateToDetail() }
@@ -43,14 +46,18 @@ class MainActivityAdapter @Inject constructor(val presenter: MainActivityPresent
 	}
 
 
-	fun updateCryptoData(dataMap: List<Pair<CryptoCurrency?, CurrencyPriceConversions?>>) {
+	fun updateCryptoData(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>>) {
 
 		if (cryptoData.isNotEmpty()) {
 			cryptoData.clear()
 		}
 
-		cryptoData.addAll(dataMap)
+		cryptoData.addAll(dataList)
 		notifyDataSetChanged()
+	}
+
+	fun setCurrency(currecyStr : String) {
+		currencyStr = currecyStr
 	}
 
 	class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
@@ -58,6 +65,7 @@ class MainActivityAdapter @Inject constructor(val presenter: MainActivityPresent
 		val name: TextView by lazy { item.findViewById<TextView>(R.id.name_abbr) }
 		val fullName: TextView by lazy { item.findViewById<TextView>(R.id.full_name) }
 		val price: TextView by lazy { item.findViewById<TextView>(R.id.price) }
+		//val pctChange : TextView by lazy { item.findViewById<TextView>(R.id.pct_txt)}
 	}
 
 

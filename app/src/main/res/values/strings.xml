@@ -8,5 +8,10 @@
 	<string name="powered_by">Powered by:</string>
 	<string name="api_addr">www.cryptocompare.com</string>
 	<string name="loading">Loading!!</string>
-	<string name="price_title">Price</string>
+	<string name="price_title">Price : </string>
+	<string name="day_pct">24h % Change</string>
+	<string name="euro_abv">EUR</string>
+	<string name="gbp_abv">GBP</string>
+	<string name="btc_abv">BTC</string>
+	<string name="pln_abv">PLN</string>
 </resources>

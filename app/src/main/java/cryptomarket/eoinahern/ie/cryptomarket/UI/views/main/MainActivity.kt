@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.TextView
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
@@ -16,6 +18,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.util.BottomItemDecoration
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.LoadingView
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerActivity
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
+import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyFullPriceDataDisplay
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyPriceConversions
 import javax.inject.Inject
 
@@ -67,11 +70,23 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 		loadingView.hide()
 	}
 
-	override fun updateRecyclerView(dataMap: List<Pair<CryptoCurrency?, CurrencyPriceConversions?>>) {
+	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+		menuInflater.inflate(R.menu.toolbar_currency_menu, menu)
+		return true
+	}
+
+	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+		//return super.onOptionsItemSelected(item)
+		adapter.setCurrency(item?.title.toString())
+		return super.onOptionsItemSelected(item)
+	}
+
+	override fun updateRecyclerView(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>>) {
 
 		recycler.layoutManager = llmanager
 		recycler.addItemDecoration(BottomItemDecoration(this, R.color.dark_gray, 3f))
-		adapter.updateCryptoData(dataMap)
+		adapter.updateCryptoData(dataList)
 		recycler.adapter = adapter
 	}
 

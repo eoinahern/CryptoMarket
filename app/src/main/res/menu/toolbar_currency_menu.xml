@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<item
+		android:id="@+id/euro_item"
+		android:title="@string/euro_abv" />
+	<item
+		android:id="@+id/gbp_item"
+		android:title="@string/gbp_abv" />
+	<item
+		android:id="@+id/btc_item"
+		android:title="@string/btc_abv" />
+	<item
+		android:id="@+id/pln_item"
+		android:title="@string/pln_abv" />
+
+</menu>

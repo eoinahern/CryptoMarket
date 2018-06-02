@@ -19,7 +19,13 @@
 			android:layout_height="?actionBarSize"
 			android:id="@+id/toolbar"
 			android:background="@color/colorPrimaryDark"
-			/>
+			>
+
+
+
+
+
+		</android.support.v7.widget.Toolbar>
 
 
 		<FrameLayout
