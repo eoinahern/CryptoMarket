@@ -19,6 +19,7 @@
 			android:layout_height="?actionBarSize"
 			android:id="@+id/toolbar"
 			android:background="@color/colorPrimaryDark"
+			android:theme="@style/ActionBarStyle"
 			>
 
 

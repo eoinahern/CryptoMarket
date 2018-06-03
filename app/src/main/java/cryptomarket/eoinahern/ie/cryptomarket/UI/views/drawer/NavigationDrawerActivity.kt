@@ -23,8 +23,6 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.views.main.MainActivity
 	protected val drawerLayout: DrawerLayout by lazy { findViewById<DrawerLayout>(R.id.drawer_layout) }
 	protected val favourites: View by lazy { findViewById<View>(R.id.drawer_favourites) }
 	protected val alerts: View by lazy { findViewById<View>(R.id.drawer_alerts) }
-
-	//have to manually update textview to bold. cant be done via selector?
 	protected val mainTxt: TextView by lazy { findViewById<TextView>(R.id.main_txt) }
 	protected val favouritesTxt: TextView by lazy { findViewById<TextView>(R.id.favourites_txt) }
 	protected val alertsTxt: TextView by lazy { findViewById<TextView>(R.id.alerts_txt) }
@@ -36,6 +34,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.views.main.MainActivity
 
 		setSupportActionBar(toolbar)
 		supportActionBar?.setDisplayHomeAsUpEnabled(true)
+		supportActionBar?.title = null
 
 		setUpDrawerToggle()
 		setListeners()

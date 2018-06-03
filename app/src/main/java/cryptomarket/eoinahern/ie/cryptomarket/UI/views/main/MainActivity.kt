@@ -73,11 +73,12 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
 		menuInflater.inflate(R.menu.toolbar_currency_menu, menu)
+		menu?.getItem(0)?.isChecked = true
 		return true
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-		//return super.onOptionsItemSelected(item)
+
 		adapter.setCurrency(item?.title.toString())
 		return super.onOptionsItemSelected(item)
 	}
@@ -86,6 +87,7 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 
 		recycler.layoutManager = llmanager
 		recycler.addItemDecoration(BottomItemDecoration(this, R.color.dark_gray, 3f))
+		adapter.setCurrency(getString(R.string.euro_abv))
 		adapter.updateCryptoData(dataList)
 		recycler.adapter = adapter
 	}

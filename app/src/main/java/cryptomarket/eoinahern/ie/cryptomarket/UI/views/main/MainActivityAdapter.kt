@@ -18,7 +18,7 @@ import javax.inject.Inject
 class MainActivityAdapter @Inject constructor(val presenter: MainActivityPresenter) : RecyclerView.Adapter<MainActivityAdapter.ViewHolder>() {
 
 	private var cryptoData: MutableList<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>> = mutableListOf()
-	private lateinit var currencyStr : String
+	private lateinit var currencyStr: String
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
@@ -26,8 +26,6 @@ class MainActivityAdapter @Inject constructor(val presenter: MainActivityPresent
 		holder.fullName.text = cryptoData[position].first?.FullName
 		val url = compareApiDeprecated.plus(cryptoData[position].first?.ImageUrl)
 		holder.price.text = cryptoData[position].second?.get(currencyStr)?.PRICE
-		//holder.pctChange.text = cryptoData[position].second?.get("EUR")?.CHANGEPCT24HOUR
-
 		holder.icon.setImageURI(url)
 		holder.itemView.setOnClickListener { presenter.navigateToDetail() }
 	}
@@ -56,7 +54,7 @@ class MainActivityAdapter @Inject constructor(val presenter: MainActivityPresent
 		notifyDataSetChanged()
 	}
 
-	fun setCurrency(currecyStr : String) {
+	fun setCurrency(currecyStr: String) {
 		currencyStr = currecyStr
 	}
 
@@ -67,6 +65,4 @@ class MainActivityAdapter @Inject constructor(val presenter: MainActivityPresent
 		val price: TextView by lazy { item.findViewById<TextView>(R.id.price) }
 		//val pctChange : TextView by lazy { item.findViewById<TextView>(R.id.pct_txt)}
 	}
-
-
 }
