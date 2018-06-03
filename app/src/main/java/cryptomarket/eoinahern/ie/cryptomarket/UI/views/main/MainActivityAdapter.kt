@@ -56,6 +56,7 @@ class MainActivityAdapter @Inject constructor(val presenter: MainActivityPresent
 
 	fun setCurrency(currecyStr: String) {
 		currencyStr = currecyStr
+		notifyDataSetChanged()
 	}
 
 	class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {

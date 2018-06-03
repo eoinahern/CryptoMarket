@@ -6,6 +6,9 @@
 		android:id="@+id/euro_item"
 		android:title="@string/euro_abv" />
 	<item
+		android:id="@+id/usd_item"
+		android:title="@string/usd_abv"/>
+	<item
 		android:id="@+id/gbp_item"
 		android:title="@string/gbp_abv" />
 	<item

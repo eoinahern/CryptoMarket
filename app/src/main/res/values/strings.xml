@@ -14,4 +14,5 @@
 	<string name="gbp_abv">GBP</string>
 	<string name="btc_abv">BTC</string>
 	<string name="pln_abv">PLN</string>
+	<string name="usd_abv">USD</string>
 </resources>
