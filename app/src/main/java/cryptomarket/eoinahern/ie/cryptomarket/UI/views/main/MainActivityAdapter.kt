@@ -46,9 +46,9 @@ class MainActivityAdapter @Inject constructor(val presenter: MainActivityPresent
 
 	fun updateCryptoData(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>>) {
 
-		if (cryptoData.isNotEmpty()) {
+		/*if (cryptoData.isNotEmpty()) {
 			cryptoData.clear()
-		}
+		}*/
 
 		cryptoData.addAll(dataList)
 		notifyDataSetChanged()

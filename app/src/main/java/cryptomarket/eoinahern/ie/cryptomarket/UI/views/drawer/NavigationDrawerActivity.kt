@@ -16,7 +16,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.views.alerts.AlertsActivity
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.favourites.FavouritesActivity
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.main.MainActivity
 
- abstract class NavigationDrawerActivity : BaseActivity() {
+abstract class NavigationDrawerActivity : BaseActivity() {
 
 	protected val main: View by lazy { findViewById<View>(R.id.drawer_main) }
 	protected val toolbar: Toolbar by lazy { findViewById<Toolbar>(R.id.toolbar) }
@@ -100,7 +100,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.views.main.MainActivity
 
 		favourites.isSelected = false
 		alerts.isSelected = false
-		alerts.isSelected = false
+		main.isSelected = false
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -111,7 +111,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.views.main.MainActivity
 		return super.onOptionsItemSelected(item)
 	}
 
-	 open fun setDrawerOnState() {
-		 cancelBoldText()
-	 }
+	open fun setDrawerOnState() {
+		cancelBoldText()
+	}
 }
