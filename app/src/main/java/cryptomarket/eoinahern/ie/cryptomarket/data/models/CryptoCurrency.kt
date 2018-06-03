@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class CryptoCurrency(
+data class CryptoCurrency  (
 		@Json(name = "Id")
 		val Id: String,
 		@Json(name = "Url")
@@ -18,4 +18,11 @@ data class CryptoCurrency(
 		@Json(name = "CoinName")
 		val CoinName: String,
 		@Json(name = "FullName")
-		val FullName: String)
+		val FullName: String,
+		@Json(name="SortOrder")
+		val SortOrder : String) : Comparable<CryptoCurrency> {
+
+	override fun compareTo(other: CryptoCurrency): Int {
+		return SortOrder.toInt()  - other.SortOrder.toInt()
+	}
+}

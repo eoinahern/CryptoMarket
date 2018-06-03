@@ -1,5 +1,6 @@
 package cryptomarket.eoinahern.ie.cryptomarket.UI.views.main
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -15,17 +16,21 @@ import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyPriceConversio
 import javax.inject.Inject
 
 
-class MainActivityAdapter @Inject constructor(val presenter: MainActivityPresenter) : RecyclerView.Adapter<MainActivityAdapter.ViewHolder>() {
+class MainActivityAdapter @Inject constructor(private val presenter: MainActivityPresenter, val context: Context) : RecyclerView.Adapter<MainActivityAdapter.ViewHolder>() {
 
 	private var cryptoData: MutableList<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>> = mutableListOf()
 	private lateinit var currencyStr: String
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-		holder.name.text = cryptoData[position].first?.Symbol
-		holder.fullName.text = cryptoData[position].first?.FullName
-		val url = compareApiDeprecated.plus(cryptoData[position].first?.ImageUrl)
-		holder.price.text = cryptoData[position].second?.get(currencyStr)?.PRICE
+		val cryptoCurrencyData = cryptoData[position].first
+		val fullPriceMap = cryptoData[position].second
+
+		holder.name.text = cryptoCurrencyData?.Symbol
+		holder.fullName.text = cryptoCurrencyData?.FullName
+		val url = compareApiDeprecated.plus(cryptoCurrencyData?.ImageUrl)
+		holder.price.text = fullPriceMap?.get(currencyStr)?.PRICE
+		holder.pctChange.text = String.format(context.getString(R.string.pct_format), fullPriceMap?.get(currencyStr)?.CHANGEPCT24HOUR)
 		holder.icon.setImageURI(url)
 		holder.itemView.setOnClickListener { presenter.navigateToDetail() }
 	}
@@ -46,10 +51,6 @@ class MainActivityAdapter @Inject constructor(val presenter: MainActivityPresent
 
 	fun updateCryptoData(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>>) {
 
-		/*if (cryptoData.isNotEmpty()) {
-			cryptoData.clear()
-		}*/
-
 		cryptoData.addAll(dataList)
 		notifyDataSetChanged()
 	}
@@ -64,6 +65,6 @@ class MainActivityAdapter @Inject constructor(val presenter: MainActivityPresent
 		val name: TextView by lazy { item.findViewById<TextView>(R.id.name_abbr) }
 		val fullName: TextView by lazy { item.findViewById<TextView>(R.id.full_name) }
 		val price: TextView by lazy { item.findViewById<TextView>(R.id.price) }
-		//val pctChange : TextView by lazy { item.findViewById<TextView>(R.id.pct_txt)}
+		val pctChange: TextView by lazy { item.findViewById<TextView>(R.id.percent_txt) }
 	}
 }

@@ -18,7 +18,7 @@ class MainActivityPresenter @Inject constructor(private val getCryptoListInterac
 			override fun onNext(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>>) {
 
 				getView()?.hideLoading()
-				println("size : ${dataList.size}")
+				//println("size : ${dataList.size}")
 				getView()?.updateRecyclerView(dataList)
 			}
 

@@ -46,7 +46,7 @@ class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoA
 				.map { fullPriceWrapper ->
 
 					println(fullPriceWrapper.DISPLAY)
-					val f = HashMap<String, Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>>()
+					val f = LinkedHashMap<String, Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>>()
 
 					for (symbol in listOfSymbols) {
 
@@ -55,11 +55,14 @@ class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoA
 						}
 					}
 
-
-					f.values.toList().sortedBy { p -> p.first?.Symbol }
+					f.values.toList()
 				}
 	}
 
-	private fun constructList(currencyData: CurrencyData) = currencyData.cryptoWrapper.toSortedMap().map { it.value.Symbol }.subList(offset, limit)
+	private fun constructList(currencyData: CurrencyData): List<String> {
+
+		val sortedList : List<CryptoCurrency>  = currencyData.cryptoWrapper.values.toList().sorted()
+		return sortedList.map{ it.Symbol }.subList(offset, limit)
+	}
 
 }
