@@ -27,7 +27,8 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	lateinit var llmanager: LinearLayoutManager
 
 	private var offset: Int = 0
-	private var limit: Int = 50
+	private var limit: Int = 10
+
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -84,14 +85,19 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 
 		llmanager = LinearLayoutManager(this)
 		recycler.layoutManager = llmanager
+		recycler.setHasFixedSize(false)
 		recycler.addItemDecoration(BottomItemDecoration(this, R.color.dark_gray, 3f))
 		recycler.addOnScrollListener(getOnScrollListener())
+		recycler.adapter = adapter
 	}
 
-	override fun updateRecyclerView(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>>) {
+	override fun updateRecyclerView(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) {
 
+		recycler.post{
+			adapter.removeLoadingItems()
+		}
 		adapter.updateCryptoData(dataList)
-		recycler.adapter = adapter
+		offset += 10
 	}
 
 	private fun getOnScrollListener(): RecyclerView.OnScrollListener {
@@ -100,7 +106,17 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 			override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
 				super.onScrolled(recyclerView, dx, dy)
 
+				var visibleItemCount = llmanager.childCount
+				var totalItemCount = llmanager.itemCount
+				var firstVisibleItemPosition = llmanager.findFirstVisibleItemPosition()
 
+				if (!adapter.isLoading() && (visibleItemCount + firstVisibleItemPosition) >= totalItemCount) {
+					recycler.post{
+						adapter.showLoadingItems()
+
+					}
+					presenter.getCurrencyData(offset, limit)
+				}
 			}
 		}
 	}

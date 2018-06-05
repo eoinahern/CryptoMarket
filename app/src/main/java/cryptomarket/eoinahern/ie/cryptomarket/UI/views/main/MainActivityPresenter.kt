@@ -11,32 +11,36 @@ import javax.inject.Inject
 @PerScreen
 class MainActivityPresenter @Inject constructor(private val getCryptoListInteractor: GetCryptoListInteractor) : BasePresenter<MainActivityView>() {
 
-	fun getCurrencyData(offset: Int, limit: Int) {
 
-		getCryptoListInteractor.setStartLimit(offset, limit).execute(object : BaseDisposableObserver<List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>>>() {
+	inner class MyObs : BaseDisposableObserver<List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>> () {
 
-			override fun onNext(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>>) {
+		override fun onNext(t: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) {
+			getView()?.hideLoading()
+			getView()?.updateRecyclerView(t)
+		}
 
+		override fun onError(e: Throwable) {
+			e.printStackTrace()
+			println("error caught")
+			println(e.message)
+			/**
+			 * differenciate error types
+			 */
+
+			if (e is NoConnectionException) {
 				getView()?.hideLoading()
-				getView()?.updateRecyclerView(dataList)
+				getView()?.showError()
+			} else {
+				getView()?.hideLoading()
+				getView()?.showError()
 			}
 
-			override fun onError(e: Throwable) {
+		}
+	}
 
-				e.printStackTrace()
-				/**
-				 * differenciate error types
-				 */
 
-				if (e is NoConnectionException) {
-					getView()?.hideLoading()
-					getView()?.showError()
-				} else {
-					getView()?.hideLoading()
-					getView()?.showError()
-				}
-			}
-		})
+	fun getCurrencyData(offset: Int, limit: Int) {
+		getCryptoListInteractor.setStartLimit(offset, limit).execute(MyObs())
 	}
 
 	fun navigateToDetail() {

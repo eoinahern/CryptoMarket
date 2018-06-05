@@ -1,6 +1,7 @@
 package cryptomarket.eoinahern.ie.cryptomarket.UI.views.main
 
 import android.content.Context
+import android.os.Handler
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -18,15 +19,16 @@ import javax.inject.Inject
 
 class MainActivityAdapter @Inject constructor(private val presenter: MainActivityPresenter, val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-	private val VIEW_CRYPTO = 0
-	private val VIEW_LOADING = 1
+	private val VIEWCRYPTO = 0
+	private val VIEWLOADING = 1
+	private var isLoading: Boolean = false
 
 	private var cryptoData: MutableList<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?> = mutableListOf()
 	private lateinit var currencyStr: String
 
 	override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-		if (getItemViewType(position) == VIEW_CRYPTO) {
+		if (getItemViewType(position) == VIEWCRYPTO) {
 			bindCryptoItemView(holder as ViewHolder, position)
 		}
 	}
@@ -49,7 +51,7 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 
 		val vh: RecyclerView.ViewHolder
 
-		if (viewType == VIEW_CRYPTO) {
+		if (viewType == VIEWCRYPTO) {
 
 			val v = LayoutInflater.from(parent.context).inflate(R.layout.single_crypto_layout, parent, false)
 			vh = ViewHolder(v)
@@ -67,14 +69,20 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 
 	fun showLoadingItems() {
 
+		isLoading = true
 		cryptoData.add(cryptoData.size, null)
-		notifyItemChanged(cryptoData.size - 1)
+		notifyItemInserted(cryptoData.size - 1)
 	}
 
 	fun removeLoadingItems() {
 
-		cryptoData.removeAt(cryptoData.size - 1)
-		notifyItemChanged(cryptoData.size)
+		if (isLoading) {
+
+			isLoading = false
+			cryptoData.removeAt(cryptoData.size - 1)
+			notifyItemRemoved(cryptoData.size)
+			notifyDataSetChanged()
+		}
 	}
 
 	override fun getItemCount(): Int {
@@ -82,7 +90,7 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 	}
 
 
-	fun updateCryptoData(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>>) {
+	fun updateCryptoData(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) {
 
 		cryptoData.addAll(dataList)
 		notifyDataSetChanged()
@@ -94,7 +102,9 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 		notifyDataSetChanged()
 	}
 
-	override fun getItemViewType(position: Int) = if (cryptoData[position] != null) VIEW_CRYPTO else VIEW_LOADING
+	fun isLoading() = isLoading
+
+	override fun getItemViewType(position: Int) = if (cryptoData[position] != null) VIEWCRYPTO else VIEWLOADING
 
 	class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
 		val icon: SimpleDraweeView by lazy { item.findViewById<SimpleDraweeView>(R.id.crypto_icon) }

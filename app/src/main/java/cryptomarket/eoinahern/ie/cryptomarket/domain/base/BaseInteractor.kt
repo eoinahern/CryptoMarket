@@ -14,14 +14,13 @@ open abstract class BaseInteractor<T> {
 
 	fun execute(disp: BaseDisposableObserver<T>) {
 
+		println("execute called!!")
 		disposeObs()
 
 		disposables.add(buildObservable()
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribeWith(disp))
-
-
 	}
 
 	fun execute(disp: BaseSubscriber<T>) {
