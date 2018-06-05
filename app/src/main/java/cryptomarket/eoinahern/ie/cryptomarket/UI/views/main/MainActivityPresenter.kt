@@ -11,14 +11,13 @@ import javax.inject.Inject
 @PerScreen
 class MainActivityPresenter @Inject constructor(private val getCryptoListInteractor: GetCryptoListInteractor) : BasePresenter<MainActivityView>() {
 
-	fun getCurrencyData(offset: Int = 0, limit: Int = 50) {
+	fun getCurrencyData(offset: Int, limit: Int) {
 
 		getCryptoListInteractor.setStartLimit(offset, limit).execute(object : BaseDisposableObserver<List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>>>() {
 
 			override fun onNext(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>>) {
 
 				getView()?.hideLoading()
-				//println("size : ${dataList.size}")
 				getView()?.updateRecyclerView(dataList)
 			}
 

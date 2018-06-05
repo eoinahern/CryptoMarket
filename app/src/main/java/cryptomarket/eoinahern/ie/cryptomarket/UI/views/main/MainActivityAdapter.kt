@@ -16,15 +16,25 @@ import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyPriceConversio
 import javax.inject.Inject
 
 
-class MainActivityAdapter @Inject constructor(private val presenter: MainActivityPresenter, val context: Context) : RecyclerView.Adapter<MainActivityAdapter.ViewHolder>() {
+class MainActivityAdapter @Inject constructor(private val presenter: MainActivityPresenter, val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-	private var cryptoData: MutableList<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>> = mutableListOf()
+	private val VIEW_CRYPTO = 0
+	private val VIEW_LOADING = 1
+
+	private var cryptoData: MutableList<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?> = mutableListOf()
 	private lateinit var currencyStr: String
 
-	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+	override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-		val cryptoCurrencyData = cryptoData[position].first
-		val fullPriceMap = cryptoData[position].second
+		if (getItemViewType(position) == VIEW_CRYPTO) {
+			bindCryptoItemView(holder as ViewHolder, position)
+		}
+	}
+
+	private fun bindCryptoItemView(holder: ViewHolder, position: Int) {
+
+		val cryptoCurrencyData = cryptoData[position]?.first
+		val fullPriceMap = cryptoData[position]?.second
 
 		holder.name.text = cryptoCurrencyData?.Symbol
 		holder.fullName.text = cryptoCurrencyData?.FullName
@@ -35,13 +45,36 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 		holder.itemView.setOnClickListener { presenter.navigateToDetail() }
 	}
 
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
-		val v = LayoutInflater.from(parent.context).inflate(R.layout.single_crypto_layout, parent, false)
-		val vh = ViewHolder(v)
-		vh.itemView.setOnClickListener { presenter.navigateToDetail() }
+		val vh: RecyclerView.ViewHolder
+
+		if (viewType == VIEW_CRYPTO) {
+
+			val v = LayoutInflater.from(parent.context).inflate(R.layout.single_crypto_layout, parent, false)
+			vh = ViewHolder(v)
+			vh.itemView.setOnClickListener {
+				presenter.navigateToDetail()
+			}
+		} else {
+
+			val v = LayoutInflater.from(parent.context).inflate(R.layout.page_loading_layout, parent, false)
+			vh = LoadingViewHolder(v)
+		}
 
 		return vh
+	}
+
+	fun showLoadingItems() {
+
+		cryptoData.add(cryptoData.size, null)
+		notifyItemChanged(cryptoData.size - 1)
+	}
+
+	fun removeLoadingItems() {
+
+		cryptoData.removeAt(cryptoData.size - 1)
+		notifyItemChanged(cryptoData.size)
 	}
 
 	override fun getItemCount(): Int {
@@ -56,9 +89,12 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 	}
 
 	fun setCurrency(currecyStr: String) {
+
 		currencyStr = currecyStr
 		notifyDataSetChanged()
 	}
+
+	override fun getItemViewType(position: Int) = if (cryptoData[position] != null) VIEW_CRYPTO else VIEW_LOADING
 
 	class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
 		val icon: SimpleDraweeView by lazy { item.findViewById<SimpleDraweeView>(R.id.crypto_icon) }
@@ -67,4 +103,6 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 		val price: TextView by lazy { item.findViewById<TextView>(R.id.price) }
 		val pctChange: TextView by lazy { item.findViewById<TextView>(R.id.percent_txt) }
 	}
+
+	class LoadingViewHolder(item: View) : RecyclerView.ViewHolder(item)
 }

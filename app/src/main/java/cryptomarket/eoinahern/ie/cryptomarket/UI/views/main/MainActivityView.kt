@@ -12,7 +12,7 @@ interface MainActivityView : MvpView {
 
 	fun hideLoading()
 
-	fun updateRecyclerView(dataMap : List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>>)
+	fun updateRecyclerView(dataList : List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>>)
 
 	fun showError()
 

@@ -2,16 +2,12 @@ package cryptomarket.eoinahern.ie.cryptomarket.UI.views.main
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.Typeface
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.BottomItemDecoration
@@ -19,7 +15,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.util.LoadingView
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerActivity
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyFullPriceDataDisplay
-import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyPriceConversions
+import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : NavigationDrawerActivity(), MainActivityView {
@@ -30,15 +26,15 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	lateinit var adapter: MainActivityAdapter
 	lateinit var llmanager: LinearLayoutManager
 
-	private val loadingView: LoadingView by lazy { findViewById<LoadingView>(R.id.loading_view) }
-	private val recycler: RecyclerView by lazy { findViewById<RecyclerView>(R.id.recycler) }
+	private var offset: Int = 0
+	private var limit: Int = 50
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setDrawerOnState()
-		llmanager = LinearLayoutManager(this)
+		setUpRecycler()
 		presenter.attachView(this)
-		presenter.getCurrencyData()
+		presenter.getCurrencyData(offset, limit)
 		showLoading()
 	}
 
@@ -74,6 +70,7 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 
 		menuInflater.inflate(R.menu.toolbar_currency_menu, menu)
 		menu?.getItem(0)?.isChecked = true
+		adapter.setCurrency(getString(R.string.euro_abv))
 		return true
 	}
 
@@ -83,13 +80,29 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 		return super.onOptionsItemSelected(item)
 	}
 
-	override fun updateRecyclerView(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>>) {
+	private fun setUpRecycler() {
 
+		llmanager = LinearLayoutManager(this)
 		recycler.layoutManager = llmanager
 		recycler.addItemDecoration(BottomItemDecoration(this, R.color.dark_gray, 3f))
-		adapter.setCurrency(getString(R.string.euro_abv))
+		recycler.addOnScrollListener(getOnScrollListener())
+	}
+
+	override fun updateRecyclerView(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>>) {
+
 		adapter.updateCryptoData(dataList)
 		recycler.adapter = adapter
+	}
+
+	private fun getOnScrollListener(): RecyclerView.OnScrollListener {
+
+		return object : RecyclerView.OnScrollListener() {
+			override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+				super.onScrolled(recyclerView, dx, dy)
+
+
+			}
+		}
 	}
 
 	override fun showError() {
