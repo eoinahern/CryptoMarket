@@ -70,4 +70,6 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:2.10.0'
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
     testImplementation 'de.jodamob.kotlin:kotlin-runner-junit4:0.3.1'
+
+    implementation 'com.github.markomilos:paginate:0.5.1'
 }

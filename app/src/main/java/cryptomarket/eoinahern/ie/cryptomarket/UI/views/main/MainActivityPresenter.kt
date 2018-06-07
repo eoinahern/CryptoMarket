@@ -1,46 +1,74 @@
 package cryptomarket.eoinahern.ie.cryptomarket.UI.views.main
 
+import android.os.Handler
+import android.text.format.Time
 import cryptomarket.eoinahern.ie.cryptomarket.DI.annotation.PerScreen
 import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BasePresenter
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.*
 import cryptomarket.eoinahern.ie.cryptomarket.data.util.NoConnectionException
 import cryptomarket.eoinahern.ie.cryptomarket.domain.base.BaseDisposableObserver
+import cryptomarket.eoinahern.ie.cryptomarket.domain.base.BaseSubscriber
 import cryptomarket.eoinahern.ie.cryptomarket.domain.main.GetCryptoListInteractor
+import io.reactivex.disposables.Disposable
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @PerScreen
-class MainActivityPresenter @Inject constructor(private val getCryptoListInteractor: GetCryptoListInteractor) : BasePresenter<MainActivityView>() {
+class MainActivityPresenter @Inject constructor(private var getCryptoListInteractor: GetCryptoListInteractor) : BasePresenter<MainActivityView>() {
 
 
-	inner class MyObs : BaseDisposableObserver<List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>> () {
+	fun getCurrencyDataInitial() {
 
-		override fun onNext(t: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) {
-			getView()?.hideLoading()
-			getView()?.updateRecyclerView(t)
-		}
+		getCryptoListInteractor.setStartLimit(0, 50).execute(object : BaseDisposableObserver<List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>> () {
 
-		override fun onError(e: Throwable) {
-			e.printStackTrace()
-			println("error caught")
-			println(e.message)
-			/**
-			 * differenciate error types
-			 */
-
-			if (e is NoConnectionException) {
+			override fun onNext(t: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) {
 				getView()?.hideLoading()
-				getView()?.showError()
-			} else {
-				getView()?.hideLoading()
-				getView()?.showError()
+				getView()?.updateRecyclerView(t)
 			}
 
-		}
+			override fun onError(e: Throwable) {
+				e.printStackTrace()
+				println("error caught")
+				println(e.message)
+				/**
+				 * differenciate error types
+				 */
+
+				if (e is NoConnectionException) {
+					getView()?.hideLoading()
+					getView()?.showError()
+				} else {
+					getView()?.hideLoading()
+					getView()?.showError()
+				}
+
+			}
+		})
 	}
 
+	fun getCurrencyUpdateData(offset: Int, limit: Int) {
 
-	fun getCurrencyData(offset: Int, limit: Int) {
-		getCryptoListInteractor.setStartLimit(offset, limit).execute(MyObs())
+		getCryptoListInteractor.setStartLimit(offset, limit).execute(object : BaseSubscriber<List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>>() {
+
+			override fun onNext(t: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) {
+				getView()?.updateRecyclerView(t)
+			}
+
+			override fun onError(e: Throwable) {
+				e.printStackTrace()
+				println("error caught")
+				println(e.message)
+				/**
+				 * differenciate error types
+				 */
+
+				if (e is NoConnectionException) {
+					getView()?.showError()
+				} else {
+					getView()?.showError()
+				}
+			}
+		})
 	}
 
 	fun navigateToDetail() {

@@ -70,11 +70,15 @@ class GetCryptoListInteractorTest {
 		assertEquals("BTC", list[0]?.first?.Symbol)
 		assertEquals("ETH", list[1]?.first?.Symbol)
 
-		 var newlist = cryptoInteractor.buildObservable().blockingFirst()
+		var newlist = cryptoInteractor.buildObservable().blockingFirst()
 		assertEquals(4, newlist.size)
 
 
-		verify(mockCryptoApi, times(2)).getList()
+		cryptoInteractor.buildObservable()
+		cryptoInteractor.buildObservable()
+
+
+		verify(mockCryptoApi, times(4)).getList()
 		verify(mockCryptoApi, times(2)).getFullPriceData("BTC,ETH,LTC,DASH", "EUR,USD,BTC,PLN,GBP")
 
 	}

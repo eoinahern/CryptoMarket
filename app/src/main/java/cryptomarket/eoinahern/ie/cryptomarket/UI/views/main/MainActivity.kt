@@ -25,17 +25,15 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	@Inject
 	lateinit var adapter: MainActivityAdapter
 	lateinit var llmanager: LinearLayoutManager
-
 	private var offset: Int = 0
-	private var limit: Int = 10
-
+	private var limit: Int = 50
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setDrawerOnState()
 		setUpRecycler()
 		presenter.attachView(this)
-		presenter.getCurrencyData(offset, limit)
+		presenter.getCurrencyDataInitial()
 		showLoading()
 	}
 
@@ -93,11 +91,9 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 
 	override fun updateRecyclerView(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) {
 
-		recycler.post{
-			adapter.removeLoadingItems()
-		}
+		adapter.removeLoadingItems()
 		adapter.updateCryptoData(dataList)
-		offset += 10
+		offset += 50
 	}
 
 	private fun getOnScrollListener(): RecyclerView.OnScrollListener {
@@ -111,18 +107,15 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 				var firstVisibleItemPosition = llmanager.findFirstVisibleItemPosition()
 
 				if (!adapter.isLoading() && (visibleItemCount + firstVisibleItemPosition) >= totalItemCount) {
-					recycler.post{
-						adapter.showLoadingItems()
 
-					}
-					presenter.getCurrencyData(offset, limit)
+					adapter.showLoadingItems()
+					presenter.getCurrencyUpdateData(offset, limit)
 				}
 			}
 		}
 	}
 
 	override fun showError() {
-
 	}
 
 	override fun onDestroy() {

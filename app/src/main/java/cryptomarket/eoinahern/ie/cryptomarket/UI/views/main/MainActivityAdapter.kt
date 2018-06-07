@@ -41,8 +41,8 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 		holder.name.text = cryptoCurrencyData?.Symbol
 		holder.fullName.text = cryptoCurrencyData?.FullName
 		val url = compareApiDeprecated.plus(cryptoCurrencyData?.ImageUrl)
-		holder.price.text = fullPriceMap?.get(currencyStr)?.PRICE
-		holder.pctChange.text = String.format(context.getString(R.string.pct_format), fullPriceMap?.get(currencyStr)?.CHANGEPCT24HOUR)
+		//holder.price.text = fullPriceMap?.get(currencyStr)?.PRICE
+		//holder.pctChange.text = String.format(context.getString(R.string.pct_format), fullPriceMap?.get(currencyStr)?.CHANGEPCT24HOUR)
 		holder.icon.setImageURI(url)
 		holder.itemView.setOnClickListener { presenter.navigateToDetail() }
 	}
@@ -81,19 +81,16 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 			isLoading = false
 			cryptoData.removeAt(cryptoData.size - 1)
 			notifyItemRemoved(cryptoData.size)
-			notifyDataSetChanged()
 		}
 	}
 
-	override fun getItemCount(): Int {
-		return cryptoData.size
-	}
-
+	override fun getItemCount() = cryptoData.size
 
 	fun updateCryptoData(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) {
 
+		val insertIndex = cryptoData.size
 		cryptoData.addAll(dataList)
-		notifyDataSetChanged()
+		notifyItemRangeInserted(insertIndex, dataList.size)
 	}
 
 	fun setCurrency(currecyStr: String) {
