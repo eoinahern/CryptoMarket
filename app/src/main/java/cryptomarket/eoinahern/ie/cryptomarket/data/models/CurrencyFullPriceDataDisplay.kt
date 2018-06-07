@@ -10,3 +10,6 @@ data class CurrencyFullPriceDataDisplay(
 		val PRICE : String,
 		@Json(name = "CHANGEPCT24HOUR")
 		val CHANGEPCT24HOUR : String )
+
+
+fun  CurrencyFullPriceDataDisplay.isMinus() : Boolean = (CHANGEPCT24HOUR[0]  == '-')

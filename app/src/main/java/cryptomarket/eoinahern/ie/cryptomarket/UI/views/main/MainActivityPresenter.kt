@@ -1,7 +1,5 @@
 package cryptomarket.eoinahern.ie.cryptomarket.UI.views.main
 
-import android.os.Handler
-import android.text.format.Time
 import cryptomarket.eoinahern.ie.cryptomarket.DI.annotation.PerScreen
 import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BasePresenter
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.*
@@ -10,7 +8,6 @@ import cryptomarket.eoinahern.ie.cryptomarket.domain.base.BaseDisposableObserver
 import cryptomarket.eoinahern.ie.cryptomarket.domain.base.BaseSubscriber
 import cryptomarket.eoinahern.ie.cryptomarket.domain.main.GetCryptoListInteractor
 import io.reactivex.disposables.Disposable
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @PerScreen
@@ -54,13 +51,12 @@ class MainActivityPresenter @Inject constructor(private var getCryptoListInterac
 				getView()?.updateRecyclerView(t)
 			}
 
+			override fun onSubscribe(d: Disposable) {
+				getCryptoListInteractor.addDisposables(d)
+			}
+
 			override fun onError(e: Throwable) {
 				e.printStackTrace()
-				println("error caught")
-				println(e.message)
-				/**
-				 * differenciate error types
-				 */
 
 				if (e is NoConnectionException) {
 					getView()?.showError()

@@ -11,9 +11,7 @@ import com.facebook.drawee.view.SimpleDraweeView
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.compareApiDeprecated
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.compareApiEndPoint
-import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
-import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyFullPriceDataDisplay
-import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyPriceConversions
+import cryptomarket.eoinahern.ie.cryptomarket.data.models.*
 import javax.inject.Inject
 
 
@@ -37,12 +35,14 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 
 		val cryptoCurrencyData = cryptoData[position]?.first
 		val fullPriceMap = cryptoData[position]?.second
+		val currency = fullPriceMap?.get(currencyStr)
 
 		holder.name.text = cryptoCurrencyData?.Symbol
 		holder.fullName.text = cryptoCurrencyData?.FullName
 		val url = compareApiDeprecated.plus(cryptoCurrencyData?.ImageUrl)
-		//holder.price.text = fullPriceMap?.get(currencyStr)?.PRICE
-		//holder.pctChange.text = String.format(context.getString(R.string.pct_format), fullPriceMap?.get(currencyStr)?.CHANGEPCT24HOUR)
+		holder.price.text = currency?.PRICE
+		holder.pctChange.text = String.format(context.getString(R.string.pct_format), currency?.CHANGEPCT24HOUR)
+		holder.pctChange.isSelected = currency?.isMinus() ?: false
 		holder.icon.setImageURI(url)
 		holder.itemView.setOnClickListener { presenter.navigateToDetail() }
 	}

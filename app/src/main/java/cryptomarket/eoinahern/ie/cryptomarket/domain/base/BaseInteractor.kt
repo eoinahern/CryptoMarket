@@ -3,6 +3,7 @@ package cryptomarket.eoinahern.ie.cryptomarket.domain.base
 import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 
@@ -30,6 +31,10 @@ open abstract class BaseInteractor<T> {
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(disp)
 
+	}
+
+	fun addDisposables(d : Disposable) {
+		disposables.add(d)
 	}
 
 	fun disposeObs() {

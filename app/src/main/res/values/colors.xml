@@ -7,4 +7,5 @@
 	<color name="light_grey">#d3d3d3</color>
 	<color name="dark_gray">#545454</color>
 	<color name="darkest_grey">#2a2a2a</color>
+	<color name="red_price_color">#ff4c4c</color>
 </resources>
