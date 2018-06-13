@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import cryptomarket.eoinahern.ie.cryptomarket.R
@@ -15,7 +17,8 @@ import cryptomarket.eoinahern.ie.cryptomarket.data.models.*
 import javax.inject.Inject
 
 
-class MainActivityAdapter @Inject constructor(private val presenter: MainActivityPresenter, val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MainActivityAdapter @Inject constructor(private val presenter: MainActivityPresenter, val context: Context)
+	: RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
 	private val VIEWCRYPTO = 0
 	private val VIEWLOADING = 1
@@ -100,6 +103,10 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 	}
 
 	fun isLoading() = isLoading
+
+	override fun getFilter(): Filter {
+		return  MainActivityCryptoFilter(cryptoData)
+	}
 
 	override fun getItemViewType(position: Int) = if (cryptoData[position] != null) VIEWCRYPTO else VIEWLOADING
 

@@ -20,11 +20,28 @@
 			android:id="@+id/toolbar"
 			android:background="@color/colorPrimaryDark"
 			android:theme="@style/ActionBarStyle"
+			app:contentInsetLeft="0dp"
+			app:contentInsetStart="0dp"
+			app:contentInsetStartWithNavigation="0dp"
 			>
 
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				>
 
 
+			<android.support.v7.widget.SearchView
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_marginLeft="0dp"
+				android:id="@+id/cryptoSearchView"
+				android:focusable="false"
+				app:iconifiedByDefault="false"
+				app:queryHint="@string/search_cryptos"
+				android:layout_marginBottom="5dp"/>
 
+			</RelativeLayout>
 
 		</android.support.v7.widget.Toolbar>
 

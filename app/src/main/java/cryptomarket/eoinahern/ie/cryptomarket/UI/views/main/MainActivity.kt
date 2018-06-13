@@ -6,8 +6,11 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
+import com.jakewharton.rxbinding.support.v7.widget.RxSearchView
+import com.jakewharton.rxbinding2.widget.RxTextView
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.BottomItemDecoration
@@ -16,6 +19,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerAc
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyFullPriceDataDisplay
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MainActivity : NavigationDrawerActivity(), MainActivityView {
@@ -35,6 +39,9 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 		presenter.attachView(this)
 		presenter.getCurrencyDataInitial()
 		showLoading()
+		//cryptoSearchView.clearFocus()
+		cryptoSearchView.isEnabled = false
+		setUpSearchListener()
 	}
 
 	override fun setDrawerOnState() {
@@ -87,6 +94,17 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 		recycler.addItemDecoration(BottomItemDecoration(this, R.color.dark_gray, 3f))
 		recycler.addOnScrollListener(getOnScrollListener())
 		recycler.adapter = adapter
+		cryptoSearchView.isEnabled = true
+	}
+
+	private fun setUpSearchListener() {
+
+		RxSearchView.queryTextChanges(cryptoSearchView)
+				.debounce(1000, TimeUnit.MILLISECONDS)
+				.subscribe({
+					charSequence ->
+					println(charSequence.toString())
+				})
 	}
 
 	override fun updateRecyclerView(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) {

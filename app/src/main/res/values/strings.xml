@@ -16,4 +16,5 @@
 	<string name="pln_abv">PLN</string>
 	<string name="usd_abv">USD</string>
 	<string name="pct_format">%s%%</string>
+	<string name="search_cryptos">Search cryptos</string>
 </resources>
