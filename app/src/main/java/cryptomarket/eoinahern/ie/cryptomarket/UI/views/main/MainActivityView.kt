@@ -16,5 +16,7 @@ interface MainActivityView : MvpView {
 
 	fun showError()
 
+	fun displayFilteredData(dataList : List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>)
+
 
 }

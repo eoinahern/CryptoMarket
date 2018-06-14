@@ -2,6 +2,7 @@ package cryptomarket.eoinahern.ie.cryptomarket.UI.views.main
 
 import android.content.Context
 import android.os.Handler
+import android.os.Looper
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +26,7 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 	private var isLoading: Boolean = false
 
 	private var cryptoData: MutableList<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?> = mutableListOf()
+	private var initialData : MutableList<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?> = mutableListOf()
 	private lateinit var currencyStr: String
 
 	override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -96,6 +98,18 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 		notifyItemRangeInserted(insertIndex, dataList.size)
 	}
 
+	fun showFilteredList(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) {
+
+		if (cryptoData.size > 0) {
+			cryptoData.clear()
+		}
+
+		cryptoData.addAll(dataList)
+		notifyDataSetChanged()
+	}
+
+	fun setInitData(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) = initialData.addAll(dataList)
+
 	fun setCurrency(currecyStr: String) {
 
 		currencyStr = currecyStr
@@ -105,7 +119,42 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 	fun isLoading() = isLoading
 
 	override fun getFilter(): Filter {
-		return  MainActivityCryptoFilter(cryptoData)
+
+		return object : Filter() {
+
+			override fun publishResults(searchSequence: CharSequence?, filteredResults: FilterResults?) {
+
+				if (filteredResults?.count == 0 && searchSequence.isNullOrEmpty()) {
+					showFilteredList(initialData)
+					return
+				}
+
+				var list = filteredResults?.values as List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>
+				showFilteredList(list)
+			}
+
+			override fun performFiltering(searchSequence: CharSequence?): FilterResults? {
+
+				var filteredResults = FilterResults()
+
+				if(searchSequence.isNullOrEmpty()) {
+
+					filteredResults.count = 0
+					return filteredResults
+				}
+
+				val searchStr = searchSequence.toString()
+				var filteredList = cryptoData.filter {
+					it?.first?.FullName?.contains(searchStr, ignoreCase = true) ?: false
+				}
+
+				filteredResults.count = filteredList.size
+				filteredResults.values = filteredList
+
+				return filteredResults
+			}
+
+		}
 	}
 
 	override fun getItemViewType(position: Int) = if (cryptoData[position] != null) VIEWCRYPTO else VIEWLOADING

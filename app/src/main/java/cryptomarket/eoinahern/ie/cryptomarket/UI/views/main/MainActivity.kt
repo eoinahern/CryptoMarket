@@ -6,11 +6,9 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
-import com.jakewharton.rxbinding.support.v7.widget.RxSearchView
-import com.jakewharton.rxbinding2.widget.RxTextView
+import com.jakewharton.rxbinding2.widget.RxSearchView
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.BottomItemDecoration
@@ -18,7 +16,10 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.util.LoadingView
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerActivity
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyFullPriceDataDisplay
+import io.reactivex.android.schedulers.AndroidSchedulers
+
 import kotlinx.android.synthetic.main.activity_main.*
+
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -39,7 +40,6 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 		presenter.attachView(this)
 		presenter.getCurrencyDataInitial()
 		showLoading()
-		//cryptoSearchView.clearFocus()
 		cryptoSearchView.isEnabled = false
 		setUpSearchListener()
 	}
@@ -100,10 +100,12 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	private fun setUpSearchListener() {
 
 		RxSearchView.queryTextChanges(cryptoSearchView)
-				.debounce(1000, TimeUnit.MILLISECONDS)
-				.subscribe({
-					charSequence ->
-					println(charSequence.toString())
+				.debounce(1, TimeUnit.SECONDS)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe({ charSequence ->
+					adapter.filter.filter(charSequence)
+				}, {
+					it.printStackTrace()
 				})
 	}
 
@@ -111,7 +113,12 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 
 		adapter.removeLoadingItems()
 		adapter.updateCryptoData(dataList)
+		adapter.setInitData(dataList)
 		offset += 50
+	}
+
+	override fun displayFilteredData(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) {
+
 	}
 
 	private fun getOnScrollListener(): RecyclerView.OnScrollListener {
