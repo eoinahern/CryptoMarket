@@ -27,9 +27,6 @@ class MainActivityPresenter @Inject constructor(private var getCryptoListInterac
 				e.printStackTrace()
 				println("error caught")
 				println(e.message)
-				/**
-				 * differenciate error types
-				 */
 
 				if (e is NoConnectionException) {
 					getView()?.hideLoading()
