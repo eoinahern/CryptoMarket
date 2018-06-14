@@ -26,7 +26,7 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 	private var isLoading: Boolean = false
 
 	private var cryptoData: MutableList<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?> = mutableListOf()
-	private var initialData : MutableList<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?> = mutableListOf()
+	private var initialData: MutableList<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?> = mutableListOf()
 	private lateinit var currencyStr: String
 
 	override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -100,9 +100,8 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 
 	fun showFilteredList(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) {
 
-		if (cryptoData.size > 0) {
+		if (cryptoData.size > 0)
 			cryptoData.clear()
-		}
 
 		cryptoData.addAll(dataList)
 		notifyDataSetChanged()
@@ -124,11 +123,6 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 
 			override fun publishResults(searchSequence: CharSequence?, filteredResults: FilterResults?) {
 
-				if (filteredResults?.count == 0 && searchSequence.isNullOrEmpty()) {
-					showFilteredList(initialData)
-					return
-				}
-
 				var list = filteredResults?.values as List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>
 				showFilteredList(list)
 			}
@@ -137,15 +131,16 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 
 				var filteredResults = FilterResults()
 
-				if(searchSequence.isNullOrEmpty()) {
+				if (searchSequence.isNullOrEmpty()) {
 
-					filteredResults.count = 0
+					filteredResults.count = initialData.size
+					filteredResults.values = initialData
 					return filteredResults
 				}
 
 				val searchStr = searchSequence.toString()
 				var filteredList = cryptoData.filter {
-					it?.first?.FullName?.contains(searchStr, ignoreCase = true) ?: false
+					it?.first?.FullName?.startsWith(searchStr, ignoreCase = true) ?: false
 				}
 
 				filteredResults.count = filteredList.size

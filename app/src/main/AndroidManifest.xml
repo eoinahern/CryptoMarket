@@ -13,19 +13,20 @@
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme">
 		<activity android:name=".UI.views.main.MainActivity"
-			android:windowSoftInputMode="stateHidden">
+			android:windowSoftInputMode="stateHidden"
+			android:screenOrientation="portrait">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".UI.views.alerts.AlertsActivity"></activity>
-		<activity android:name=".UI.views.currency.CurrencyActivity" />
-		<activity android:name=".UI.views.favourites.FavouritesActivity" />
-		<activity
-			android:name=".UI.views.drawer.NavigationDrawerActivity"
-			android:launchMode="singleTask" />
+		<activity android:name=".UI.views.alerts.AlertsActivity"
+			android:screenOrientation="portrait"></activity>
+		<activity android:name=".UI.views.currency.CurrencyActivity"
+			android:screenOrientation="portrait"/>
+		<activity android:name=".UI.views.favourites.FavouritesActivity"
+			android:screenOrientation="portrait"/>
 
 		<meta-data
 			android:name="preloaded_fonts"
