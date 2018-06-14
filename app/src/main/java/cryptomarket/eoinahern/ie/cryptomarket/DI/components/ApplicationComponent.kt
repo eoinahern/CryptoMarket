@@ -1,13 +1,18 @@
 package cryptomarket.eoinahern.ie.cryptomarket.DI.components
 
 import cryptomarket.eoinahern.ie.cryptomarket.DI.modules.ApplicationModule
+import cryptomarket.eoinahern.ie.cryptomarket.DI.modules.NetworkModule
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.alerts.AlertsActivityComponent
+import cryptomarket.eoinahern.ie.cryptomarket.UI.views.main.MainActivityComponent
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [ApplicationModule::class])
+@Component(modules = [ApplicationModule::class, NetworkModule::class])
 interface ApplicationComponent {
 
-	fun plus(module : AlertsActivityComponent.AlertsActivityModule) : AlertsActivityComponent
+	fun plus(module: AlertsActivityComponent.AlertsActivityModule): AlertsActivityComponent
+
+	fun plus(module: MainActivityComponent.MainActivityModule): MainActivityComponent
+
 }

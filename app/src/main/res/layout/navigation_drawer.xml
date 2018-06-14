@@ -3,31 +3,28 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:layout_gravity="left"
 	android:background="@color/colorPrimaryDark"
 	android:fillViewport="true"
-	android:layout_gravity="left"
 	android:orientation="vertical">
 
-	<LinearLayout
+	<RelativeLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:clickable="true"
-		android:orientation="vertical">
+		android:clickable="true">
 
 		<RelativeLayout
 			android:id="@+id/top_view"
 			android:layout_width="match_parent"
-			android:layout_height="104dp"
-			>
+			android:layout_height="104dp">
 
 
 			<ImageView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:background="@drawable/ic_icon"
 				android:layout_centerVertical="true"
 				android:layout_marginLeft="18dp"
-				/>
+				android:background="@drawable/ic_icon" />
 
 
 		</RelativeLayout>
@@ -36,15 +33,15 @@
 			android:id="@+id/drawer_main"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:orientation="horizontal"
+			android:layout_below="@id/top_view"
 			android:clickable="true"
-			android:background="?selectableItemBackground">
+			android:orientation="horizontal">
 
 			<TextView
+				android:id="@+id/main_txt"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:fontFamily="@font/quicksand"
-				android:id="@+id/main_txt"
 				android:padding="14dp"
 				android:text="@string/main"
 				android:textColor="@drawable/menu_item_text_selector"
@@ -56,6 +53,7 @@
 		<View
 			android:layout_width="match_parent"
 			android:layout_height="1dp"
+			android:layout_below="@id/drawer_main"
 			android:layout_marginLeft="12dp"
 			android:layout_marginRight="12dp"
 			android:background="@color/light_grey" />
@@ -65,16 +63,16 @@
 			android:id="@+id/drawer_favourites"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:orientation="horizontal"
+			android:layout_below="@id/drawer_main"
 			android:clickable="true"
-			android:background="?selectableItemBackground">
+			android:orientation="horizontal">
 
 			<TextView
+				android:id="@+id/favourites_txt"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:fontFamily="@font/quicksand"
 				android:padding="14dp"
-				android:id="@+id/favourites_txt"
 				android:text="@string/favourites"
 				android:textColor="@drawable/menu_item_text_selector"
 				android:textSize="16dp" />
@@ -85,6 +83,7 @@
 		<View
 			android:layout_width="match_parent"
 			android:layout_height="1dp"
+			android:layout_below="@id/drawer_favourites"
 			android:layout_marginLeft="12dp"
 			android:layout_marginRight="12dp"
 			android:background="@color/light_grey" />
@@ -94,16 +93,16 @@
 			android:id="@+id/drawer_alerts"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:orientation="horizontal"
+			android:layout_below="@id/drawer_favourites"
 			android:clickable="true"
-			android:background="?selectableItemBackground">
+			android:orientation="horizontal">
 
 			<TextView
+				android:id="@+id/alerts_txt"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:fontFamily="@font/quicksand"
 				android:padding="14dp"
-				android:id="@+id/alerts_txt"
 				android:text="@string/alerts"
 				android:textColor="@drawable/menu_item_text_selector"
 				android:textSize="16dp" />
@@ -114,13 +113,40 @@
 		<View
 			android:layout_width="match_parent"
 			android:layout_height="1dp"
+			android:layout_below="@id/drawer_alerts"
 			android:layout_marginLeft="12dp"
 			android:layout_marginRight="12dp"
 			android:background="@color/light_grey" />
 
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true"
+			android:layout_marginBottom="12dp"
+			android:layout_marginLeft="12dp"
+			android:orientation="horizontal">
 
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:fontFamily="@font/abel"
+				android:text="@string/powered_by"
+				android:textColor="@color/dark_gray"
+				android:textSize="10dp"
+				android:textStyle="bold|italic" />
 
-	</LinearLayout>
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="4dp"
+				android:fontFamily="@font/abel"
+				android:text="@string/api_addr"
+				android:textColor="@color/colorAccent"
+				android:textSize="10dp"
+				android:textStyle="italic" />
+
+		</LinearLayout>
+	</RelativeLayout>
 
 
 </ScrollView>

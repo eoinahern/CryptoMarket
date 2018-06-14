@@ -16,15 +16,13 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.views.alerts.AlertsActivity
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.favourites.FavouritesActivity
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.main.MainActivity
 
- abstract class NavigationDrawerActivity : BaseActivity() {
+abstract class NavigationDrawerActivity : BaseActivity() {
 
 	protected val main: View by lazy { findViewById<View>(R.id.drawer_main) }
 	protected val toolbar: Toolbar by lazy { findViewById<Toolbar>(R.id.toolbar) }
 	protected val drawerLayout: DrawerLayout by lazy { findViewById<DrawerLayout>(R.id.drawer_layout) }
 	protected val favourites: View by lazy { findViewById<View>(R.id.drawer_favourites) }
 	protected val alerts: View by lazy { findViewById<View>(R.id.drawer_alerts) }
-
-	//have to manually update textview to bold. cant be done via selector?
 	protected val mainTxt: TextView by lazy { findViewById<TextView>(R.id.main_txt) }
 	protected val favouritesTxt: TextView by lazy { findViewById<TextView>(R.id.favourites_txt) }
 	protected val alertsTxt: TextView by lazy { findViewById<TextView>(R.id.alerts_txt) }
@@ -36,6 +34,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.views.main.MainActivity
 
 		setSupportActionBar(toolbar)
 		supportActionBar?.setDisplayHomeAsUpEnabled(true)
+		supportActionBar?.title = null
 
 		setUpDrawerToggle()
 		setListeners()
@@ -101,7 +100,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.views.main.MainActivity
 
 		favourites.isSelected = false
 		alerts.isSelected = false
-		alerts.isSelected = false
+		main.isSelected = false
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -112,7 +111,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.views.main.MainActivity
 		return super.onOptionsItemSelected(item)
 	}
 
-	 open fun setDrawerOnState() {
-		 cancelBoldText()
-	 }
+	open fun setDrawerOnState() {
+		cancelBoldText()
+	}
 }
