@@ -1,7 +1,9 @@
 package cryptomarket.eoinahern.ie.cryptomarket.UI.views.main
 
+import android.support.v4.content.ContextCompat.startActivity
 import cryptomarket.eoinahern.ie.cryptomarket.DI.annotation.PerScreen
 import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BasePresenter
+import cryptomarket.eoinahern.ie.cryptomarket.UI.views.detail.DetailsActivity
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.*
 import cryptomarket.eoinahern.ie.cryptomarket.data.util.NoConnectionException
 import cryptomarket.eoinahern.ie.cryptomarket.domain.base.BaseDisposableObserver
@@ -65,7 +67,7 @@ class MainActivityPresenter @Inject constructor(private var getCryptoListInterac
 	}
 
 	fun navigateToDetail() {
-
+		getView()?.gotToDetail()
 	}
 
 	override fun detachView() {

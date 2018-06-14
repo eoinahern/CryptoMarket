@@ -5,5 +5,37 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	tools:context=".UI.views.detail.DetailsActivity">
+	
+	<android.support.v7.widget.Toolbar
+		android:layout_width="match_parent"
+		android:layout_height="?actionBarSize"
+		android:background="@color/colorPrimaryDark"
+		android:theme="@style/ActionBarStyle"
+		android:id="@+id/detailsToolbar">
+
+	</android.support.v7.widget.Toolbar>
+
+
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:id="@+id/scroll">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical">
+
+
+
+
+		</LinearLayout>
+
+
+
+
+
+
+	</ScrollView>
 
 </android.support.constraint.ConstraintLayout>

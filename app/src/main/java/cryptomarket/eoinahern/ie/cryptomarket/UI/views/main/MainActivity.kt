@@ -13,6 +13,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.BottomItemDecoration
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.LoadingView
+import cryptomarket.eoinahern.ie.cryptomarket.UI.views.detail.DetailsActivity
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerActivity
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyFullPriceDataDisplay
@@ -117,10 +118,6 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 		offset += 50
 	}
 
-	override fun displayFilteredData(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) {
-
-	}
-
 	private fun getOnScrollListener(): RecyclerView.OnScrollListener {
 
 		return object : RecyclerView.OnScrollListener() {
@@ -142,6 +139,10 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	}
 
 	override fun showError() {
+	}
+
+	override fun gotToDetail() {
+		startActivity(DetailsActivity.getStartIntent(this))
 	}
 
 	override fun onDestroy() {
