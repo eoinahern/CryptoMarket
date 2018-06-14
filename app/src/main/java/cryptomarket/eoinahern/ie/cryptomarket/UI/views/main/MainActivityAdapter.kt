@@ -131,7 +131,7 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 
 				var filteredResults = FilterResults()
 
-				if (searchSequence.isNullOrEmpty()) {
+				if (searchSequence?.trim().isNullOrEmpty() || searchSequence?.trim().isNullOrBlank()) {
 
 					filteredResults.count = initialData.size
 					filteredResults.values = initialData
@@ -139,16 +139,17 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 				}
 
 				val searchStr = searchSequence.toString()
-				var filteredList = cryptoData.filter {
-					it?.first?.FullName?.startsWith(searchStr, ignoreCase = true) ?: false
-				}
-
+				var filteredList = filterList(searchStr)
 				filteredResults.count = filteredList.size
 				filteredResults.values = filteredList
 
 				return filteredResults
 			}
 
+
+			private fun filterList(searchStr: String) = cryptoData.filter {
+				it?.first?.FullName?.startsWith(searchStr, ignoreCase = true) ?: false
+			}
 		}
 	}
 

@@ -100,7 +100,7 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	private fun setUpSearchListener() {
 
 		RxSearchView.queryTextChanges(cryptoSearchView)
-				.debounce(1, TimeUnit.SECONDS)
+				.debounce(500, TimeUnit.MILLISECONDS)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe({ charSequence ->
 					adapter.filter.filter(charSequence)
@@ -131,7 +131,8 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 				var totalItemCount = llmanager.itemCount
 				var firstVisibleItemPosition = llmanager.findFirstVisibleItemPosition()
 
-				if (!adapter.isLoading() && (visibleItemCount + firstVisibleItemPosition) >= totalItemCount) {
+				if (!adapter.isLoading() && cryptoSearchView.query.isEmpty()
+						&& (visibleItemCount + firstVisibleItemPosition) >= totalItemCount) {
 
 					adapter.showLoadingItems()
 					presenter.getCurrencyUpdateData(offset, limit)

@@ -5,6 +5,8 @@
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
 
+	<!--android:windowSoftInputMode="stateHidden"-->
+
 	<application
 		android:name=".MyApp"
 		android:allowBackup="true"
@@ -13,7 +15,6 @@
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme">
 		<activity android:name=".UI.views.main.MainActivity"
-			android:windowSoftInputMode="stateHidden"
 			android:screenOrientation="portrait">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
