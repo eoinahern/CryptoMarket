@@ -3,24 +3,24 @@ package cryptomarket.eoinahern.ie.cryptomarket.UI.views.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
-import android.support.v7.app.ActionBar
 import android.support.v7.widget.Toolbar
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BaseActivity
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.CURRENCY_INFO
+import cryptomarket.eoinahern.ie.cryptomarket.UI.util.LoadingView
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
-import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyData
 
 class DetailsActivity : BaseActivity(), DetailsView {
 
 	private val detailsToolbar: Toolbar by lazy { findViewById<Toolbar>(R.id.toolbar) }
-	private var actionBar: ActionBar? = null
+	private val loadingView: LoadingView by lazy { findViewById<LoadingView>(R.id.loading_view) }
 
 	override fun onCreate(savedInstanceState: Bundle?) {
+
 		super.onCreate(savedInstanceState)
 		setUpToolbar()
 		readIntent()
+		showLoading()
 	}
 
 	private fun setUpToolbar() {
@@ -55,7 +55,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
 	}
 
 	override fun showLoading() {
-
+		loadingView.setState(LoadingView.State.LOADING)
 	}
 
 	override fun hideLoading() {
