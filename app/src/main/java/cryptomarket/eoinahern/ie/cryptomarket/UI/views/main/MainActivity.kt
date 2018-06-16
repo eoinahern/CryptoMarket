@@ -12,6 +12,7 @@ import com.jakewharton.rxbinding2.widget.RxSearchView
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.BottomItemDecoration
+import cryptomarket.eoinahern.ie.cryptomarket.UI.util.CURRENCY_INFO
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.LoadingView
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.detail.DetailsActivity
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerActivity
@@ -141,8 +142,11 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	override fun showError() {
 	}
 
-	override fun gotToDetail() {
-		startActivity(DetailsActivity.getStartIntent(this))
+	override fun gotToDetail(crypto : CryptoCurrency?) {
+
+		val intent = DetailsActivity.getStartIntent(this)
+		intent.putExtra(CURRENCY_INFO, crypto)
+		startActivity(intent)
 	}
 
 	override fun onDestroy() {

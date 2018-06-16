@@ -49,27 +49,21 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 		holder.pctChange.text = String.format(context.getString(R.string.pct_format), currency?.CHANGEPCT24HOUR)
 		holder.pctChange.isSelected = currency?.isMinus() ?: false
 		holder.icon.setImageURI(url)
-		holder.itemView.setOnClickListener { presenter.navigateToDetail() }
+		holder.itemView.setOnClickListener { presenter.navigateToDetail(cryptoCurrencyData) }
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
-		val vh: RecyclerView.ViewHolder
-
-		if (viewType == VIEWCRYPTO) {
+		return if (viewType == VIEWCRYPTO) {
 
 			val v = LayoutInflater.from(parent.context).inflate(R.layout.single_crypto_layout, parent, false)
-			vh = ViewHolder(v)
-			vh.itemView.setOnClickListener {
-				presenter.navigateToDetail()
-			}
+			ViewHolder(v)
+
 		} else {
 
 			val v = LayoutInflater.from(parent.context).inflate(R.layout.page_loading_layout, parent, false)
-			vh = LoadingViewHolder(v)
+			LoadingViewHolder(v)
 		}
-
-		return vh
 	}
 
 	fun showLoadingItems() {

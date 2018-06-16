@@ -66,8 +66,8 @@ class MainActivityPresenter @Inject constructor(private var getCryptoListInterac
 		})
 	}
 
-	fun navigateToDetail() {
-		getView()?.gotToDetail()
+	fun navigateToDetail(crypto : CryptoCurrency?) {
+		getView()?.gotToDetail(crypto)
 	}
 
 	override fun detachView() {

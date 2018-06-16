@@ -3,10 +3,14 @@ package cryptomarket.eoinahern.ie.cryptomarket.UI.views.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.support.v7.app.ActionBar
 import android.support.v7.widget.Toolbar
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BaseActivity
+import cryptomarket.eoinahern.ie.cryptomarket.UI.util.CURRENCY_INFO
+import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
+import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyData
 
 class DetailsActivity : BaseActivity(), DetailsView {
 
@@ -15,18 +19,27 @@ class DetailsActivity : BaseActivity(), DetailsView {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+		setUpToolbar()
+		readIntent()
+	}
 
-		this.setSupportActionBar(detailsToolbar)
-		actionBar = supportActionBar
-		actionBar?.apply {
+	private fun setUpToolbar() {
 
-			this.title = "BTC"
+		setSupportActionBar(detailsToolbar)
+		supportActionBar?.apply {
+
 			this.setDisplayHomeAsUpEnabled(true)
 			this.setHomeButtonEnabled(true)
 			this.setHomeAsUpIndicator(R.drawable.ic_back_dark)
 		}
 
 		detailsToolbar.setNavigationOnClickListener { _ -> finish() }
+	}
+
+	private fun readIntent() {
+
+		val curr = intent.getParcelableExtra<CryptoCurrency>(CURRENCY_INFO)
+		supportActionBar?.title = curr.Symbol
 	}
 
 	override fun inject() {
