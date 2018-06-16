@@ -4,13 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
+import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BaseActivity
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.CURRENCY_INFO
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.LoadingView
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
+import javax.inject.Inject
 
 class DetailsActivity : BaseActivity(), DetailsView {
+
+	@Inject lateinit var presenter : DetailsActivityPresenter
 
 	private val detailsToolbar: Toolbar by lazy { findViewById<Toolbar>(R.id.toolbar) }
 	private val loadingView: LoadingView by lazy { findViewById<LoadingView>(R.id.loading_view) }
@@ -43,7 +47,8 @@ class DetailsActivity : BaseActivity(), DetailsView {
 	}
 
 	override fun inject() {
-		//not used yet
+		(application  as MyApp).getAppComponent()
+				.plus(DetailsActivityComponent.DetailsActivityCompnentModule(this)).inject(this)
 	}
 
 	override fun getLayoutView(): Int {
@@ -59,7 +64,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
 	}
 
 	override fun hideLoading() {
-
+		loadingView.hide()
 	}
 
 	override fun showError() {
