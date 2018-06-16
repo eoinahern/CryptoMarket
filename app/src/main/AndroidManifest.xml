@@ -39,7 +39,12 @@
 
 		<activity
 			android:name=".UI.views.detail.DetailsActivity"
+			android:parentActivityName=".UI.views.main.MainActivity"
 			android:screenOrientation="portrait">
+
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value=".UI.views.main.MainActivity"/>
 		</activity>
 	</application>
 

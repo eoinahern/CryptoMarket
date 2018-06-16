@@ -8,7 +8,9 @@
 		<item name="colorAccent">@color/colorAccent</item>
 	</style>
 
-	<style name="ActionBarStyle" parent="AppTheme">
+	<style name="ActionBarStyle" >
+		<item name="colorAccent">@color/colorAccent</item>
+		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 		<item name="android:textColorPrimary">@color/colorAccent</item>
 		<item name="actionMenuTextColor">@color/colorAccent</item>
 		<item name="android:textColorSecondary">@color/colorAccent</item>
