@@ -14,7 +14,8 @@ import javax.inject.Inject
 
 class DetailsActivity : BaseActivity(), DetailsView {
 
-	@Inject lateinit var presenter : DetailsActivityPresenter
+	@Inject
+	lateinit var presenter: DetailsActivityPresenter
 
 	private val detailsToolbar: Toolbar by lazy { findViewById<Toolbar>(R.id.toolbar) }
 	private val loadingView: LoadingView by lazy { findViewById<LoadingView>(R.id.loading_view) }
@@ -47,8 +48,9 @@ class DetailsActivity : BaseActivity(), DetailsView {
 	}
 
 	override fun inject() {
-		(application  as MyApp).getAppComponent()
-				.plus(DetailsActivityComponent.DetailsActivityCompnentModule(this)).inject(this)
+		(application as MyApp).getAppComponent()
+				.plus(DetailsActivityComponent.DetailsActivityCompnentModule(this))
+				.inject(this)
 	}
 
 	override fun getLayoutView(): Int {
