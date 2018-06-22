@@ -25,6 +25,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
 	override fun onCreate(savedInstanceState: Bundle?) {
 
 		super.onCreate(savedInstanceState)
+		presenter.attachView(this)
 		setUpToolbar()
 		readIntent()
 		showLoading()
@@ -83,7 +84,12 @@ class DetailsActivity : BaseActivity(), DetailsView {
 	}
 
 	override fun DisplayGraphData(graphList: List<HistoricalData?>) {
+		println(graphList[0].toString())
+	}
 
+	override fun onDestroy() {
+		super.onDestroy()
+		presenter.detachView()
 	}
 
 }

@@ -5,6 +5,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BasePresenter
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.HistoricalData
 import cryptomarket.eoinahern.ie.cryptomarket.domain.base.BaseSubscriber
 import cryptomarket.eoinahern.ie.cryptomarket.domain.details.GetGraphDataInteractor
+import io.reactivex.disposables.Disposable
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -21,15 +22,14 @@ class DetailsActivityPresenter @Inject constructor(private val getGraphDataInter
 						getView()?.hideLoading()
 
 						t.forEach {
-							if(it.code() != 200) {
+							if (it.code() != 200) {
 								getView()?.showError()
 								return
 							}
 						}
 
-
 						println(t.toString())
-						getView()?.DisplayGraphData(t.map{ it.body()})
+						getView()?.DisplayGraphData(t.map { it.body() })
 					}
 
 
@@ -37,6 +37,15 @@ class DetailsActivityPresenter @Inject constructor(private val getGraphDataInter
 						getView()?.hideLoading()
 						getView()?.showError()
 					}
+
+					override fun onSubscribe(d: Disposable) {
+						getGraphDataInteractor.addDisposables(d)
+					}
 				})
+	}
+
+	override fun detachView() {
+		super.detachView()
+		getGraphDataInteractor.disposeObs()
 	}
 }
