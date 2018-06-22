@@ -10,6 +10,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BaseActivity
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.CURRENCY_INFO
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.LoadingView
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
+import cryptomarket.eoinahern.ie.cryptomarket.data.models.HistoricalData
 import javax.inject.Inject
 
 class DetailsActivity : BaseActivity(), DetailsView {
@@ -74,6 +75,9 @@ class DetailsActivity : BaseActivity(), DetailsView {
 	}
 
 	override fun DisplayLoadedData() {
+
+	}
+	override fun DisplayGraphData(graphList: List<HistoricalData?>) {
 
 	}
 

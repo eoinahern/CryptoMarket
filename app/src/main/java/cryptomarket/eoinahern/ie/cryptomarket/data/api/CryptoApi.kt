@@ -17,12 +17,16 @@ interface CryptoApi {
 	fun getPriceData(@Query("fsyms") currencies: String, @Query("tsyms") prices: String): Observable<HashMap<String, CurrencyPriceConversions>>
 
 	@GET("pricemultifull")
-	fun getFullPriceData(@Query("fsyms") currencies : String, @Query("tsyms") conversions : String) : Observable<FullPriceWrapper>
+	fun getFullPriceData(@Query("fsyms") currencies: String, @Query("tsyms") conversions: String): Observable<FullPriceWrapper>
 
 	@GET("histohour")
-	fun getHistoricalDataHour(@Query("fsyms") currency : String, @Query("tsyms") convertedCurrency : String) : Observable<Response<HistoricalData>>
+	fun getHistoricalDataHour(@Query("fsyms") currency: String,
+							  @Query("tsyms") convertedCurrency: String,
+							  @Query("limit") limit: String): Observable<Response<HistoricalData>>
 
 
 	@GET("histoday")
-	fun getHistooricalDataDay(@Query("fsyms") currency : String, @Query("tsyms") convertedCurrency : String) : Observable<Response<HistoricalData>>
+	fun getHistoricalDataDay(@Query("fsyms") currency: String,
+							  @Query("tsyms") convertedCurrency: String,
+							  @Query("limit") limit: String): Observable<Response<HistoricalData>>
 }
