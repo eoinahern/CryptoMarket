@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BaseActivity
+import cryptomarket.eoinahern.ie.cryptomarket.UI.util.CONVERTED_TO
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.CURRENCY_INFO
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.LoadingView
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
@@ -45,7 +46,10 @@ class DetailsActivity : BaseActivity(), DetailsView {
 	private fun readIntent() {
 
 		val curr = intent.getParcelableExtra<CryptoCurrency>(CURRENCY_INFO)
+		val convertedTo = intent.getStringExtra(CONVERTED_TO)
 		supportActionBar?.title = curr.Symbol
+
+		presenter.loadSingleCryptoData(curr.Symbol, convertedTo)
 	}
 
 	override fun inject() {
@@ -77,6 +81,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
 	override fun DisplayLoadedData() {
 
 	}
+
 	override fun DisplayGraphData(graphList: List<HistoricalData?>) {
 
 	}

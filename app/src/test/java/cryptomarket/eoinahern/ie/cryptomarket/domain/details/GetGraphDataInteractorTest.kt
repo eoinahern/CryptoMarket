@@ -11,7 +11,6 @@ import org.mockito.Mockito.verify
 
 import org.mockito.MockitoAnnotations
 import retrofit2.Response
-import kotlin.test.assertEquals
 
 class GetGraphDataInteractorTest {
 

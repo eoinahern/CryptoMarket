@@ -12,6 +12,7 @@ import com.jakewharton.rxbinding2.widget.RxSearchView
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.BottomItemDecoration
+import cryptomarket.eoinahern.ie.cryptomarket.UI.util.CONVERTED_TO
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.CURRENCY_INFO
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.LoadingView
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.detail.DetailsActivity
@@ -34,6 +35,7 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	lateinit var llmanager: LinearLayoutManager
 	private var offset: Int = 0
 	private var limit: Int = 50
+	private lateinit var menuText : String
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -78,13 +80,15 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 
 		menuInflater.inflate(R.menu.toolbar_currency_menu, menu)
 		menu?.getItem(0)?.isChecked = true
-		adapter.setCurrency(getString(R.string.euro_abv))
+		menuText = getString(R.string.euro_abv)
+		adapter.setCurrency(menuText)
 		return true
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
-		adapter.setCurrency(item?.title.toString())
+		menuText = item?.title.toString()
+		adapter.setCurrency(menuText)
 		return super.onOptionsItemSelected(item)
 	}
 
@@ -142,10 +146,11 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	override fun showError() {
 	}
 
-	override fun gotToDetail(crypto : CryptoCurrency?) {
+	override fun gotToDetail(crypto: CryptoCurrency?) {
 
 		val intent = DetailsActivity.getStartIntent(this)
 		intent.putExtra(CURRENCY_INFO, crypto)
+		intent.putExtra(CONVERTED_TO, menuText)
 		startActivity(intent)
 	}
 

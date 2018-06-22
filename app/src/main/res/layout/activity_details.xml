@@ -35,10 +35,10 @@
 				android:layout_height="match_parent"
 				android:orientation="vertical">
 
-				<TextView
+				<!--<TextView
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:text="hello cunt1" />
+					android:text="hello cunt1" />-->
 
 
 			</LinearLayout>
