@@ -35,10 +35,44 @@
 				android:layout_height="match_parent"
 				android:orientation="vertical">
 
-				<!--<TextView
-					android:layout_width="wrap_content"
+				<com.github.mikephil.charting.charts.LineChart
+					android:layout_width="match_parent"
+					android:layout_height="280dp"
+					android:id="@+id/line_graph"/>
+
+
+				<LinearLayout
+					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:text="hello cunt1" />-->
+					android:orientation="horizontal"
+					android:weightSum="3">
+
+					<Button
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="@string/one_month"
+						android:id="@+id/oneMonthBtn"
+						tools:text="@string/one_month"/>
+
+					<Button
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="@string/twelve_hours_abv"
+						android:id="@+id/twelveHourBtn"
+						tools:text="@string/twelve_hours_abv"/>
+
+					<Button
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="@string/twofour_hours_abv"
+						android:id="@+id/twoFourHourBtn"
+						tools:tetx="@string/twofour_hours_abv"/>
+
+
+				</LinearLayout>
 
 
 			</LinearLayout>

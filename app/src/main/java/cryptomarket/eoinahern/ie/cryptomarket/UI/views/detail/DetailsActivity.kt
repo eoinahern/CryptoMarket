@@ -3,7 +3,12 @@ package cryptomarket.eoinahern.ie.cryptomarket.UI.views.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.Toolbar
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BaseActivity
@@ -12,6 +17,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.util.CURRENCY_INFO
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.LoadingView
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.HistoricalData
+import kotlinx.android.synthetic.main.activity_details.*
 import javax.inject.Inject
 
 class DetailsActivity : BaseActivity(), DetailsView {
@@ -21,6 +27,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
 
 	private val detailsToolbar: Toolbar by lazy { findViewById<Toolbar>(R.id.toolbar) }
 	private val loadingView: LoadingView by lazy { findViewById<LoadingView>(R.id.loading_view) }
+	private val lineGraph: LineChart by lazy { findViewById<LineChart>(R.id.line_graph) }
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -29,6 +36,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
 		setUpToolbar()
 		readIntent()
 		showLoading()
+
 	}
 
 	private fun setUpToolbar() {
@@ -84,7 +92,23 @@ class DetailsActivity : BaseActivity(), DetailsView {
 	}
 
 	override fun DisplayGraphData(graphList: List<HistoricalData?>) {
-		println(graphList[0].toString())
+
+		var entries: MutableList<Entry> = mutableListOf()
+
+		graphList[0]?.Data?.forEach {
+			entries.add(Entry(it.time.toFloat(), it.close))
+		}
+
+		var dataSet = LineDataSet(entries, "data")
+		dataSet.setColor(R.color.mint_green)
+		dataSet.lineWidth = 6f
+		dataSet.highLightColor = R.color.mint_green
+		dataSet.setDrawCircles(false)
+		lineGraph.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent))
+		lineGraph.setDrawGridBackground(false)
+		lineGraph.data = LineData(dataSet)
+		lineGraph.invalidate()
+
 	}
 
 	override fun onDestroy() {
