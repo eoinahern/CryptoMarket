@@ -17,7 +17,6 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.util.CURRENCY_INFO
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.LoadingView
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.HistoricalData
-import kotlinx.android.synthetic.main.activity_details.*
 import javax.inject.Inject
 
 class DetailsActivity : BaseActivity(), DetailsView {
@@ -100,11 +99,16 @@ class DetailsActivity : BaseActivity(), DetailsView {
 		}
 
 		var dataSet = LineDataSet(entries, "data")
-		dataSet.setColor(R.color.mint_green)
-		dataSet.lineWidth = 6f
-		dataSet.highLightColor = R.color.mint_green
+		dataSet.color = ContextCompat.getColor(this, R.color.mint_green)
+		dataSet.lineWidth = 4f
+		dataSet.setDrawValues(false)
 		dataSet.setDrawCircles(false)
-		lineGraph.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent))
+		dataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
+		lineGraph.axisLeft.setDrawGridLines(false)
+
+		lineGraph.setDrawBorders(false)
+		lineGraph.xAxis.setDrawGridLines(false)
+		lineGraph.axisRight.setDrawLabels(false)
 		lineGraph.setDrawGridBackground(false)
 		lineGraph.data = LineData(dataSet)
 		lineGraph.invalidate()
