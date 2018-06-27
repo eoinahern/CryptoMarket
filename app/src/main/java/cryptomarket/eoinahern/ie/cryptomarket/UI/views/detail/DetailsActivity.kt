@@ -34,6 +34,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
 		presenter.attachView(this)
 		setUpToolbar()
 		readIntent()
+		setUpGraph()
 		showLoading()
 
 	}
@@ -90,6 +91,30 @@ class DetailsActivity : BaseActivity(), DetailsView {
 
 	}
 
+
+	private fun setUpGraph() {
+
+		lineGraph.setDrawBorders(false)
+		lineGraph.xAxis.setDrawGridLines(false)
+		lineGraph.axisRight.setDrawLabels(false)
+		lineGraph.axisLeft.setDrawGridLines(false)
+		lineGraph.setDrawGridBackground(false)
+	}
+
+	/**
+	 * cant be done via xml unfortunately
+	 *
+	 */
+
+	private fun addDataSetStyling(dataset : LineDataSet) {
+
+		dataset.color = ContextCompat.getColor(this, R.color.mint_green)
+		dataset.lineWidth = 4f
+		dataset.setDrawValues(false)
+		dataset.setDrawCircles(false)
+		dataset.mode = LineDataSet.Mode.CUBIC_BEZIER
+	}
+
 	override fun DisplayGraphData(graphList: List<HistoricalData?>) {
 
 		var entries: MutableList<Entry> = mutableListOf()
@@ -99,17 +124,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
 		}
 
 		var dataSet = LineDataSet(entries, "data")
-		dataSet.color = ContextCompat.getColor(this, R.color.mint_green)
-		dataSet.lineWidth = 4f
-		dataSet.setDrawValues(false)
-		dataSet.setDrawCircles(false)
-		dataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
-		lineGraph.axisLeft.setDrawGridLines(false)
-
-		lineGraph.setDrawBorders(false)
-		lineGraph.xAxis.setDrawGridLines(false)
-		lineGraph.axisRight.setDrawLabels(false)
-		lineGraph.setDrawGridBackground(false)
+		addDataSetStyling(dataSet)
 		lineGraph.data = LineData(dataSet)
 		lineGraph.invalidate()
 

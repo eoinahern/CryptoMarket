@@ -1,5 +1,6 @@
 package cryptomarket.eoinahern.ie.cryptomarket.UI.views.detail
 
+import com.github.mikephil.charting.data.LineDataSet
 import cryptomarket.eoinahern.ie.cryptomarket.UI.base.MvpView
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.HistoricalData
 
