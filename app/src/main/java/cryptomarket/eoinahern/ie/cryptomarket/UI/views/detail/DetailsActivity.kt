@@ -5,8 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.Toolbar
+import android.view.View
 import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
@@ -17,6 +17,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.util.CURRENCY_INFO
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.LoadingView
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.HistoricalData
+import kotlinx.android.synthetic.main.activity_details.*
 import javax.inject.Inject
 
 class DetailsActivity : BaseActivity(), DetailsView {
@@ -77,6 +78,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
 
 	override fun showLoading() {
 		loadingView.setState(LoadingView.State.LOADING)
+		llayoutDetails.visibility = View.GONE
 	}
 
 	override fun hideLoading() {
@@ -106,28 +108,27 @@ class DetailsActivity : BaseActivity(), DetailsView {
 	 *
 	 */
 
-	private fun addDataSetStyling(dataset : LineDataSet) {
+	private fun addDataSetStyling(dataset: LineDataSet?) {
 
-		dataset.color = ContextCompat.getColor(this, R.color.mint_green)
-		dataset.lineWidth = 4f
-		dataset.setDrawValues(false)
-		dataset.setDrawCircles(false)
-		dataset.mode = LineDataSet.Mode.CUBIC_BEZIER
+		dataset?.apply {
+			color = ContextCompat.getColor(applicationContext, R.color.mint_green)
+			lineWidth = 4f
+			setDrawValues(false)
+			setDrawCircles(false)
+			mode = LineDataSet.Mode.CUBIC_BEZIER
+		}
 	}
 
-	override fun DisplayGraphData(graphList: List<HistoricalData?>) {
+	override fun displayGraphData(graphList: List<HistoricalData?>) {
 
-		var entries: MutableList<Entry> = mutableListOf()
+		llayoutDetails.visibility = View.VISIBLE
 
-		graphList[0]?.Data?.forEach {
-			entries.add(Entry(it.time.toFloat(), it.close))
+		graphList.forEach {
+			addDataSetStyling(it?.LineData)
 		}
 
-		var dataSet = LineDataSet(entries, "data")
-		addDataSetStyling(dataSet)
-		lineGraph.data = LineData(dataSet)
+		lineGraph.data = LineData(graphList[0]?.LineData)
 		lineGraph.invalidate()
-
 	}
 
 	override fun onDestroy() {

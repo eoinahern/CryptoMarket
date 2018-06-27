@@ -29,7 +29,7 @@ class DetailsActivityPresenter @Inject constructor(private val getGraphDataInter
 						}
 
 						println(t.toString())
-						getView()?.DisplayGraphData(t.map { it.body() })
+						getView()?.displayGraphData(t.map { it.body() })
 					}
 
 

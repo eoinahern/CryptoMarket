@@ -14,6 +14,6 @@ interface DetailsView : MvpView {
 
 	fun DisplayLoadedData()
 
-	fun DisplayGraphData(graphList : List<HistoricalData?>)
+	fun displayGraphData(graphList : List<HistoricalData?>)
 
 }
