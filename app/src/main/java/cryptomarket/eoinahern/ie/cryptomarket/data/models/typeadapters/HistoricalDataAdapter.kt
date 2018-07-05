@@ -52,7 +52,6 @@ class HistoricalDataAdapter {
 		jsonReader.beginArray()
 		while (jsonReader.hasNext()) {
 
-
 			jsonReader.beginObject()
 			jsonReader.nextName()
 			val time = jsonReader.nextLong()
@@ -73,6 +72,8 @@ class HistoricalDataAdapter {
 			list.add(TimeInstanceData(time, close, high,
 					low, open, volumefrom, volumeto))
 
+
+			//create LineDataSet variable
 			entryList.add(Entry(time.toFloat(), close))
 		}
 

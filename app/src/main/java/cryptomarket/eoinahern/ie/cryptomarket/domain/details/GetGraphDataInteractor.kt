@@ -6,11 +6,13 @@ import cryptomarket.eoinahern.ie.cryptomarket.data.models.HistoricalData
 import cryptomarket.eoinahern.ie.cryptomarket.domain.base.BaseInteractor
 import io.reactivex.Observable
 import io.reactivex.functions.Function3
+import io.reactivex.functions.Function5
+import io.reactivex.functions.Function4
 import retrofit2.Response
 import javax.inject.Inject
 
 @PerScreen
-class GetGraphDataInteractor @Inject constructor(private val cryptoApi: CryptoApi) : BaseInteractor<List<Response<HistoricalData>>>() {
+class GetGraphDataInteractor @Inject constructor(private val cryptoApi: CryptoApi) : BaseInteractor<MutableList<Response<HistoricalData>>>() {
 
 	private lateinit var cryptoAbv: String
 	private lateinit var convertedTo: String
@@ -22,14 +24,17 @@ class GetGraphDataInteractor @Inject constructor(private val cryptoApi: CryptoAp
 		return this
 	}
 
-	override fun buildObservable(): Observable<List<Response<HistoricalData>>> {
+	override fun buildObservable(): Observable<MutableList<Response<HistoricalData>>> {
 
-		return Observable.zip(cryptoApi.getHistoricalDataDay(cryptoAbv, convertedTo, "30"),
-				cryptoApi.getHistoricalDataHour(cryptoAbv, convertedTo, "12"),
+		return Observable.zip(cryptoApi.getHistoricalDataHour(cryptoAbv, convertedTo, "12"),
 				cryptoApi.getHistoricalDataHour(cryptoAbv, convertedTo, "24"),
-				Function3<Response<HistoricalData>,
-						Response<HistoricalData>, Response<HistoricalData>, List<Response<HistoricalData>>>
-				{ T1, T2, T3 -> listOf(T1, T2, T3) })
+				cryptoApi.getHistoricalDataDay(cryptoAbv, convertedTo, "30"),
+				cryptoApi.getHistoricalDataDay(cryptoAbv, convertedTo, "182"),
+				cryptoApi.getHistoricalDataDay(cryptoAbv, convertedTo, "365"),
+				Function5<Response<HistoricalData>, Response<HistoricalData>,
+						Response<HistoricalData>, Response<HistoricalData>,
+						Response<HistoricalData>, MutableList<Response<HistoricalData>>>
+				{ T1, T2, T3, T4, T5-> mutableListOf(T1, T2, T3, T4, T5) })
 	}
 
 }

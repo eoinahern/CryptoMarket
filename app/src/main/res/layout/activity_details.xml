@@ -4,8 +4,8 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	tools:context=".UI.views.detail.DetailsActivity"
-	android:orientation="vertical">
+	android:orientation="vertical"
+	tools:context=".UI.views.detail.DetailsActivity">
 
 
 	<android.support.v7.widget.Toolbar
@@ -22,8 +22,7 @@
 		android:id="@+id/scrollview"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:fillViewport="true"
-		>
+		android:fillViewport="true">
 
 
 		<FrameLayout
@@ -31,46 +30,65 @@
 			android:layout_height="fill_parent">
 
 			<LinearLayout
+				android:id="@+id/llayoutDetails"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:id="@+id/llayoutDetails"
 				android:orientation="vertical">
 
 				<com.github.mikephil.charting.charts.LineChart
+					android:id="@+id/line_graph"
 					android:layout_width="match_parent"
 					android:layout_height="280dp"
-					android:id="@+id/line_graph"/>
+					android:layout_marginBottom="30dp"
+					android:layout_marginTop="20dp" />
 
 
 				<LinearLayout
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:orientation="horizontal"
-					android:weightSum="3">
+					android:weightSum="5">
+
 
 					<Button
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:layout_weight="1"
-						android:text="@string/one_month"
-						android:id="@+id/oneMonthBtn"
-						tools:text="@string/one_month"/>
-
-					<Button
+						android:id="@+id/twelveHourBtn"
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
 						android:layout_weight="1"
 						android:text="@string/twelve_hours_abv"
-						android:id="@+id/twelveHourBtn"
-						tools:text="@string/twelve_hours_abv"/>
+						tools:text="@string/twelve_hours_abv" />
 
 					<Button
+						android:id="@+id/twoFourHourBtn"
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
 						android:layout_weight="1"
 						android:text="@string/twofour_hours_abv"
-						android:id="@+id/twoFourHourBtn"
-						tools:tetx="@string/twofour_hours_abv"/>
+						tools:tetx="@string/twofour_hours_abv" />
+
+					<Button
+						android:id="@+id/oneMonthBtn"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="@string/one_month"
+						tools:text="@string/one_month" />
+
+					<Button
+						android:id="@+id/sixMonthsBtn"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="@string/six_months"
+						tools:text="@string/six_months" />
+
+					<Button
+						android:id="@+id/oneYearBtn"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="@string/one_year"
+						tools:text="@string/one_year" />
 
 
 				</LinearLayout>

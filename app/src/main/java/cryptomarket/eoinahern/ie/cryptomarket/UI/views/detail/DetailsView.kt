@@ -12,8 +12,6 @@ interface DetailsView : MvpView {
 
 	fun showError()
 
-	fun DisplayLoadedData()
-
-	fun displayGraphData(graphList : List<HistoricalData?>)
+	fun initGraphData(graphList: MutableList<HistoricalData?>)
 
 }

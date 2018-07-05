@@ -20,4 +20,6 @@
 	<string name="twelve_hours_abv">12H</string>
 	<string name="one_month">1M</string>
 	<string name="twofour_hours_abv">24H</string>
+	<string name="six_months">6M</string>
+	<string name="one_year">1Y</string>
 </resources>

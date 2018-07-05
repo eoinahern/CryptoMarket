@@ -15,9 +15,9 @@ class DetailsActivityPresenter @Inject constructor(private val getGraphDataInter
 	fun loadSingleCryptoData(cryptoAbv: String, covertedTo: String) {
 
 		getGraphDataInteractor.setSearchCrypto(cryptoAbv, covertedTo)
-				.execute(object : BaseSubscriber<List<Response<HistoricalData>>>() {
+				.execute(object : BaseSubscriber<MutableList<Response<HistoricalData>>>() {
 
-					override fun onNext(t: List<Response<HistoricalData>>) {
+					override fun onNext(t: MutableList<Response<HistoricalData>>) {
 
 						getView()?.hideLoading()
 
@@ -28,8 +28,7 @@ class DetailsActivityPresenter @Inject constructor(private val getGraphDataInter
 							}
 						}
 
-						println(t.toString())
-						getView()?.displayGraphData(t.map { it.body() })
+						getView()?.initGraphData(t.map { it.body() }.toMutableList())
 					}
 
 

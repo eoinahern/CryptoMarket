@@ -3,7 +3,9 @@
 	<color name="colorPrimary">#292929</color>
 	<color name="colorPrimaryDark">#000000</color>
 	<color name="colorAccent">#ffffff</color>
-	<color name="mint_green">#98ff98</color>
+	<color name="mint_green_heavy">#98ff98</color>
+	<color name="mint_green_med">#b2ffb2</color>
+	<color name="mint_green_light">#e5ffe5</color>
 	<color name="light_grey">#d3d3d3</color>
 	<color name="dark_gray">#545454</color>
 	<color name="darkest_grey">#2a2a2a</color>

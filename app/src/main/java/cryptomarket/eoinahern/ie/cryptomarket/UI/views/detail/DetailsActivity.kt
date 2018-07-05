@@ -1,5 +1,6 @@
 package cryptomarket.eoinahern.ie.cryptomarket.UI.views.detail
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.Toolbar
 import android.view.View
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
@@ -29,6 +31,8 @@ class DetailsActivity : BaseActivity(), DetailsView {
 	private val loadingView: LoadingView by lazy { findViewById<LoadingView>(R.id.loading_view) }
 	private val lineGraph: LineChart by lazy { findViewById<LineChart>(R.id.line_graph) }
 
+	private var graphListCopy: MutableList<HistoricalData?> = mutableListOf()
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 
 		super.onCreate(savedInstanceState)
@@ -37,7 +41,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
 		readIntent()
 		setUpGraph()
 		showLoading()
-
+		initGraphButtons()
 	}
 
 	private fun setUpToolbar() {
@@ -89,29 +93,34 @@ class DetailsActivity : BaseActivity(), DetailsView {
 
 	}
 
-	override fun DisplayLoadedData() {
-
-	}
-
+	/**
+	 * need to set up programmatically.
+	 *
+	 */
 
 	private fun setUpGraph() {
 
 		lineGraph.setDrawBorders(false)
 		lineGraph.xAxis.setDrawGridLines(false)
+		lineGraph.setDrawBorders(false)
+		lineGraph.xAxis.setDrawLabels(false)
+		lineGraph.xAxis.position = XAxis.XAxisPosition.BOTTOM
 		lineGraph.axisRight.setDrawLabels(false)
 		lineGraph.axisLeft.setDrawGridLines(false)
+		lineGraph.axisRight.setDrawGridLines(false)
 		lineGraph.setDrawGridBackground(false)
+		lineGraph.axisRight.isEnabled = false
+		lineGraph.axisLeft.setDrawAxisLine(true)
+		lineGraph.axisLeft.textColor = ContextCompat.getColor(applicationContext, R.color.colorAccent)
+		lineGraph.legend.isEnabled = false
+		lineGraph.description = null
 	}
 
-	/**
-	 * cant be done via xml unfortunately
-	 *
-	 */
-
+	@SuppressLint("ResourceType")
 	private fun addDataSetStyling(dataset: LineDataSet?) {
 
 		dataset?.apply {
-			color = ContextCompat.getColor(applicationContext, R.color.mint_green)
+			color = ContextCompat.getColor(applicationContext, R.color.mint_green_heavy)
 			lineWidth = 4f
 			setDrawValues(false)
 			setDrawCircles(false)
@@ -119,17 +128,35 @@ class DetailsActivity : BaseActivity(), DetailsView {
 		}
 	}
 
-	override fun displayGraphData(graphList: List<HistoricalData?>) {
+	override fun initGraphData(graphList: MutableList<HistoricalData?>) {
 
 		llayoutDetails.visibility = View.VISIBLE
+		graphListCopy.addAll(graphList)
+		graphList.clear()
 
-		graphList.forEach {
+		graphListCopy.forEach {
 			addDataSetStyling(it?.LineData)
 		}
 
-		lineGraph.data = LineData(graphList[0]?.LineData)
+		lineGraph.data = LineData(graphListCopy[0]?.LineData)
 		lineGraph.invalidate()
 	}
+
+	private fun initGraphButtons() {
+
+		twelveHourBtn.setOnClickListener { updateGraph(0) }
+		twoFourHourBtn.setOnClickListener { updateGraph(1) }
+		oneMonthBtn.setOnClickListener { updateGraph(2) }
+		sixMonthsBtn.setOnClickListener { updateGraph(3) }
+		oneYearBtn.setOnClickListener { updateGraph(4) }
+	}
+
+	private fun updateGraph(index: Int) {
+
+		lineGraph.data = LineData(graphListCopy[index]?.LineData)
+		lineGraph.invalidate()
+	}
+
 
 	override fun onDestroy() {
 		super.onDestroy()
