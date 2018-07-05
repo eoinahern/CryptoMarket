@@ -35,12 +35,35 @@
 				android:layout_height="match_parent"
 				android:orientation="vertical">
 
+
+				<TextView
+					android:id="@+id/valueTxt"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_horizontal"
+					android:layout_marginTop="10dp"
+					android:fontFamily="@font/abel"
+					android:text="boooo"
+					android:textColor="@color/colorAccent"
+					android:textSize="24dp"
+					tools:text="boooo!!" />
+
+				<TextView
+					android:id="@+id/dateTxt"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_horizontal"
+					android:fontFamily="@font/abel"
+					android:textColor="@color/light_grey"
+					android:text="the date text"
+					android:textSize="16dp" />
+
 				<com.github.mikephil.charting.charts.LineChart
 					android:id="@+id/line_graph"
 					android:layout_width="match_parent"
 					android:layout_height="280dp"
 					android:layout_marginBottom="30dp"
-					android:layout_marginTop="20dp" />
+					android:layout_marginTop="5dp" />
 
 
 				<LinearLayout
