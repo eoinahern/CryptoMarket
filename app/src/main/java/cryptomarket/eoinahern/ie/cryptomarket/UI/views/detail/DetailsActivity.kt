@@ -13,10 +13,12 @@ import android.view.MotionEvent.AXIS_Y
 import android.view.View
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.DataSet
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.listener.ChartTouchListener
 import com.github.mikephil.charting.listener.OnChartGestureListener
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
@@ -164,7 +166,9 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 
 	private fun updateGraph(index: Int) {
 
-		lineGraph.data = LineData(graphListCopy[index]?.LineData)
+		val lineData = LineData(graphListCopy[index]?.LineData)
+		(lineData.dataSets[0] as LineDataSet).setDrawHighlightIndicators(false)
+		lineGraph.data = lineData
 		lineGraph.invalidate()
 	}
 
@@ -179,47 +183,48 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	 */
 
 	override fun onChartGestureEnd(me: MotionEvent?, lastPerformedGesture: ChartTouchListener.ChartGesture?) {
-		Log.d("gestureEnd", "gestureEnd")
-		//println(me?.rawX)
-		//println(me?.rawY)
+
+		val dataSet = lineGraph.lineData.dataSets[0] as LineDataSet
+		dataSet.setDrawHighlightIndicators(false)
+		val e: Entry = dataSet.getEntryForIndex(dataSet.entryCount - 1)
+		setPriceAndDate(e.y.toString(), e.x.toString())
 	}
 
 	override fun onChartFling(me1: MotionEvent?, me2: MotionEvent?, velocityX: Float, velocityY: Float) {
 	}
 
 	override fun onChartSingleTapped(me: MotionEvent?) {
-
 	}
 
 	override fun onChartGestureStart(me: MotionEvent?, lastPerformedGesture: ChartTouchListener.ChartGesture?) {
-		Log.d("gestureStart", "start")
-		//println(me?.rawX)
-		//println(me?.rawY)
 	}
 
 	override fun onChartScale(me: MotionEvent?, scaleX: Float, scaleY: Float) {
 	}
 
 	override fun onChartLongPressed(me: MotionEvent?) {
-		Log.d("onChartTranslate", "onCHartTranslate")
 	}
 
 	override fun onChartDoubleTapped(me: MotionEvent?) {
-		Log.d("onChartTranslate", "onCHartTranslate")
 	}
 
 	override fun onChartTranslate(me: MotionEvent?, dX: Float, dY: Float) {
-		Log.d("onChartTranslate", "onCHartTranslate")
 	}
 
 	override fun onNothingSelected() {
-
 	}
 
 	override fun onValueSelected(e: Entry?, h: Highlight?) {
-		Log.d("onChartTranslate", "onCHartTranslate")
-		println(e?.x)
-		println(e?.y)
+
+		val dataSet = lineGraph.lineData.dataSets[0] as LineDataSet
+		dataSet.setDrawHighlightIndicators(true)
+		setPriceAndDate(e?.y.toString(), e?.x.toString())
+	}
+
+	private fun setPriceAndDate(price: String, date: String) {
+
+		valueTxt.text = price
+		dateTxt.text = date
 	}
 
 }
