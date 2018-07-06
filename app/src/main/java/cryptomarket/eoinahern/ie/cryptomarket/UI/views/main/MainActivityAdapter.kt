@@ -49,7 +49,14 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 		holder.pctChange.text = String.format(context.getString(R.string.pct_format), currency?.CHANGEPCT24HOUR)
 		holder.pctChange.isSelected = currency?.isMinus() ?: false
 		holder.icon.setImageURI(url)
-		holder.itemView.setOnClickListener { presenter.navigateToDetail(cryptoCurrencyData) }
+		holder.itemView.setOnClickListener {
+			presenter.navigateToDetail(cryptoCurrencyData,
+					getConvertedSymbol(currency))
+		}
+	}
+
+	private fun getConvertedSymbol(currencyFullPriceData: CurrencyFullPriceDataDisplay?): String? {
+		return currencyFullPriceData?.TOSYMBOL
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

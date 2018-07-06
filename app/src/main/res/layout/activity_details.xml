@@ -43,7 +43,6 @@
 					android:layout_gravity="center_horizontal"
 					android:layout_marginTop="10dp"
 					android:fontFamily="@font/abel"
-					android:text="boooo"
 					android:textColor="@color/colorAccent"
 					android:textSize="24dp"
 					tools:text="boooo!!" />
@@ -55,7 +54,6 @@
 					android:layout_gravity="center_horizontal"
 					android:fontFamily="@font/abel"
 					android:textColor="@color/light_grey"
-					android:text="the date text"
 					android:textSize="16dp" />
 
 				<com.github.mikephil.charting.charts.LineChart

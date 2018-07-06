@@ -27,6 +27,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BaseActivity
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.CONVERTED_TO
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.CURRENCY_INFO
+import cryptomarket.eoinahern.ie.cryptomarket.UI.util.CURRENCY_SYMBOL
 import cryptomarket.eoinahern.ie.cryptomarket.UI.util.LoadingView
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.HistoricalData
@@ -43,6 +44,7 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	private val lineGraph: LineChart by lazy { findViewById<LineChart>(R.id.line_graph) }
 
 	private var graphListCopy: MutableList<HistoricalData?> = mutableListOf()
+	private lateinit var currencySymbol: String
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -72,6 +74,7 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 
 		val curr = intent.getParcelableExtra<CryptoCurrency>(CURRENCY_INFO)
 		val convertedTo = intent.getStringExtra(CONVERTED_TO)
+		currencySymbol = intent.getStringExtra(CURRENCY_SYMBOL)
 		supportActionBar?.title = curr.Symbol
 
 		presenter.loadSingleCryptoData(curr.Symbol, convertedTo)
@@ -152,6 +155,7 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 		}
 
 		lineGraph.data = LineData(graphListCopy[0]?.LineData)
+		setLastDataEntryOnTextViews()
 		lineGraph.invalidate()
 	}
 
@@ -172,10 +176,18 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 		lineGraph.invalidate()
 	}
 
+	private fun getLineDataSetFromGraph() = lineGraph.lineData.dataSets[0] as LineDataSet
 
-	override fun onDestroy() {
-		super.onDestroy()
-		presenter.detachView()
+	/**
+	 * sets price and date on top textviews from last Entry in Data set.
+	 */
+
+	private fun setLastDataEntryOnTextViews() {
+
+		val dataSet = getLineDataSetFromGraph()
+		dataSet.setDrawHighlightIndicators(false)
+		val e: Entry = dataSet.getEntryForIndex(dataSet.entryCount - 1)
+		setPriceAndDate(e.y.toString(), e.x.toString())
 	}
 
 	/**
@@ -184,10 +196,7 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 
 	override fun onChartGestureEnd(me: MotionEvent?, lastPerformedGesture: ChartTouchListener.ChartGesture?) {
 
-		val dataSet = lineGraph.lineData.dataSets[0] as LineDataSet
-		dataSet.setDrawHighlightIndicators(false)
-		val e: Entry = dataSet.getEntryForIndex(dataSet.entryCount - 1)
-		setPriceAndDate(e.y.toString(), e.x.toString())
+		setLastDataEntryOnTextViews()
 	}
 
 	override fun onChartFling(me1: MotionEvent?, me2: MotionEvent?, velocityX: Float, velocityY: Float) {
@@ -216,15 +225,20 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 
 	override fun onValueSelected(e: Entry?, h: Highlight?) {
 
-		val dataSet = lineGraph.lineData.dataSets[0] as LineDataSet
+		val dataSet = getLineDataSetFromGraph()
 		dataSet.setDrawHighlightIndicators(true)
 		setPriceAndDate(e?.y.toString(), e?.x.toString())
 	}
 
 	private fun setPriceAndDate(price: String, date: String) {
 
-		valueTxt.text = price
+		valueTxt.text = currencySymbol.plus(price)
 		dateTxt.text = date
 	}
 
+	override fun onDestroy() {
+
+		super.onDestroy()
+		presenter.detachView()
+	}
 }

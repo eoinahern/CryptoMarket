@@ -16,7 +16,7 @@ interface MainActivityView : MvpView {
 
 	fun showError()
 
-	fun gotToDetail(crypto : CryptoCurrency?)
+	fun gotToDetail(crypto : CryptoCurrency?, convertedCurrencySymbol : String?)
 
 
 }
