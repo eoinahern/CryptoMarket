@@ -144,7 +144,12 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 		}
 	}
 
-	override fun showError() {
+	override fun showNetworkError() {
+		loadingView.setState(LoadingView.State.NETWORK_ERROR)
+	}
+
+	override fun showOtherError() {
+		loadingView.setState(LoadingView.State.OTHER_ERROR)
 	}
 
 	override fun gotToDetail(crypto: CryptoCurrency?, convertedCurrencySymbol: String?) {

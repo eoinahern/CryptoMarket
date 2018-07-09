@@ -10,7 +10,9 @@ interface DetailsView : MvpView {
 
 	fun hideLoading()
 
-	fun showError()
+	fun showNetworkError()
+
+	fun showOtherError()
 
 	fun initGraphData(graphList: MutableList<HistoricalData?>)
 

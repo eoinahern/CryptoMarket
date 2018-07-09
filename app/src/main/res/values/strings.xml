@@ -22,4 +22,6 @@
 	<string name="twofour_hours_abv">24H</string>
 	<string name="six_months">6M</string>
 	<string name="one_year">1Y</string>
+	<string name="network_error">Network error, please check connection!</string>
+	<string name="data_loading_error">Error loading data!</string>
 </resources>

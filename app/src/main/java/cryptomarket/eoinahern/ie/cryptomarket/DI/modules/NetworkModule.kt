@@ -41,10 +41,11 @@ class NetworkModule {
 
 	@Singleton
 	@Provides
-	fun getCryptoApi(moshi: Moshi): CryptoApi {
+	fun getCryptoApi(moshi: Moshi, client: OkHttpClient): CryptoApi {
 
 		return Retrofit.Builder()
 				.baseUrl(compareApiEndPoint)
+				.client(client)
 				.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 				.addConverterFactory(MoshiConverterFactory.create(moshi))
 				.build().create(CryptoApi::class.java)

@@ -5,9 +5,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.data.api.CryptoApi
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.HistoricalData
 import cryptomarket.eoinahern.ie.cryptomarket.domain.base.BaseInteractor
 import io.reactivex.Observable
-import io.reactivex.functions.Function3
 import io.reactivex.functions.Function5
-import io.reactivex.functions.Function4
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -34,7 +32,7 @@ class GetGraphDataInteractor @Inject constructor(private val cryptoApi: CryptoAp
 				Function5<Response<HistoricalData>, Response<HistoricalData>,
 						Response<HistoricalData>, Response<HistoricalData>,
 						Response<HistoricalData>, MutableList<Response<HistoricalData>>>
-				{ T1, T2, T3, T4, T5-> mutableListOf(T1, T2, T3, T4, T5) })
+				{ T1, T2, T3, T4, T5 -> mutableListOf(T1, T2, T3, T4, T5) })
 	}
 
 }

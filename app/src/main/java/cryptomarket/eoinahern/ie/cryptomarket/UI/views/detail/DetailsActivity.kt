@@ -19,6 +19,7 @@ import com.github.mikephil.charting.listener.OnChartGestureListener
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
+import cryptomarket.eoinahern.ie.cryptomarket.R.id.*
 import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BaseActivity
 import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CONVERTED_TO
 import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CURRENCY_INFO
@@ -77,7 +78,7 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 		currencySymbol = intent.getStringExtra(CURRENCY_SYMBOL)
 		supportActionBar?.title = curr.Symbol
 
-		presenter.loadSingleCryptoData(curr.Symbol, convertedTo)
+		presenter.loadGraphData(curr.Symbol, convertedTo)
 	}
 
 	override fun inject() {
@@ -103,8 +104,12 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 		loadingView.hide()
 	}
 
-	override fun showError() {
+	override fun showNetworkError() {
+		loadingView.setState(LoadingView.State.NETWORK_ERROR)
+	}
 
+	override fun showOtherError() {
+		loadingView.setState(LoadingView.State.OTHER_ERROR)
 	}
 
 	/**

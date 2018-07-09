@@ -27,6 +27,6 @@ interface CryptoApi {
 
 	@GET("histoday")
 	fun getHistoricalDataDay(@Query("fsym") currency: String,
-							  @Query("tsym") convertedCurrency: String,
-							  @Query("limit") limit: String): Observable<Response<HistoricalData>>
+							 @Query("tsym") convertedCurrency: String,
+							 @Query("limit") limit: String): Observable<Response<HistoricalData>>
 }
