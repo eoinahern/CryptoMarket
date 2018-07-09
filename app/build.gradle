@@ -80,5 +80,6 @@ dependencies {
     kapt "nz.bradcampbell:paperparcel-compiler:$PAPER_PARCEL"
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.1.0'
 
 }

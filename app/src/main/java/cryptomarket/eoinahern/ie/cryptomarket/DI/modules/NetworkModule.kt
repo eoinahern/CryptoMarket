@@ -2,7 +2,7 @@ package cryptomarket.eoinahern.ie.cryptomarket.DI.modules
 
 import android.content.Context
 import com.squareup.moshi.Moshi
-import cryptomarket.eoinahern.ie.cryptomarket.UI.util.compareApiEndPoint
+import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.compareApiEndPoint
 import cryptomarket.eoinahern.ie.cryptomarket.data.api.ConnectionCheckInterceptor
 import cryptomarket.eoinahern.ie.cryptomarket.data.api.CryptoApi
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.typeadapters.FullPriceWrapperInternalDisplayAdapter

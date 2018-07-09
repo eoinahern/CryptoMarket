@@ -1,4 +1,4 @@
-package cryptomarket.eoinahern.ie.cryptomarket.UI.util
+package cryptomarket.eoinahern.ie.cryptomarket.tools.view
 
 import android.content.Context
 import android.util.AttributeSet

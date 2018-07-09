@@ -11,11 +11,15 @@ import android.view.MenuItem
 import com.jakewharton.rxbinding2.widget.RxSearchView
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
-import cryptomarket.eoinahern.ie.cryptomarket.UI.util.*
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.detail.DetailsActivity
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerActivity
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyFullPriceDataDisplay
+import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CONVERTED_TO
+import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CURRENCY_INFO
+import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CURRENCY_SYMBOL
+import cryptomarket.eoinahern.ie.cryptomarket.tools.decoration.BottomItemDecoration
+import cryptomarket.eoinahern.ie.cryptomarket.tools.view.LoadingView
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 import kotlinx.android.synthetic.main.activity_main.*

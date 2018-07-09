@@ -6,31 +6,28 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.MotionEvent
-import android.view.MotionEvent.AXIS_X
-import android.view.MotionEvent.AXIS_Y
 import android.view.View
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.DataSet
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.highlight.Highlight
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.listener.ChartTouchListener
 import com.github.mikephil.charting.listener.OnChartGestureListener
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BaseActivity
-import cryptomarket.eoinahern.ie.cryptomarket.UI.util.CONVERTED_TO
-import cryptomarket.eoinahern.ie.cryptomarket.UI.util.CURRENCY_INFO
-import cryptomarket.eoinahern.ie.cryptomarket.UI.util.CURRENCY_SYMBOL
-import cryptomarket.eoinahern.ie.cryptomarket.UI.util.LoadingView
+import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CONVERTED_TO
+import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CURRENCY_INFO
+import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CURRENCY_SYMBOL
+import cryptomarket.eoinahern.ie.cryptomarket.tools.view.LoadingView
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.HistoricalData
+import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.GRAPH_LINE_WIDTH
+import cryptomarket.eoinahern.ie.cryptomarket.tools.date.DateUtil
 import kotlinx.android.synthetic.main.activity_details.*
 import javax.inject.Inject
 
@@ -38,6 +35,9 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 
 	@Inject
 	lateinit var presenter: DetailsActivityPresenter
+
+	@Inject
+	lateinit var dateUtil: DateUtil
 
 	private val detailsToolbar: Toolbar by lazy { findViewById<Toolbar>(R.id.toolbar) }
 	private val loadingView: LoadingView by lazy { findViewById<LoadingView>(R.id.loading_view) }
@@ -137,7 +137,7 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 
 		dataSet?.apply {
 			color = ContextCompat.getColor(applicationContext, R.color.mint_green_heavy)
-			lineWidth = 4f
+			lineWidth = GRAPH_LINE_WIDTH
 			setDrawValues(false)
 			setDrawCircles(false)
 			mode = LineDataSet.Mode.CUBIC_BEZIER
@@ -187,7 +187,7 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 		val dataSet = getLineDataSetFromGraph()
 		dataSet.setDrawHighlightIndicators(false)
 		val e: Entry = dataSet.getEntryForIndex(dataSet.entryCount - 1)
-		setPriceAndDate(e.y.toString(), e.x.toString())
+		setPriceAndDate(e.y.toString(), e.x)
 	}
 
 	/**
@@ -223,17 +223,17 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	override fun onNothingSelected() {
 	}
 
-	override fun onValueSelected(e: Entry?, h: Highlight?) {
+	override fun onValueSelected(e: Entry, h: Highlight) {
 
 		val dataSet = getLineDataSetFromGraph()
 		dataSet.setDrawHighlightIndicators(true)
-		setPriceAndDate(e?.y.toString(), e?.x.toString())
+		setPriceAndDate(e.y.toString(), e.x)
 	}
 
-	private fun setPriceAndDate(price: String, date: String) {
+	private fun setPriceAndDate(price: String, date: Float) {
 
 		valueTxt.text = currencySymbol.plus(price)
-		dateTxt.text = date
+		dateTxt.text = dateUtil.getLocalDateTime(date.toLong())
 	}
 
 	override fun onDestroy() {

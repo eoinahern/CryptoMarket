@@ -1,8 +1,6 @@
 package cryptomarket.eoinahern.ie.cryptomarket.UI.views.main
 
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +10,7 @@ import android.widget.Filterable
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import cryptomarket.eoinahern.ie.cryptomarket.R
-import cryptomarket.eoinahern.ie.cryptomarket.UI.util.compareApiDeprecated
-import cryptomarket.eoinahern.ie.cryptomarket.UI.util.compareApiEndPoint
+import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.compareApiDeprecated
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.*
 import javax.inject.Inject
 

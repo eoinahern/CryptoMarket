@@ -6,6 +6,7 @@ import android.preference.PreferenceManager.getDefaultSharedPreferences
 import com.google.gson.Gson
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.data.api.CryptoApi
+import cryptomarket.eoinahern.ie.cryptomarket.tools.date.DateUtil
 import dagger.Module
 import dagger.Provides
 import okhttp3.HttpUrl
@@ -16,17 +17,23 @@ import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
-class ApplicationModule constructor(var myApp : MyApp) {
+class ApplicationModule constructor(var myApp: MyApp) {
 
 	@Singleton
 	@Provides
-	fun getContext() : Context =  myApp
+	fun getContext(): Context = myApp
 
 	@Singleton
 	@Provides
-    fun getSharedPrefs(cont : Context) : SharedPreferences = getDefaultSharedPreferences(cont)
+	fun getSharedPrefs(cont: Context): SharedPreferences = getDefaultSharedPreferences(cont)
 
 	@Singleton
 	@Provides
-	fun getGson() : Gson = Gson()
+	fun getGson(): Gson = Gson()
+
+
+	@Singleton
+	@Provides
+	fun getDateUtil() = DateUtil()
+
 }
