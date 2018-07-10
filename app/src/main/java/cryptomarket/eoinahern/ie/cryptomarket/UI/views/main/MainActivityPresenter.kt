@@ -32,7 +32,6 @@ class MainActivityPresenter @Inject constructor(private var getCryptoListInterac
 				} else {
 					getView()?.showOtherError()
 				}
-
 			}
 		})
 	}

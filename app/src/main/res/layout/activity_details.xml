@@ -114,8 +114,47 @@
 
 				</LinearLayout>
 
+				<android.support.v7.widget.CardView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:background="@color/light_grey"
+					android:layout_margin="10dp"
+					app:cardElevation="8dp">
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:orientation="vertical">
+
+
+						<TextView
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:textColor="@color/colorAccent"
+							android:textSize="18dp"
+							android:padding="10dp"
+							android:id="@+id/blurbTxt"
+							tools:text="blah blah blah"
+							android:fontFamily="@font/abel"/>
+
+
+					</LinearLayout>
+
+
+
+
+
+
+				</android.support.v7.widget.CardView>
+
 
 			</LinearLayout>
+
+
+
+
+
+
 
 
 			<cryptomarket.eoinahern.ie.cryptomarket.tools.view.LoadingView
