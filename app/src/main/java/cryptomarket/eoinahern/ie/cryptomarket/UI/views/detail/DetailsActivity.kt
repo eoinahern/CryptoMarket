@@ -3,9 +3,11 @@ package cryptomarket.eoinahern.ie.cryptomarket.UI.views.detail
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.Toolbar
+import android.text.Html
 import android.view.MotionEvent
 import android.view.View
 import com.github.mikephil.charting.charts.LineChart
@@ -26,6 +28,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CURRENCY_INFO
 import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CURRENCY_SYMBOL
 import cryptomarket.eoinahern.ie.cryptomarket.tools.view.LoadingView
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
+import cryptomarket.eoinahern.ie.cryptomarket.data.models.GeneralCoinInfo
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.HistoricalData
 import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.GRAPH_LINE_WIDTH
 import cryptomarket.eoinahern.ie.cryptomarket.tools.date.DateUtil
@@ -78,7 +81,7 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 		currencySymbol = intent.getStringExtra(CURRENCY_SYMBOL)
 		supportActionBar?.title = curr.Symbol
 
-		presenter.loadGraphData(curr.Symbol, convertedTo)
+		presenter.loadDetailsData(curr.Symbol, convertedTo, curr.Id)
 	}
 
 	override fun inject() {
@@ -174,11 +177,19 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	}
 
 	private fun updateGraph(index: Int) {
-
 		val lineData = LineData(graphListCopy[index]?.LineData)
 		(lineData.dataSets[0] as LineDataSet).setDrawHighlightIndicators(false)
 		lineGraph.data = lineData
 		lineGraph.invalidate()
+	}
+
+	override fun showGeneralCoinInfo(generalCoinInfo: GeneralCoinInfo) {
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			blurbTxt.text = Html.fromHtml(generalCoinInfo.Description, Html.FROM_HTML_MODE_LEGACY)
+		} else {
+			blurbTxt.text = Html.fromHtml(generalCoinInfo.Description)
+		}
 	}
 
 	private fun getLineDataSetFromGraph() = lineGraph.lineData.dataSets[0] as LineDataSet
@@ -188,7 +199,6 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	 */
 
 	private fun setLastDataEntryOnTextViews() {
-
 		val dataSet = getLineDataSetFromGraph()
 		dataSet.setDrawHighlightIndicators(false)
 		val e: Entry = dataSet.getEntryForIndex(dataSet.entryCount - 1)
@@ -200,7 +210,6 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	 */
 
 	override fun onChartGestureEnd(me: MotionEvent?, lastPerformedGesture: ChartTouchListener.ChartGesture?) {
-
 		setLastDataEntryOnTextViews()
 	}
 
@@ -229,20 +238,17 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	}
 
 	override fun onValueSelected(e: Entry, h: Highlight) {
-
 		val dataSet = getLineDataSetFromGraph()
 		dataSet.setDrawHighlightIndicators(true)
 		setPriceAndDate(e.y.toString(), e.x)
 	}
 
 	private fun setPriceAndDate(price: String, date: Float) {
-
 		valueTxt.text = currencySymbol.plus(price)
 		dateTxt.text = dateUtil.getLocalDateTime(date.toLong())
 	}
 
 	override fun onDestroy() {
-
 		super.onDestroy()
 		presenter.detachView()
 	}

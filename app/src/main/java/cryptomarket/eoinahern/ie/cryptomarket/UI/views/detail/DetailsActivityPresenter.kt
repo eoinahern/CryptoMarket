@@ -2,18 +2,22 @@ package cryptomarket.eoinahern.ie.cryptomarket.UI.views.detail
 
 import cryptomarket.eoinahern.ie.cryptomarket.DI.annotation.PerScreen
 import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BasePresenter
+import cryptomarket.eoinahern.ie.cryptomarket.data.models.CoinFullSnapShot
+import cryptomarket.eoinahern.ie.cryptomarket.data.models.GeneralCoinInfo
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.HistoricalData
 import cryptomarket.eoinahern.ie.cryptomarket.data.util.NoConnectionException
 import cryptomarket.eoinahern.ie.cryptomarket.domain.base.BaseSubscriber
+import cryptomarket.eoinahern.ie.cryptomarket.domain.details.GetCryptoInfoInteractor
 import cryptomarket.eoinahern.ie.cryptomarket.domain.details.GetGraphDataInteractor
 import io.reactivex.disposables.Disposable
 import retrofit2.Response
 import javax.inject.Inject
 
 @PerScreen
-class DetailsActivityPresenter @Inject constructor(private val getGraphDataInteractor: GetGraphDataInteractor) : BasePresenter<DetailsView>() {
+class DetailsActivityPresenter @Inject constructor(private val getGraphDataInteractor: GetGraphDataInteractor,
+												   private val getCryptoInfoInteractor: GetCryptoInfoInteractor) : BasePresenter<DetailsView>() {
 
-	fun loadGraphData(cryptoAbv: String, covertedTo: String) {
+	fun loadDetailsData(cryptoAbv: String, covertedTo: String, id: String) {
 
 		getGraphDataInteractor.setSearchCrypto(cryptoAbv, covertedTo)
 				.execute(object : BaseSubscriber<MutableList<Response<HistoricalData>>>() {
@@ -26,8 +30,8 @@ class DetailsActivityPresenter @Inject constructor(private val getGraphDataInter
 							}
 						}
 
-						getView()?.hideLoading()
 						getView()?.initGraphData(t.map { it.body() }.toMutableList())
+						getCoinInfo(id)
 					}
 
 					override fun onError(e: Throwable) {
@@ -44,8 +48,32 @@ class DetailsActivityPresenter @Inject constructor(private val getGraphDataInter
 				})
 	}
 
+	private fun getCoinInfo(id: String) {
+
+		getCryptoInfoInteractor.setID(id).execute(object : BaseSubscriber<GeneralCoinInfo>() {
+			override fun onNext(generalCoinInfo: GeneralCoinInfo) {
+				getView()?.hideLoading()
+				println("generalInfo: $generalCoinInfo")
+				getView()?.showGeneralCoinInfo(generalCoinInfo)
+			}
+
+			override fun onError(e: Throwable) {
+				if (e is NoConnectionException) {
+					getView()?.showNetworkError()
+				} else {
+					getView()?.showOtherError()
+				}
+			}
+
+			override fun onSubscribe(d: Disposable) {
+				getCryptoInfoInteractor.addDisposables(d)
+			}
+		})
+	}
+
 	override fun detachView() {
 		super.detachView()
 		getGraphDataInteractor.disposeObs()
+		getCryptoInfoInteractor.disposeObs()
 	}
 }
