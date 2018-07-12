@@ -6,7 +6,7 @@ const val compareApiEndPointOld: String = "https://www.cryptocompare.com/api/dat
 const val compareApiDeprecated = "https://www.cryptocompare.com"
 const val CURRENCY_INFO: String = "currency"
 const val CONVERTED_TO: String = "converted"
-const val CURRENCY_SYMBOL: String = "currency_symbol"
+const val CURRENCY_FULL_PRICE: String = "currency_full_price"
 const val GRAPH_LINE_WIDTH: Float = 4f
 
 const val toSymbolSyr: String = "TOSYMBOL"

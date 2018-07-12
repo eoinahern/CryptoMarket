@@ -16,8 +16,8 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerAc
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyFullPriceDataDisplay
 import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CONVERTED_TO
+import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CURRENCY_FULL_PRICE
 import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CURRENCY_INFO
-import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CURRENCY_SYMBOL
 import cryptomarket.eoinahern.ie.cryptomarket.tools.decoration.BottomItemDecoration
 import cryptomarket.eoinahern.ie.cryptomarket.tools.view.LoadingView
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -152,13 +152,13 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 		loadingView.setState(LoadingView.State.OTHER_ERROR)
 	}
 
-	override fun gotToDetail(crypto: CryptoCurrency?, convertedCurrencySymbol: String?) {
+	override fun gotToDetail(crypto: CryptoCurrency?, fullPriceDataDisplay: CurrencyFullPriceDataDisplay?) {
 
 		val intent = DetailsActivity.getStartIntent(this)
 
 		intent.putExtra(CURRENCY_INFO, crypto)
 		intent.putExtra(CONVERTED_TO, menuText)
-		intent.putExtra(CURRENCY_SYMBOL, convertedCurrencySymbol)
+		intent.putExtra(CURRENCY_FULL_PRICE, fullPriceDataDisplay)
 		startActivity(intent)
 	}
 

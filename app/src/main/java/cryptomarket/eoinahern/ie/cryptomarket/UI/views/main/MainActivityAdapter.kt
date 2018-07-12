@@ -48,13 +48,13 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 		holder.icon.setImageURI(url)
 		holder.itemView.setOnClickListener {
 			presenter.navigateToDetail(cryptoCurrencyData,
-					getConvertedSymbol(currency))
+					currency)
 		}
 	}
 
-	private fun getConvertedSymbol(currencyFullPriceData: CurrencyFullPriceDataDisplay?): String? {
+	/*private fun getConvertedSymbol(currencyFullPriceData: CurrencyFullPriceDataDisplay?): String? {
 		return currencyFullPriceData?.TOSYMBOL
-	}
+	}*/
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 

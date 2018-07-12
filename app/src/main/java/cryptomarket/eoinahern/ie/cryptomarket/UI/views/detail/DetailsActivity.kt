@@ -25,6 +25,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.R.id.*
 import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BaseActivity
 import cryptomarket.eoinahern.ie.cryptomarket.tools.view.LoadingView
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
+import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyFullPriceDataDisplay
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.GeneralCoinInfo
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.HistoricalData
 import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.*
@@ -45,7 +46,7 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	private val lineGraph: LineChart by lazy { findViewById<LineChart>(R.id.line_graph) }
 
 	private var graphListCopy: MutableList<HistoricalData?> = mutableListOf()
-	private lateinit var currencySymbol: String
+	private lateinit var currencyFullPrice: CurrencyFullPriceDataDisplay
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -75,7 +76,8 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 
 		val curr = intent.getParcelableExtra<CryptoCurrency>(CURRENCY_INFO)
 		val convertedTo = intent.getStringExtra(CONVERTED_TO)
-		currencySymbol = intent.getStringExtra(CURRENCY_SYMBOL)
+		currencyFullPrice = intent.getParcelableExtra<CurrencyFullPriceDataDisplay>(CURRENCY_FULL_PRICE)
+
 
 		actionBarIcon.setImageURI(compareApiDeprecated.plus(curr.ImageUrl))
 		toolbarCryptoTxt.text = curr.FullName
@@ -243,7 +245,7 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	}
 
 	private fun setPriceAndDate(price: String, date: Float) {
-		valueTxt.text = currencySymbol.plus(price)
+		valueTxt.text = currencyFullPrice.TOSYMBOL.plus(price)
 		dateTxt.text = dateUtil.getLocalDateTime(date.toLong())
 	}
 
