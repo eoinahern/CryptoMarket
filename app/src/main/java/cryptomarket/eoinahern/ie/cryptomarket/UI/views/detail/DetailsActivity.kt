@@ -76,7 +76,6 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 		val curr = intent.getParcelableExtra<CryptoCurrency>(CURRENCY_INFO)
 		val convertedTo = intent.getStringExtra(CONVERTED_TO)
 		currencySymbol = intent.getStringExtra(CURRENCY_SYMBOL)
-		//supportActionBar?.title.visibility = curr.Symbol
 
 		actionBarIcon.setImageURI(compareApiDeprecated.plus(curr.ImageUrl))
 		toolbarCryptoTxt.text = curr.FullName

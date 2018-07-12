@@ -10,4 +10,6 @@
 	<color name="dark_gray">#545454</color>
 	<color name="darkest_grey">#2a2a2a</color>
 	<color name="red_price_color">#ff4c4c</color>
+	<color name="white_smoke">#F5F5F5</color>
+	<color name="gainsboro_grey">#DCDCDC</color>
 </resources>

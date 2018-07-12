@@ -17,8 +17,7 @@
 
 		<RelativeLayout
 			android:layout_width="wrap_content"
-			android:layout_height="match_parent"
-			>
+			android:layout_height="match_parent">
 
 			<com.facebook.drawee.view.SimpleDraweeView
 				android:id="@+id/actionBarIcon"
@@ -31,9 +30,9 @@
 				android:id="@+id/toolbarCryptoTxt"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_centerVertical="true"
 				android:layout_marginLeft="8dp"
 				android:layout_toRightOf="@id/actionBarIcon"
-				android:layout_centerVertical="true"
 				android:textColor="@color/colorAccent"
 				android:textSize="18dp"
 				tools:text="Name" />
@@ -48,7 +47,6 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:fillViewport="true">
-
 
 		<FrameLayout
 			android:layout_width="match_parent"
@@ -140,7 +138,306 @@
 				<android.support.v7.widget.CardView
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:layout_margin="10dp"
+					android:layout_margin="5dp"
+					android:background="@color/light_grey"
+					app:cardElevation="8dp">
+
+					<android.support.constraint.ConstraintLayout
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:padding="10dp"
+
+						>
+
+						<TextView
+							android:id="@+id/textView2"
+							style="@style/detailsTitleTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="@string/market_info_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toTopOf="parent"
+							tools:text="@string/market_info_title" />
+
+						<TextView
+							android:id="@+id/textView3"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:text="@string/symbol_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/textView2"
+							tools:text="@string/symbol_title" />
+
+						<TextView
+							android:id="@+id/textView4"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/textView2"
+							tools:text="BTC" />
+
+
+						<View
+							android:id="@+id/div_1"
+							android:layout_width="match_parent"
+							android:layout_height="1dp"
+							android:layout_marginTop="5dp"
+							android:background="@color/colorPrimary"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+						<TextView
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:text="@string/marketcap_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/div_1"
+							tools:text="@string/marketcap_title" />
+
+						<TextView
+							android:id="@+id/marketcapTxt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/div_1"
+							tools:text="1B" />
+
+						<View
+							android:id="@+id/div_2"
+							android:layout_width="match_parent"
+							android:layout_height="1dp"
+							android:layout_marginTop="5dp"
+							android:background="@color/colorPrimary"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/marketcapTxt" />
+
+
+						<TextView
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:text="@string/market_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/div_2"
+							tools:text="@string/market_title" />
+
+						<TextView
+							android:id="@+id/marketTxt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/div_2"
+							tools:text="A market!!" />
+
+						<View
+							android:id="@+id/div_3"
+							android:layout_width="match_parent"
+							android:layout_height="1dp"
+							android:layout_marginTop="5dp"
+							android:background="@color/colorPrimary"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/marketTxt" />
+
+						<TextView
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:text="@string/supply_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/div_3" />
+
+						<TextView
+							android:id="@+id/supplyTxt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/div_3"
+							tools:text="balls" />
+
+						<View
+							android:id="@+id/div_4"
+							android:layout_width="match_parent"
+							android:layout_height="1dp"
+							android:layout_marginTop="5dp"
+							android:background="@color/colorPrimary"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/supplyTxt" />
+
+						<TextView
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:text="@string/vol24_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/div_4" />
+
+						<TextView
+							android:id="@+id/vol24hTxt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/div_4"
+							tools:text="1000 B" />
+
+						<View
+							android:id="@+id/div_5"
+							android:layout_width="match_parent"
+							android:layout_height="1dp"
+							android:layout_marginTop="5dp"
+							android:background="@color/colorPrimary"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/vol24hTxt" />
+
+						<TextView
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:text="@string/vol24_total_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/div_5" />
+
+						<TextView
+							android:id="@+id/totalVol24hTxt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/div_5"
+							tools:text="20 B" />
+
+						<View
+							android:id="@+id/div_6"
+							android:layout_width="match_parent"
+							android:layout_height="1dp"
+							android:layout_marginTop="5dp"
+							android:background="@color/colorPrimary"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/totalVol24hTxt" />
+
+						<TextView
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:text="@string/high_day_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/div_6" />
+
+						<TextView
+							android:id="@+id/highDayTxt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/div_6"
+							tools:text="$5.00" />
+
+						<View
+							android:id="@+id/div_7"
+							android:layout_width="match_parent"
+							android:layout_height="1dp"
+							android:layout_marginTop="5dp"
+							android:background="@color/colorPrimary"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/highDayTxt" />
+
+						<TextView
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:text="@string/low_day_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/div_7" />
+
+						<TextView
+							android:id="@+id/lowDayTxt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/div_7"
+							tools:text="$3.00" />
+
+
+					</android.support.constraint.ConstraintLayout>
+
+
+				</android.support.v7.widget.CardView>
+
+				<android.support.v7.widget.CardView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:background="@color/light_grey"
+					app:cardElevation="8dp">
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:orientation="vertical">
+
+
+						<TextView
+							style="@style/detailsTitleTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_margin="10dp"
+							android:text="@string/description_title"
+							tools:text="@string/description_title" />
+
+						<TextView
+							android:id="@+id/blurbTxt"
+							style="@style/detailsTextStyle"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:gravity="left"
+							android:paddingLeft="10dp"
+							android:paddingRight="10dp"
+							android:paddingTop="5dp"
+							tools:text="blah blah blah" />
+
+
+					</LinearLayout>
+
+
+				</android.support.v7.widget.CardView>
+
+				<android.support.v7.widget.CardView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="10dp"
+					android:layout_marginLeft="5dp"
+
+					android:layout_marginTop="5dp"
 					android:background="@color/light_grey"
 					app:cardElevation="8dp">
 
@@ -150,17 +447,14 @@
 						android:orientation="vertical">
 
 						<TextView
-							android:id="@+id/blurbTxt"
-							android:layout_width="match_parent"
+							style="@style/detailsTitleTextStyle"
+							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
-							android:fontFamily="@font/abel"
-							android:gravity="left"
-							android:paddingLeft="10dp"
-							android:paddingRight="10dp"
-							android:paddingTop="10dp"
-							android:textColor="@color/colorAccent"
-							android:textSize="14dp"
-							tools:text="blah blah blah" />
+							android:layout_margin="10dp"
+							android:text="@string/links_title"
+							android:textSize="@dimen/text_header_medium"
+							tools:text="@string/links_title" />
+
 
 					</LinearLayout>
 
@@ -175,11 +469,7 @@
 				android:id="@+id/loading_view"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_gravity="center">
-
-
-			</cryptomarket.eoinahern.ie.cryptomarket.tools.view.LoadingView>
-
+				android:layout_gravity="center" />
 
 		</FrameLayout>
 
