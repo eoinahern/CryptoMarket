@@ -47,14 +47,9 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 		holder.pctChange.isSelected = currency?.isMinus() ?: false
 		holder.icon.setImageURI(url)
 		holder.itemView.setOnClickListener {
-			presenter.navigateToDetail(cryptoCurrencyData,
-					currency)
+			presenter.navigateToDetail(cryptoCurrencyData, currency)
 		}
 	}
-
-	/*private fun getConvertedSymbol(currencyFullPriceData: CurrencyFullPriceDataDisplay?): String? {
-		return currencyFullPriceData?.TOSYMBOL
-	}*/
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 

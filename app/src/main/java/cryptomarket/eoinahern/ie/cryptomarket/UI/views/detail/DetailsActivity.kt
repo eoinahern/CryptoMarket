@@ -23,15 +23,20 @@ import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.R.id.*
 import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BaseActivity
+import cryptomarket.eoinahern.ie.cryptomarket.data.models.*
 import cryptomarket.eoinahern.ie.cryptomarket.tools.view.LoadingView
-import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
-import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyFullPriceDataDisplay
-import cryptomarket.eoinahern.ie.cryptomarket.data.models.GeneralCoinInfo
-import cryptomarket.eoinahern.ie.cryptomarket.data.models.HistoricalData
 import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.*
 import cryptomarket.eoinahern.ie.cryptomarket.tools.date.DateUtil
 import kotlinx.android.synthetic.main.activity_details.*
 import javax.inject.Inject
+
+/**
+ * could refactor this to remove some of the string
+ * manipulation done in the view. using a mapper class.
+ * graph stuff and listners are directly related to view.
+ * those need to be manipulated in view. doesnt make sense
+ * to pass lineGraph obj (view) to presenter.
+ */
 
 class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnChartValueSelectedListener {
 
@@ -76,13 +81,27 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 
 		val curr = intent.getParcelableExtra<CryptoCurrency>(CURRENCY_INFO)
 		val convertedTo = intent.getStringExtra(CONVERTED_TO)
-		currencyFullPrice = intent.getParcelableExtra<CurrencyFullPriceDataDisplay>(CURRENCY_FULL_PRICE)
-
-
-		actionBarIcon.setImageURI(compareApiDeprecated.plus(curr.ImageUrl))
-		toolbarCryptoTxt.text = curr.FullName
+		currencyFullPrice = intent.getParcelableExtra(CURRENCY_FULL_PRICE)
+		setCryptoCurrencyToViews(curr)
+		setPriceDataToViews()
 
 		presenter.loadDetailsData(curr.Symbol, convertedTo, curr.Id)
+	}
+
+	private fun setCryptoCurrencyToViews(cryptoCurrency: CryptoCurrency) {
+		actionBarIcon.setImageURI(compareApiDeprecated.plus(cryptoCurrency.ImageUrl))
+		toolbarCryptoTxt.text = cryptoCurrency.FullName
+		symbolTxt.text = cryptoCurrency.Symbol
+	}
+
+	private fun setPriceDataToViews() {
+		marketcapTxt.text = currencyFullPrice.MKTCAP
+		marketTxt.text = currencyFullPrice.MARKET
+		supplyTxt.text = currencyFullPrice.SUPPLY
+		vol24hTxt.text = currencyFullPrice.VOLUME24HOURTO
+		totalVol24hTxt.text = currencyFullPrice.TOTALVOLUME24HTO
+		lowDayTxt.text = currencyFullPrice.LOWDAY
+		highDayTxt.text = currencyFullPrice.HIGHDAY
 	}
 
 	override fun inject() {
@@ -155,7 +174,6 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 
 	override fun initGraphData(graphList: MutableList<HistoricalData?>) {
 
-		llayoutDetails.visibility = View.VISIBLE
 		graphListCopy.addAll(graphList)
 		graphList.clear()
 
@@ -184,13 +202,24 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 		lineGraph.invalidate()
 	}
 
-	override fun showGeneralCoinInfo(generalCoinInfo: GeneralCoinInfo) {
+	override fun showGeneralCoinInfo(snapShotData: SnapShotData) {
+
+		val general = snapShotData.General
+		val ico = snapShotData.ico
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-			blurbTxt.text = Html.fromHtml(generalCoinInfo.Description, Html.FROM_HTML_MODE_LEGACY)
+			blurbTxt.text = Html.fromHtml(general.description, Html.FROM_HTML_MODE_LEGACY)
+			whitepaperTxt.text = Html.fromHtml(ico.whitePaper, Html.FROM_HTML_MODE_LEGACY)
 		} else {
-			blurbTxt.text = Html.fromHtml(generalCoinInfo.Description)
+			blurbTxt.text = Html.fromHtml(general.description)
+			whitepaperTxt.text = Html.fromHtml(ico.whitePaper)
 		}
+
+		twitterUrlTxt.text = general.getTwitterFullLink()
+		websiteTxt.text = general.websiteUrl
+		blogTxt.text = ico.getBlogLink()
+
+		llayoutDetails.visibility = View.VISIBLE
 	}
 
 	private fun getLineDataSetFromGraph() = lineGraph.lineData.dataSets[0] as LineDataSet

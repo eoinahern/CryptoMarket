@@ -5,6 +5,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BasePresenter
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CoinFullSnapShot
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.GeneralCoinInfo
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.HistoricalData
+import cryptomarket.eoinahern.ie.cryptomarket.data.models.SnapShotData
 import cryptomarket.eoinahern.ie.cryptomarket.data.util.NoConnectionException
 import cryptomarket.eoinahern.ie.cryptomarket.domain.base.BaseSubscriber
 import cryptomarket.eoinahern.ie.cryptomarket.domain.details.GetCryptoInfoInteractor
@@ -50,11 +51,10 @@ class DetailsActivityPresenter @Inject constructor(private val getGraphDataInter
 
 	private fun getCoinInfo(id: String) {
 
-		getCryptoInfoInteractor.setID(id).execute(object : BaseSubscriber<GeneralCoinInfo>() {
-			override fun onNext(generalCoinInfo: GeneralCoinInfo) {
+		getCryptoInfoInteractor.setID(id).execute(object : BaseSubscriber<SnapShotData>() {
+			override fun onNext(snapShotData: SnapShotData) {
 				getView()?.hideLoading()
-				println("generalInfo: $generalCoinInfo")
-				getView()?.showGeneralCoinInfo(generalCoinInfo)
+				getView()?.showGeneralCoinInfo(snapShotData)
 			}
 
 			override fun onError(e: Throwable) {

@@ -1,9 +1,8 @@
 package cryptomarket.eoinahern.ie.cryptomarket.UI.views.detail
 
-import com.github.mikephil.charting.data.LineDataSet
 import cryptomarket.eoinahern.ie.cryptomarket.UI.base.MvpView
-import cryptomarket.eoinahern.ie.cryptomarket.data.models.GeneralCoinInfo
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.HistoricalData
+import cryptomarket.eoinahern.ie.cryptomarket.data.models.SnapShotData
 
 interface DetailsView : MvpView {
 
@@ -17,6 +16,6 @@ interface DetailsView : MvpView {
 
 	fun initGraphData(graphList: MutableList<HistoricalData?>)
 
-	fun showGeneralCoinInfo(generalCoinInfo: GeneralCoinInfo)
+	fun showGeneralCoinInfo(snapShotData: SnapShotData)
 
 }

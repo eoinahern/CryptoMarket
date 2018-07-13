@@ -160,7 +160,7 @@
 							tools:text="@string/market_info_title" />
 
 						<TextView
-							android:id="@+id/textView3"
+							android:id="@+id/symbol_title"
 							style="@style/detailsTextStyle"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
@@ -171,7 +171,7 @@
 							tools:text="@string/symbol_title" />
 
 						<TextView
-							android:id="@+id/textView4"
+							android:id="@+id/symbolTxt"
 							style="@style/detailsTextStyle"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
@@ -189,7 +189,7 @@
 							android:background="@color/colorPrimary"
 							app:layout_constraintEnd_toEndOf="parent"
 							app:layout_constraintStart_toStartOf="parent"
-							app:layout_constraintTop_toBottomOf="@+id/textView3" />
+							app:layout_constraintTop_toBottomOf="@+id/symbol_title" />
 
 						<TextView
 							style="@style/detailsTextStyle"
@@ -436,27 +436,125 @@
 					android:layout_height="wrap_content"
 					android:layout_marginBottom="10dp"
 					android:layout_marginLeft="5dp"
-
 					android:layout_marginTop="5dp"
 					android:background="@color/light_grey"
 					app:cardElevation="8dp">
 
-					<LinearLayout
+					<android.support.constraint.ConstraintLayout
 						android:layout_width="match_parent"
-						android:layout_height="match_parent"
-						android:orientation="vertical">
+						android:layout_height="wrap_content"
+						android:padding="10dp">
 
 						<TextView
+							android:id="@+id/links_title"
 							style="@style/detailsTitleTextStyle"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:layout_margin="10dp"
 							android:text="@string/links_title"
 							android:textSize="@dimen/text_header_medium"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toTopOf="parent"
 							tools:text="@string/links_title" />
 
 
-					</LinearLayout>
+						<TextView
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="10dp"
+							android:layout_marginTop="12dp"
+							android:text="@string/twitter_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/links_title"
+							tools:text="@string/twitter_title" />
+
+
+						<TextView
+							android:id="@+id/twitterUrlTxt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginEnd="10dp"
+							android:layout_marginTop="12dp"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/links_title"
+							tools:text="blah!!!" />
+
+						<TextView
+							android:id="@+id/blog_title_txt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="10dp"
+							android:layout_marginTop="12dp"
+							android:text="@string/blog_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/twitterUrlTxt"
+							tools:text="@string/blog_title" />
+
+
+						<TextView
+							android:id="@+id/blogTxt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginEnd="10dp"
+							android:layout_marginTop="12dp"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/twitterUrlTxt"
+							tools:text="blah!!!" />
+
+						<TextView
+							android:id="@+id/website_title_txt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="10dp"
+							android:layout_marginTop="12dp"
+							android:text="@string/website_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/blog_title_txt"
+							tools:text="@string/website_title" />
+
+
+						<TextView
+							android:id="@+id/websiteTxt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginEnd="10dp"
+							android:layout_marginTop="12dp"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/blog_title_txt"
+							tools:text="blah!!!" />
+
+						<TextView
+							android:id="@+id/whitepaper_title_txt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="10dp"
+							android:layout_marginTop="12dp"
+							android:text="@string/whitepaper_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/website_title_txt"
+							tools:text="@string/whitepaper_title" />
+
+
+						<TextView
+							android:id="@+id/whitepaperTxt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginEnd="10dp"
+							android:layout_marginTop="12dp"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/website_title_txt"
+							tools:text="blah!!!" />
+
+
+					</android.support.constraint.ConstraintLayout>
 
 
 				</android.support.v7.widget.CardView>

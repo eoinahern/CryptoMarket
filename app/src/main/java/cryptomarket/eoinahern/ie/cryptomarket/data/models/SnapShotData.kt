@@ -1,9 +1,12 @@
 package cryptomarket.eoinahern.ie.cryptomarket.data.models
 
-import com.google.gson.annotations.SerializedName
+
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class SnapShotData(
-		@SerializedName("General")
-		val General: GeneralCoinInfo)
+		@Json(name = "General")
+		val General: GeneralCoinInfo,
+		@Json(name = "ICO")
+		val ico: IcoData)

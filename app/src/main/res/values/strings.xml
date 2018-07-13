@@ -35,4 +35,8 @@
 	<string name="vol24_total_title">Total Volume 24H</string>
 	<string name="high_day_title">High day</string>
 	<string name="low_day_title">Low day</string>
+	<string name="twitter_title">Twitter</string>
+	<string name="blog_title">Blog</string>
+	<string name="website_title">Website</string>
+	<string name="whitepaper_title">White paper</string>
 </resources>
