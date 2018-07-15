@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.Toolbar
 import android.text.Html
+import android.text.method.LinkMovementMethod
+import android.util.Xml
 import android.view.MotionEvent
 import android.view.View
 import com.github.mikephil.charting.charts.LineChart
@@ -28,6 +30,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.tools.view.LoadingView
 import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.*
 import cryptomarket.eoinahern.ie.cryptomarket.tools.date.DateUtil
 import kotlinx.android.synthetic.main.activity_details.*
+import java.net.URLDecoder
 import javax.inject.Inject
 
 /**
@@ -62,6 +65,7 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 		setUpGraph()
 		showLoading()
 		initGraphButtons()
+		initLinkSelect()
 	}
 
 	private fun setUpToolbar() {
@@ -136,7 +140,7 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	}
 
 	/**
-	 * need to set up programmatically.
+	 * needs to set up programmatically.
 	 *
 	 */
 
@@ -195,6 +199,11 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 		oneYearBtn.setOnClickListener { updateGraph(4) }
 	}
 
+	private fun initLinkSelect() {
+		whitepaperTxt.movementMethod = LinkMovementMethod.getInstance()
+		blurbTxt.movementMethod = LinkMovementMethod.getInstance()
+	}
+
 	private fun updateGraph(index: Int) {
 		val lineData = LineData(graphListCopy[index]?.LineData)
 		(lineData.dataSets[0] as LineDataSet).setDrawHighlightIndicators(false)
@@ -209,7 +218,7 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 			blurbTxt.text = Html.fromHtml(general.description, Html.FROM_HTML_MODE_LEGACY)
-			whitepaperTxt.text = Html.fromHtml(ico.whitePaper, Html.FROM_HTML_MODE_LEGACY)
+			whitepaperTxt.text = Html.fromHtml(URLDecoder.decode(ico.whitePaper, "UTF-8"), Html.FROM_HTML_MODE_LEGACY)
 		} else {
 			blurbTxt.text = Html.fromHtml(general.description)
 			whitepaperTxt.text = Html.fromHtml(ico.whitePaper)
