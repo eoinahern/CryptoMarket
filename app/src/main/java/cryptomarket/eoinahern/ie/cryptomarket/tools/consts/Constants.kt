@@ -3,6 +3,7 @@ package cryptomarket.eoinahern.ie.cryptomarket.tools.consts
 
 const val compareApiEndPoint: String = "https://min-api.cryptocompare.com/data/"
 const val compareApiEndPointOld: String = "https://www.cryptocompare.com/api/data/"
+const val coinMarketCapAPI = " https://api.coinmarketcap.com/v2/"
 const val compareApiDeprecated = "https://www.cryptocompare.com"
 const val TWITTER_BASE_URL = "https://twitter.com/"
 const val CURRENCY_INFO: String = "currency"

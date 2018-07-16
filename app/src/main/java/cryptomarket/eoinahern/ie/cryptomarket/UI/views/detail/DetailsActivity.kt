@@ -85,7 +85,7 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 
 		val curr = intent.getParcelableExtra<CryptoCurrency>(CURRENCY_INFO)
 		val convertedTo = intent.getStringExtra(CONVERTED_TO)
-		currencyFullPrice = intent.getParcelableExtra(CURRENCY_FULL_PRICE)
+		//currencyFullPrice = intent.getParcelableExtra(CURRENCY_FULL_PRICE)
 		setCryptoCurrencyToViews(curr)
 		setPriceDataToViews()
 
@@ -99,13 +99,13 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	}
 
 	private fun setPriceDataToViews() {
-		marketcapTxt.text = currencyFullPrice.MKTCAP
+		/*marketcapTxt.text = currencyFullPrice.MKTCAP
 		marketTxt.text = currencyFullPrice.MARKET
 		supplyTxt.text = currencyFullPrice.SUPPLY
 		vol24hTxt.text = currencyFullPrice.VOLUME24HOURTO
 		totalVol24hTxt.text = currencyFullPrice.TOTALVOLUME24HTO
 		lowDayTxt.text = currencyFullPrice.LOWDAY
-		highDayTxt.text = currencyFullPrice.HIGHDAY
+		highDayTxt.text = currencyFullPrice.HIGHDAY*/
 	}
 
 	override fun inject() {
@@ -283,7 +283,7 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	}
 
 	private fun setPriceAndDate(price: String, date: Float) {
-		valueTxt.text = currencyFullPrice.TOSYMBOL.plus(price)
+		valueTxt.text = price  //currencyFullPrice.TOSYMBOL.plus(price)
 		dateTxt.text = dateUtil.getLocalDateTime(date.toLong())
 	}
 

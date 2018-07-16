@@ -158,7 +158,7 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 
 		intent.putExtra(CURRENCY_INFO, crypto)
 		intent.putExtra(CONVERTED_TO, menuText)
-		intent.putExtra(CURRENCY_FULL_PRICE, fullPriceDataDisplay)
+		//intent.putExtra(CURRENCY_FULL_PRICE, fullPriceDataDisplay)
 		startActivity(intent)
 	}
 
