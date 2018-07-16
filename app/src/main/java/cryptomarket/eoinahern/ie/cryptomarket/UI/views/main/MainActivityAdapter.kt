@@ -57,6 +57,8 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 		holder.name.text = data.symbol
 		holder.pctChange.text = String.format(context.getString(R.string.pct_format), quote?.percent_change_24h)
 		holder.pctChange.isSelected = quote?.isMinus() ?: false
+		holder.price.text = quote?.price.toString()
+		holder.icon.setImageURI(data.getIconUrl())
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

@@ -10,6 +10,8 @@ const val CURRENCY_INFO: String = "currency"
 const val CONVERTED_TO: String = "converted"
 const val CURRENCY_FULL_PRICE: String = "currency_full_price"
 const val GRAPH_LINE_WIDTH: Float = 4f
+const val PNG_SUFFIX = ".png"
+const val ICON_LOCATION = "https://s2.coinmarketcap.com/static/img/coins/64x64/"
 
 const val toSymbolSyr: String = "TOSYMBOL"
 const val changeStr = "CHANGEPCT24HOUR"
