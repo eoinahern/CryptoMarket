@@ -16,13 +16,12 @@ class MainActivityPresenter @Inject constructor(private var getCryptoListInterac
 
 	fun getCurrencyDataInitial() {
 
-		getCryptoListInteractor.execute(object : BaseDisposableObserver<List<CoinMarketCrypto>>() {
+		getCryptoListInteractor.execute(object : BaseDisposableObserver<Pair<List<CoinMarketCrypto>, CurrencyData>>() {
 
-			override fun onNext(t: List<CoinMarketCrypto>) {
+			override fun onNext(t: Pair<List<CoinMarketCrypto>, CurrencyData>) {
 				getView()?.hideLoading()
-				println("num elements ${t.size}")
-				println("last name = ${t[t.size - 1].name}")
-				getView()?.updateRecyclerView(t)
+				getView()?.updateRecyclerView(t.first)
+				getView()?.initCurrencyData(t.second.cryptoWrapper)
 			}
 
 			override fun onError(e: Throwable) {

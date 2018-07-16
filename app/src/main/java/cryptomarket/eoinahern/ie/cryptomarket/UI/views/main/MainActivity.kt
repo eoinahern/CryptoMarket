@@ -36,6 +36,7 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	lateinit var adapter: MainActivityAdapter
 	lateinit var llmanager: LinearLayoutManager
 	private lateinit var menuText: String
+	private lateinit var currencyData: Map<String, CryptoCurrency>
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -98,7 +99,6 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 		recycler.layoutManager = llmanager
 		recycler.setHasFixedSize(false)
 		recycler.addItemDecoration(BottomItemDecoration(this, R.color.dark_gray, 3f))
-		//recycler.addOnScrollListener(getOnScrollListener())
 		recycler.adapter = adapter
 		cryptoSearchView.isEnabled = true
 	}
@@ -119,6 +119,11 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 		adapter.updateCryptoData(dataList)
 		adapter.setInitData(dataList)
 	}
+
+	override fun initCurrencyData(currencyData: Map<String, CryptoCurrency>) {
+		this.currencyData = currencyData
+	}
+
 
 	override fun showNetworkError() {
 		loadingView.setState(LoadingView.State.NETWORK_ERROR)

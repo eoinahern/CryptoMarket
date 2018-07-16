@@ -9,14 +9,16 @@ import cryptomarket.eoinahern.ie.cryptomarket.domain.base.BaseInteractor
 import io.reactivex.Observable
 import io.reactivex.functions.Function7
 import io.reactivex.functions.Function3
+import io.reactivex.functions.Function4
 import javax.inject.Inject
 
 @PerScreen
 class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoApi,
 												  private val coinMarketCapApi: CoinMarketCapApi) :
-		BaseInteractor<List<CoinMarketCrypto>>() {
+		BaseInteractor<Pair<List<CoinMarketCrypto>, CurrencyData>>() {
 
-	override fun buildObservable(): Observable<List<CoinMarketCrypto>> {
+	override fun buildObservable(): Observable<Pair<List<CoinMarketCrypto>, CurrencyData>> {
+
 		return Observable.zip(
 
 				Observable.zip(coinMarketCapApi.getTickerData("1", "100"),
@@ -50,12 +52,14 @@ class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoA
 				Observable.zip(coinMarketCapApi.getTickerData("1401", "100"),
 						coinMarketCapApi.getTickerData("1501", "100"),
 						coinMarketCapApi.getTickerData("1601", "100"),
-						Function3<CoinMarketTickerData, CoinMarketTickerData, CoinMarketTickerData,
-								List<CoinMarketCrypto>> { z1, z2, z3 ->
-							listOf(z1.data.values, z2.data.values, z3.data.values).flatten()
+						cryptoApi.getList(),
+						Function4<CoinMarketTickerData, CoinMarketTickerData, CoinMarketTickerData, CurrencyData, Pair<List<CoinMarketCrypto>, CurrencyData>>
+						{ z1, z2, z3, z4 ->
+							Pair(listOf(z1.data.values, z2.data.values, z3.data.values).flatten(), z4)
 						})
-				, Function3<List<CoinMarketCrypto>, List<CoinMarketCrypto>, List<CoinMarketCrypto>, List<CoinMarketCrypto>> { x1, x2, x3 ->
-			listOf(x1, x2, x3).flatten()
+				, Function3<List<CoinMarketCrypto>, List<CoinMarketCrypto>, Pair<List<CoinMarketCrypto>, CurrencyData>,
+				Pair<List<CoinMarketCrypto>, CurrencyData>> { x1, x2, x3 ->
+			Pair(listOf(x1, x2, x3.first).flatten(), x3.second)
 		})
 	}
 

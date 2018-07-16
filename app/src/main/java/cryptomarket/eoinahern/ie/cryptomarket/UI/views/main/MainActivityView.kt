@@ -21,5 +21,5 @@ interface MainActivityView : MvpView {
 
 	fun gotToDetail(crypto: CryptoCurrency?, currencyFullPrice: CurrencyFullPriceDataDisplay?)
 
-
+	fun initCurrencyData(currencyData: Map<String, CryptoCurrency>)
 }
