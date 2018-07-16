@@ -51,9 +51,12 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
         }*/
 
 		val data = cryptoData[position]
+		val quote = data.quotes["USD"]
 
 		holder.fullName.text = data.name
 		holder.name.text = data.symbol
+		holder.pctChange.text = String.format(context.getString(R.string.pct_format), quote?.percent_change_24h)
+		holder.pctChange.isSelected = quote?.isMinus() ?: false
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

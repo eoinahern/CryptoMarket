@@ -12,5 +12,7 @@ data class CoinMarketQuotes(
 		val percent_change_24h: Float?,
 		val percent_change_7d: Float?)
 
+fun CoinMarketQuotes.isMinus(): Boolean = (percent_change_24h?.compareTo(0f)  == -1)
+
 
 

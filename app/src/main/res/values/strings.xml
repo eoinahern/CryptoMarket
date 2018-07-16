@@ -39,4 +39,5 @@
 	<string name="blog_title">Blog</string>
 	<string name="website_title">Website</string>
 	<string name="whitepaper_title">White paper</string>
+	<string name="not_available">N/A</string>
 </resources>

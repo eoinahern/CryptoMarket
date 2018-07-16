@@ -93,11 +93,10 @@
 		android:layout_marginStart="8dp"
 		android:fontFamily="@font/abel"
 		android:id="@+id/percent_txt"
-		android:text="+ 0.88%"
+		android:text="@string/not_available"
 		android:textSize="20dp"
 		android:textColor="@drawable/change_pct_text_selector"
 		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toStartOf="@+id/linearLayout"
 		app:layout_constraintStart_toEndOf="@+id/full_name"
 		app:layout_constraintTop_toTopOf="parent"
 		tools:text="+ 0.88%" />
