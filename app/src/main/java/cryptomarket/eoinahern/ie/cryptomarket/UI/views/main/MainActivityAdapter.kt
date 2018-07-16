@@ -16,21 +16,14 @@ import javax.inject.Inject
 
 
 class MainActivityAdapter @Inject constructor(private val presenter: MainActivityPresenter, val context: Context)
-	: RecyclerView.Adapter<RecyclerView.ViewHolder>() { //Filterable {
-
-	private val VIEWCRYPTO = 0
-	private val VIEWLOADING = 1
-	private var isLoading: Boolean = false
+	: RecyclerView.Adapter<MainActivityAdapter.ViewHolder>(), Filterable {
 
 	private var cryptoData: MutableList<CoinMarketCrypto> = mutableListOf()
 	private var initialData: MutableList<CoinMarketCrypto> = mutableListOf()
 	private lateinit var currencyStr: String
 
-	override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
-		if (getItemViewType(position) == VIEWCRYPTO) {
-			bindCryptoItemView(holder as ViewHolder, position)
-		}
+	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+		bindCryptoItemView(holder, position)
 	}
 
 	private fun bindCryptoItemView(holder: ViewHolder, position: Int) {
@@ -61,36 +54,11 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 		holder.icon.setImageURI(data.getIconUrl())
 	}
 
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
-		return if (viewType == VIEWCRYPTO) {
-
-			val v = LayoutInflater.from(parent.context).inflate(R.layout.single_crypto_layout, parent, false)
-			ViewHolder(v)
-
-		} else {
-
-			val v = LayoutInflater.from(parent.context).inflate(R.layout.page_loading_layout, parent, false)
-			LoadingViewHolder(v)
-		}
+		val v = LayoutInflater.from(parent.context).inflate(R.layout.single_crypto_layout, parent, false)
+		return ViewHolder(v)
 	}
-
-	/*fun showLoadingItems() {
-
-		isLoading = true
-		cryptoData.add(cryptoData.size, null)
-		notifyItemInserted(cryptoData.size - 1)
-	}*/
-
-	/*fun removeLoadingItems() {
-
-		if (isLoading) {
-
-			isLoading = false
-			cryptoData.removeAt(cryptoData.size - 1)
-			notifyItemRemoved(cryptoData.size)
-		}
-	}*/
 
 	override fun getItemCount() = cryptoData.size
 
@@ -113,14 +81,11 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 	fun setInitData(dataList: List<CoinMarketCrypto>) = initialData.addAll(dataList)
 
 	fun setCurrency(currecyStr: String) {
-
 		currencyStr = currecyStr
 		notifyDataSetChanged()
 	}
 
-	fun isLoading() = isLoading
-
-	/*override fun getFilter(): Filter {
+	override fun getFilter(): Filter {
 
 		return object : Filter() {
 
@@ -149,14 +114,11 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 				return filteredResults
 			}
 
-
 			private fun filterList(searchStr: String) = cryptoData.filter {
-				it.startsWith(searchStr, ignoreCase = true) ?: false
+				it.name.startsWith(searchStr, ignoreCase = true)
 			}
 		}
-	}*/
-
-	override fun getItemViewType(position: Int) = if (cryptoData[position] != null) VIEWCRYPTO else VIEWLOADING
+	}
 
 	class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
 		val icon: SimpleDraweeView by lazy { item.findViewById<SimpleDraweeView>(R.id.crypto_icon) }
@@ -165,6 +127,4 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 		val price: TextView by lazy { item.findViewById<TextView>(R.id.price) }
 		val pctChange: TextView by lazy { item.findViewById<TextView>(R.id.percent_txt) }
 	}
-
-	class LoadingViewHolder(item: View) : RecyclerView.ViewHolder(item)
 }

@@ -21,13 +21,9 @@ class MainActivityPresenter @Inject constructor(private var getCryptoListInterac
 			override fun onNext(t: List<CoinMarketCrypto>) {
 				getView()?.hideLoading()
 				println("num elements ${t.size}")
+				println("last name = ${t[t.size - 1].name}")
 				getView()?.updateRecyclerView(t)
 			}
-
-			/*override fun onNext(t: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) {
-				getView()?.hideLoading()
-				getView()?.updateRecyclerView(t)
-			}*/
 
 			override fun onError(e: Throwable) {
 				e.printStackTrace()

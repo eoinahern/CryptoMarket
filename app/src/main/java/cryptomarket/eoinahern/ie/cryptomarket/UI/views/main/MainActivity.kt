@@ -35,8 +35,6 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	@Inject
 	lateinit var adapter: MainActivityAdapter
 	lateinit var llmanager: LinearLayoutManager
-	//private var offset: Int = 0
-	//private var limit: Int = 50
 	private lateinit var menuText: String
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -107,43 +105,20 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 
 	private fun setUpSearchListener() {
 
-		/*RxSearchView.queryTextChanges(cryptoSearchView)
+		RxSearchView.queryTextChanges(cryptoSearchView)
 				.debounce(500, TimeUnit.MILLISECONDS)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe({ charSequence ->
 					adapter.filter.filter(charSequence)
 				}, {
 					it.printStackTrace()
-				})*/
+				})
 	}
 
 	override fun updateRecyclerView(dataList: List<CoinMarketCrypto>) {
-
-		//adapter.removeLoadingItems()
 		adapter.updateCryptoData(dataList)
 		adapter.setInitData(dataList)
-		//offset += 50
 	}
-
-	/*private fun getOnScrollListener(): RecyclerView.OnScrollListener {
-
-		return object : RecyclerView.OnScrollListener() {
-			override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-				super.onScrolled(recyclerView, dx, dy)
-
-				var visibleItemCount = llmanager.childCount
-				var totalItemCount = llmanager.itemCount
-				var firstVisibleItemPosition = llmanager.findFirstVisibleItemPosition()
-
-				if (!adapter.isLoading() && cryptoSearchView.query.isEmpty()
-						&& (visibleItemCount + firstVisibleItemPosition) >= totalItemCount) {
-
-					adapter.showLoadingItems()
-					presenter.getCurrencyUpdateData(offset, limit)
-				}
-			}
-		}
-	}*/
 
 	override fun showNetworkError() {
 		loadingView.setState(LoadingView.State.NETWORK_ERROR)
