@@ -13,6 +13,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.detail.DetailsActivity
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerActivity
+import cryptomarket.eoinahern.ie.cryptomarket.data.models.CoinMarketCrypto
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyFullPriceDataDisplay
 import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CONVERTED_TO
@@ -34,8 +35,8 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	@Inject
 	lateinit var adapter: MainActivityAdapter
 	lateinit var llmanager: LinearLayoutManager
-	private var offset: Int = 0
-	private var limit: Int = 50
+	//private var offset: Int = 0
+	//private var limit: Int = 50
 	private lateinit var menuText: String
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,32 +100,32 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 		recycler.layoutManager = llmanager
 		recycler.setHasFixedSize(false)
 		recycler.addItemDecoration(BottomItemDecoration(this, R.color.dark_gray, 3f))
-		recycler.addOnScrollListener(getOnScrollListener())
+		//recycler.addOnScrollListener(getOnScrollListener())
 		recycler.adapter = adapter
 		cryptoSearchView.isEnabled = true
 	}
 
 	private fun setUpSearchListener() {
 
-		RxSearchView.queryTextChanges(cryptoSearchView)
+		/*RxSearchView.queryTextChanges(cryptoSearchView)
 				.debounce(500, TimeUnit.MILLISECONDS)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe({ charSequence ->
 					adapter.filter.filter(charSequence)
 				}, {
 					it.printStackTrace()
-				})
+				})*/
 	}
 
-	override fun updateRecyclerView(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) {
+	override fun updateRecyclerView(dataList: List<CoinMarketCrypto>) {
 
-		adapter.removeLoadingItems()
+		//adapter.removeLoadingItems()
 		adapter.updateCryptoData(dataList)
 		adapter.setInitData(dataList)
-		offset += 50
+		//offset += 50
 	}
 
-	private fun getOnScrollListener(): RecyclerView.OnScrollListener {
+	/*private fun getOnScrollListener(): RecyclerView.OnScrollListener {
 
 		return object : RecyclerView.OnScrollListener() {
 			override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
@@ -142,7 +143,7 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 				}
 			}
 		}
-	}
+	}*/
 
 	override fun showNetworkError() {
 		loadingView.setState(LoadingView.State.NETWORK_ERROR)
@@ -156,10 +157,10 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 
 		val intent = DetailsActivity.getStartIntent(this)
 
-		intent.putExtra(CURRENCY_INFO, crypto)
-		intent.putExtra(CONVERTED_TO, menuText)
+		//intent.putExtra(CURRENCY_INFO, crypto)
+		//intent.putExtra(CONVERTED_TO, menuText)
 		//intent.putExtra(CURRENCY_FULL_PRICE, fullPriceDataDisplay)
-		startActivity(intent)
+		//startActivity(intent)
 	}
 
 	override fun onDestroy() {

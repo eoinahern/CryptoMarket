@@ -16,14 +16,14 @@ import javax.inject.Inject
 
 
 class MainActivityAdapter @Inject constructor(private val presenter: MainActivityPresenter, val context: Context)
-	: RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
+	: RecyclerView.Adapter<RecyclerView.ViewHolder>() { //Filterable {
 
 	private val VIEWCRYPTO = 0
 	private val VIEWLOADING = 1
 	private var isLoading: Boolean = false
 
-	private var cryptoData: MutableList<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?> = mutableListOf()
-	private var initialData: MutableList<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?> = mutableListOf()
+	private var cryptoData: MutableList<CoinMarketCrypto> = mutableListOf()
+	private var initialData: MutableList<CoinMarketCrypto> = mutableListOf()
 	private lateinit var currencyStr: String
 
 	override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -35,11 +35,11 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 
 	private fun bindCryptoItemView(holder: ViewHolder, position: Int) {
 
-		val cryptoCurrencyData = cryptoData[position]?.first
+		/*val cryptoCurrencyData = cryptoData[position]?.first
 		val fullPriceMap = cryptoData[position]?.second
-		val currency = fullPriceMap?.get(currencyStr)
+		val currency = fullPriceMap?.get(currencyStr)*/
 
-		holder.name.text = cryptoCurrencyData?.Symbol
+		/*holder.name.text = cryptoCurrencyData?.Symbol
 		holder.fullName.text = cryptoCurrencyData?.FullName
 		val url = compareApiDeprecated.plus(cryptoCurrencyData?.ImageUrl)
 		holder.price.text = currency?.PRICE
@@ -48,7 +48,12 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 		holder.icon.setImageURI(url)
 		holder.itemView.setOnClickListener {
 			presenter.navigateToDetail(cryptoCurrencyData, currency)
-		}
+        }*/
+
+		val data = cryptoData[position]
+
+		holder.fullName.text = data.name
+		holder.name.text = data.symbol
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -65,14 +70,14 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 		}
 	}
 
-	fun showLoadingItems() {
+	/*fun showLoadingItems() {
 
 		isLoading = true
 		cryptoData.add(cryptoData.size, null)
 		notifyItemInserted(cryptoData.size - 1)
-	}
+	}*/
 
-	fun removeLoadingItems() {
+	/*fun removeLoadingItems() {
 
 		if (isLoading) {
 
@@ -80,18 +85,18 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 			cryptoData.removeAt(cryptoData.size - 1)
 			notifyItemRemoved(cryptoData.size)
 		}
-	}
+	}*/
 
 	override fun getItemCount() = cryptoData.size
 
-	fun updateCryptoData(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) {
+	fun updateCryptoData(dataList: List<CoinMarketCrypto>) {
 
 		val insertIndex = cryptoData.size
 		cryptoData.addAll(dataList)
 		notifyItemRangeInserted(insertIndex, dataList.size)
 	}
 
-	fun showFilteredList(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) {
+	fun showFilteredList(dataList: List<CoinMarketCrypto>) {
 
 		if (cryptoData.size > 0)
 			cryptoData.clear()
@@ -100,7 +105,7 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 		notifyDataSetChanged()
 	}
 
-	fun setInitData(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) = initialData.addAll(dataList)
+	fun setInitData(dataList: List<CoinMarketCrypto>) = initialData.addAll(dataList)
 
 	fun setCurrency(currecyStr: String) {
 
@@ -110,13 +115,13 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 
 	fun isLoading() = isLoading
 
-	override fun getFilter(): Filter {
+	/*override fun getFilter(): Filter {
 
 		return object : Filter() {
 
 			override fun publishResults(searchSequence: CharSequence?, filteredResults: FilterResults?) {
 
-				var list = filteredResults?.values as List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>
+				var list = filteredResults?.values as List<CoinMarketCrypto>
 				showFilteredList(list)
 			}
 
@@ -141,10 +146,10 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 
 
 			private fun filterList(searchStr: String) = cryptoData.filter {
-				it?.first?.FullName?.startsWith(searchStr, ignoreCase = true) ?: false
+				it.startsWith(searchStr, ignoreCase = true) ?: false
 			}
 		}
-	}
+	}*/
 
 	override fun getItemViewType(position: Int) = if (cryptoData[position] != null) VIEWCRYPTO else VIEWLOADING
 

@@ -16,12 +16,18 @@ class MainActivityPresenter @Inject constructor(private var getCryptoListInterac
 
 	fun getCurrencyDataInitial() {
 
-		getCryptoListInteractor.setStartLimit(0, 50).execute(object : BaseDisposableObserver<List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>>() {
+		getCryptoListInteractor.execute(object : BaseDisposableObserver<List<CoinMarketCrypto>>() {
 
-			override fun onNext(t: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) {
+			override fun onNext(t: List<CoinMarketCrypto>) {
 				getView()?.hideLoading()
+				println("num elements ${t.size}")
 				getView()?.updateRecyclerView(t)
 			}
+
+			/*override fun onNext(t: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) {
+				getView()?.hideLoading()
+				getView()?.updateRecyclerView(t)
+			}*/
 
 			override fun onError(e: Throwable) {
 				e.printStackTrace()
@@ -36,7 +42,7 @@ class MainActivityPresenter @Inject constructor(private var getCryptoListInterac
 		})
 	}
 
-	fun getCurrencyUpdateData(offset: Int, limit: Int) {
+	/*fun getCurrencyUpdateData(offset: Int, limit: Int) {
 
 		getCryptoListInteractor.setStartLimit(offset, limit).execute(object : BaseSubscriber<List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>>() {
 
@@ -58,7 +64,7 @@ class MainActivityPresenter @Inject constructor(private var getCryptoListInterac
 				}
 			}
 		})
-	}
+	}*/
 
 	fun navigateToDetail(crypto: CryptoCurrency?, currencyFullPriceDataDisplay: CurrencyFullPriceDataDisplay?) {
 		getView()?.gotToDetail(crypto, currencyFullPriceDataDisplay)
