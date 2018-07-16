@@ -8,10 +8,30 @@
 		<item name="colorAccent">@color/colorAccent</item>
 	</style>
 
-	<style name="ActionBarStyle" parent="AppTheme">
+	<style name="ActionBarStyle">
+		<item name="colorAccent">@color/colorAccent</item>
+		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 		<item name="android:textColorPrimary">@color/colorAccent</item>
 		<item name="actionMenuTextColor">@color/colorAccent</item>
 		<item name="android:textColorSecondary">@color/colorAccent</item>
+		<item name="android:fontFamily">@font/abel</item>
+	</style>
+
+	<style name="detailsTextStyle">
+		<item name="android:textColor">@color/gainsboro_grey</item>
+		<item name="android:textSize">@dimen/text_standard</item>
+		<item name="android:fontFamily">@font/abel</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+
+	<style name="detailsTitleTextStyle" parent="detailsTextStyle">
+		<item name="android:textSize">@dimen/text_header_medium</item>
+		<item name="android:textColor">@color/colorAccent</item>
+	</style>
+
+	<style name="linkTextStyle" parent="detailsTextStyle">
+		<item name="android:textColor">@color/mint_green_heavy</item>
+		<item name="android:textColorLink">@color/mint_green_heavy</item>
 	</style>
 
 </resources>

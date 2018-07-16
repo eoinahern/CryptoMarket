@@ -11,11 +11,15 @@ import android.view.MenuItem
 import com.jakewharton.rxbinding2.widget.RxSearchView
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
-import cryptomarket.eoinahern.ie.cryptomarket.UI.util.BottomItemDecoration
-import cryptomarket.eoinahern.ie.cryptomarket.UI.util.LoadingView
+import cryptomarket.eoinahern.ie.cryptomarket.UI.views.detail.DetailsActivity
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerActivity
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyFullPriceDataDisplay
+import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CONVERTED_TO
+import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CURRENCY_FULL_PRICE
+import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CURRENCY_INFO
+import cryptomarket.eoinahern.ie.cryptomarket.tools.decoration.BottomItemDecoration
+import cryptomarket.eoinahern.ie.cryptomarket.tools.view.LoadingView
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 import kotlinx.android.synthetic.main.activity_main.*
@@ -32,6 +36,7 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	lateinit var llmanager: LinearLayoutManager
 	private var offset: Int = 0
 	private var limit: Int = 50
+	private lateinit var menuText: String
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -76,13 +81,15 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 
 		menuInflater.inflate(R.menu.toolbar_currency_menu, menu)
 		menu?.getItem(0)?.isChecked = true
-		adapter.setCurrency(getString(R.string.euro_abv))
+		menuText = getString(R.string.euro_abv)
+		adapter.setCurrency(menuText)
 		return true
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
-		adapter.setCurrency(item?.title.toString())
+		menuText = item?.title.toString()
+		adapter.setCurrency(menuText)
 		return super.onOptionsItemSelected(item)
 	}
 
@@ -117,10 +124,6 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 		offset += 50
 	}
 
-	override fun displayFilteredData(dataList: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) {
-
-	}
-
 	private fun getOnScrollListener(): RecyclerView.OnScrollListener {
 
 		return object : RecyclerView.OnScrollListener() {
@@ -141,7 +144,22 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 		}
 	}
 
-	override fun showError() {
+	override fun showNetworkError() {
+		loadingView.setState(LoadingView.State.NETWORK_ERROR)
+	}
+
+	override fun showOtherError() {
+		loadingView.setState(LoadingView.State.OTHER_ERROR)
+	}
+
+	override fun gotToDetail(crypto: CryptoCurrency?, fullPriceDataDisplay: CurrencyFullPriceDataDisplay?) {
+
+		val intent = DetailsActivity.getStartIntent(this)
+
+		intent.putExtra(CURRENCY_INFO, crypto)
+		intent.putExtra(CONVERTED_TO, menuText)
+		intent.putExtra(CURRENCY_FULL_PRICE, fullPriceDataDisplay)
+		startActivity(intent)
 	}
 
 	override fun onDestroy() {

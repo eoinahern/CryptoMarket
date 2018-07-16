@@ -17,4 +17,26 @@
 	<string name="usd_abv">USD</string>
 	<string name="pct_format">%s%%</string>
 	<string name="search_cryptos">Search cryptos</string>
+	<string name="twelve_hours_abv">12H</string>
+	<string name="one_month">1M</string>
+	<string name="twofour_hours_abv">24H</string>
+	<string name="six_months">6M</string>
+	<string name="one_year">1Y</string>
+	<string name="network_error">Network error, please check connection!</string>
+	<string name="data_loading_error">Error loading data!</string>
+	<string name="links_title">Links</string>
+	<string name="market_info_title">Market Info</string>
+	<string name="description_title">Description</string>
+	<string name="symbol_title">Symbol</string>
+	<string name="marketcap_title">Market cap</string>
+	<string name="market_title">Market</string>
+	<string name="supply_title">Supply</string>
+	<string name="vol24_title">Volume 24H</string>
+	<string name="vol24_total_title">Total Volume 24H</string>
+	<string name="high_day_title">High day</string>
+	<string name="low_day_title">Low day</string>
+	<string name="twitter_title">Twitter</string>
+	<string name="blog_title">Blog</string>
+	<string name="website_title">Website</string>
+	<string name="whitepaper_title">White paper</string>
 </resources>

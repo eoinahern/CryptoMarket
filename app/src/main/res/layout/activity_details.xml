@@ -1,9 +1,578 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:orientation="vertical"
 	tools:context=".UI.views.detail.DetailsActivity">
 
-</android.support.constraint.ConstraintLayout>
+
+	<android.support.v7.widget.Toolbar
+		android:id="@+id/toolbar"
+		android:layout_width="match_parent"
+		android:layout_height="?android:attr/actionBarSize"
+		android:background="@color/colorPrimaryDark"
+		android:theme="@style/ActionBarStyle">
+
+		<RelativeLayout
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent">
+
+			<com.facebook.drawee.view.SimpleDraweeView
+				android:id="@+id/actionBarIcon"
+				android:layout_width="28dp"
+				android:layout_height="28dp"
+				android:layout_centerVertical="true"
+				app:actualImageScaleType="centerInside" />
+
+			<TextView
+				android:id="@+id/toolbarCryptoTxt"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerVertical="true"
+				android:layout_marginLeft="8dp"
+				android:layout_toRightOf="@id/actionBarIcon"
+				android:textColor="@color/colorAccent"
+				android:textSize="18dp"
+				tools:text="Name" />
+
+		</RelativeLayout>
+
+	</android.support.v7.widget.Toolbar>
+
+
+	<ScrollView
+		android:id="@+id/scrollview"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:fillViewport="true">
+
+		<FrameLayout
+			android:layout_width="match_parent"
+			android:layout_height="fill_parent">
+
+			<LinearLayout
+				android:id="@+id/llayoutDetails"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical">
+
+
+				<TextView
+					android:id="@+id/valueTxt"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_horizontal"
+					android:layout_marginTop="10dp"
+					android:fontFamily="@font/abel"
+					android:textColor="@color/colorAccent"
+					android:textSize="24dp"
+					tools:text="boooo!!" />
+
+				<TextView
+					android:id="@+id/dateTxt"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_horizontal"
+					android:fontFamily="@font/abel"
+					android:textColor="@color/light_grey"
+					android:textSize="16dp" />
+
+				<com.github.mikephil.charting.charts.LineChart
+					android:id="@+id/line_graph"
+					android:layout_width="match_parent"
+					android:layout_height="280dp"
+					android:layout_marginBottom="5dp" />
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:weightSum="5">
+
+
+					<Button
+						android:id="@+id/twelveHourBtn"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="@string/twelve_hours_abv"
+						tools:text="@string/twelve_hours_abv" />
+
+					<Button
+						android:id="@+id/twoFourHourBtn"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="@string/twofour_hours_abv"
+						tools:tetx="@string/twofour_hours_abv" />
+
+					<Button
+						android:id="@+id/oneMonthBtn"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="@string/one_month"
+						tools:text="@string/one_month" />
+
+					<Button
+						android:id="@+id/sixMonthsBtn"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="@string/six_months"
+						tools:text="@string/six_months" />
+
+					<Button
+						android:id="@+id/oneYearBtn"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="@string/one_year"
+						tools:text="@string/one_year" />
+
+
+				</LinearLayout>
+
+				<android.support.v7.widget.CardView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:background="@color/light_grey"
+					app:cardElevation="8dp">
+
+					<android.support.constraint.ConstraintLayout
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:padding="10dp">
+
+						<TextView
+							android:id="@+id/textView2"
+							style="@style/detailsTitleTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="@string/market_info_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toTopOf="parent"
+							tools:text="@string/market_info_title" />
+
+						<TextView
+							android:id="@+id/symbol_title"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:text="@string/symbol_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/textView2"
+							tools:text="@string/symbol_title" />
+
+						<TextView
+							android:id="@+id/symbolTxt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/textView2"
+							tools:text="BTC" />
+
+
+						<View
+							android:id="@+id/div_1"
+							android:layout_width="match_parent"
+							android:layout_height="1dp"
+							android:layout_marginTop="5dp"
+							android:background="@color/colorPrimary"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/symbol_title" />
+
+						<TextView
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:text="@string/marketcap_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/div_1"
+							tools:text="@string/marketcap_title" />
+
+						<TextView
+							android:id="@+id/marketcapTxt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/div_1"
+							tools:text="1B" />
+
+						<View
+							android:id="@+id/div_2"
+							android:layout_width="match_parent"
+							android:layout_height="1dp"
+							android:layout_marginTop="5dp"
+							android:background="@color/colorPrimary"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/marketcapTxt" />
+
+
+						<TextView
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:text="@string/market_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/div_2"
+							tools:text="@string/market_title" />
+
+						<TextView
+							android:id="@+id/marketTxt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/div_2"
+							tools:text="A market!!" />
+
+						<View
+							android:id="@+id/div_3"
+							android:layout_width="match_parent"
+							android:layout_height="1dp"
+							android:layout_marginTop="5dp"
+							android:background="@color/colorPrimary"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/marketTxt" />
+
+						<TextView
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:text="@string/supply_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/div_3" />
+
+						<TextView
+							android:id="@+id/supplyTxt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/div_3"
+							tools:text="balls" />
+
+						<View
+							android:id="@+id/div_4"
+							android:layout_width="match_parent"
+							android:layout_height="1dp"
+							android:layout_marginTop="5dp"
+							android:background="@color/colorPrimary"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/supplyTxt" />
+
+						<TextView
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:text="@string/vol24_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/div_4" />
+
+						<TextView
+							android:id="@+id/vol24hTxt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/div_4"
+							tools:text="1000 B" />
+
+						<View
+							android:id="@+id/div_5"
+							android:layout_width="match_parent"
+							android:layout_height="1dp"
+							android:layout_marginTop="5dp"
+							android:background="@color/colorPrimary"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/vol24hTxt" />
+
+						<TextView
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:text="@string/vol24_total_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/div_5" />
+
+						<TextView
+							android:id="@+id/totalVol24hTxt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/div_5"
+							tools:text="20 B" />
+
+						<View
+							android:id="@+id/div_6"
+							android:layout_width="match_parent"
+							android:layout_height="1dp"
+							android:layout_marginTop="5dp"
+							android:background="@color/colorPrimary"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/totalVol24hTxt" />
+
+						<TextView
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:text="@string/high_day_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/div_6" />
+
+						<TextView
+							android:id="@+id/highDayTxt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/div_6"
+							tools:text="$5.00" />
+
+						<View
+							android:id="@+id/div_7"
+							android:layout_width="match_parent"
+							android:layout_height="1dp"
+							android:layout_marginTop="5dp"
+							android:background="@color/colorPrimary"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/highDayTxt" />
+
+						<TextView
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:text="@string/low_day_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/div_7" />
+
+						<TextView
+							android:id="@+id/lowDayTxt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/div_7"
+							tools:text="$3.00" />
+
+
+					</android.support.constraint.ConstraintLayout>
+
+
+				</android.support.v7.widget.CardView>
+
+				<android.support.v7.widget.CardView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:background="@color/light_grey"
+					app:cardElevation="8dp">
+
+					<android.support.constraint.ConstraintLayout
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:padding="10dp">
+
+
+						<TextView
+							android:id="@+id/description_title"
+							style="@style/detailsTitleTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="@string/description_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toTopOf="parent"
+							tools:text="@string/description_title" />
+
+						<TextView
+							android:id="@+id/blurbTxt"
+							style="@style/detailsTextStyle"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:gravity="left"
+							android:linksClickable="true"
+							android:textColorLink="@color/mint_green_heavy"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/description_title"
+							/>
+
+
+					</android.support.constraint.ConstraintLayout>
+
+
+				</android.support.v7.widget.CardView>
+
+				<android.support.v7.widget.CardView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="10dp"
+					android:layout_marginLeft="5dp"
+					android:layout_marginRight="5dp"
+					android:layout_marginTop="5dp"
+					android:background="@color/light_grey"
+					app:cardElevation="8dp">
+
+					<android.support.constraint.ConstraintLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:padding="10dp">
+
+						<TextView
+							android:id="@+id/links_title"
+							style="@style/detailsTitleTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="@string/links_title"
+							android:textSize="@dimen/text_header_medium"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toTopOf="parent"
+							tools:text="@string/links_title" />
+
+
+						<TextView
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:text="@string/twitter_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/links_title"
+							tools:text="@string/twitter_title" />
+
+
+						<TextView
+							android:id="@+id/twitterUrlTxt"
+							style="@style/linkTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:autoLink="web"
+							android:linksClickable="true"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/links_title"
+							tools:text="blah!!!" />
+
+						<TextView
+							android:id="@+id/blog_title_txt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:text="@string/blog_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/twitterUrlTxt"
+							tools:text="@string/blog_title" />
+
+
+						<TextView
+							android:id="@+id/blogTxt"
+							style="@style/linkTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:autoLink="web"
+							android:linksClickable="true"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/twitterUrlTxt"
+							tools:text="blah!!!" />
+
+						<TextView
+							android:id="@+id/website_title_txt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:text="@string/website_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/blog_title_txt"
+							tools:text="@string/website_title" />
+
+
+						<TextView
+							android:id="@+id/websiteTxt"
+							style="@style/linkTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:autoLink="web"
+							android:linksClickable="true"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/blog_title_txt"
+							tools:text="blah!!!" />
+
+						<TextView
+							android:id="@+id/whitepaper_title_txt"
+							style="@style/detailsTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:text="@string/whitepaper_title"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/website_title_txt"
+							tools:text="@string/whitepaper_title" />
+
+
+						<TextView
+							android:id="@+id/whitepaperTxt"
+							style="@style/linkTextStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="12dp"
+							android:linksClickable="true"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/website_title_txt"
+							tools:text="blah!!!" />
+
+
+					</android.support.constraint.ConstraintLayout>
+
+
+				</android.support.v7.widget.CardView>
+
+
+			</LinearLayout>
+
+
+			<cryptomarket.eoinahern.ie.cryptomarket.tools.view.LoadingView
+				android:id="@+id/loading_view"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center" />
+
+		</FrameLayout>
+
+
+	</ScrollView>
+
+</LinearLayout>

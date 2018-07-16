@@ -16,7 +16,7 @@ class MainActivityPresenter @Inject constructor(private var getCryptoListInterac
 
 	fun getCurrencyDataInitial() {
 
-		getCryptoListInteractor.setStartLimit(0, 50).execute(object : BaseDisposableObserver<List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>> () {
+		getCryptoListInteractor.setStartLimit(0, 50).execute(object : BaseDisposableObserver<List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>>() {
 
 			override fun onNext(t: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) {
 				getView()?.hideLoading()
@@ -25,17 +25,13 @@ class MainActivityPresenter @Inject constructor(private var getCryptoListInterac
 
 			override fun onError(e: Throwable) {
 				e.printStackTrace()
-				println("error caught")
 				println(e.message)
 
-				if (e is NoConnectionException) {
-					getView()?.hideLoading()
-					getView()?.showError()
+				if (e as? NoConnectionException != null) {
+					getView()?.showNetworkError()
 				} else {
-					getView()?.hideLoading()
-					getView()?.showError()
+					getView()?.showOtherError()
 				}
-
 			}
 		})
 	}
@@ -55,17 +51,17 @@ class MainActivityPresenter @Inject constructor(private var getCryptoListInterac
 			override fun onError(e: Throwable) {
 				e.printStackTrace()
 
-				if (e is NoConnectionException) {
-					getView()?.showError()
+				if ((e as? NoConnectionException) != null) {
+					getView()?.showNetworkError()
 				} else {
-					getView()?.showError()
+					getView()?.showOtherError()
 				}
 			}
 		})
 	}
 
-	fun navigateToDetail() {
-
+	fun navigateToDetail(crypto: CryptoCurrency?, currencyFullPriceDataDisplay: CurrencyFullPriceDataDisplay?) {
+		getView()?.gotToDetail(crypto, currencyFullPriceDataDisplay)
 	}
 
 	override fun detachView() {

@@ -1,8 +1,6 @@
 package cryptomarket.eoinahern.ie.cryptomarket.UI.views.main
 
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +10,7 @@ import android.widget.Filterable
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import cryptomarket.eoinahern.ie.cryptomarket.R
-import cryptomarket.eoinahern.ie.cryptomarket.UI.util.compareApiDeprecated
-import cryptomarket.eoinahern.ie.cryptomarket.UI.util.compareApiEndPoint
+import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.compareApiDeprecated
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.*
 import javax.inject.Inject
 
@@ -49,27 +46,23 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 		holder.pctChange.text = String.format(context.getString(R.string.pct_format), currency?.CHANGEPCT24HOUR)
 		holder.pctChange.isSelected = currency?.isMinus() ?: false
 		holder.icon.setImageURI(url)
-		holder.itemView.setOnClickListener { presenter.navigateToDetail() }
+		holder.itemView.setOnClickListener {
+			presenter.navigateToDetail(cryptoCurrencyData, currency)
+		}
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
-		val vh: RecyclerView.ViewHolder
-
-		if (viewType == VIEWCRYPTO) {
+		return if (viewType == VIEWCRYPTO) {
 
 			val v = LayoutInflater.from(parent.context).inflate(R.layout.single_crypto_layout, parent, false)
-			vh = ViewHolder(v)
-			vh.itemView.setOnClickListener {
-				presenter.navigateToDetail()
-			}
+			ViewHolder(v)
+
 		} else {
 
 			val v = LayoutInflater.from(parent.context).inflate(R.layout.page_loading_layout, parent, false)
-			vh = LoadingViewHolder(v)
+			LoadingViewHolder(v)
 		}
-
-		return vh
 	}
 
 	fun showLoadingItems() {

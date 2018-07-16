@@ -2,7 +2,10 @@ package cryptomarket.eoinahern.ie.cryptomarket.data.models
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import paperparcel.PaperParcel
+import paperparcel.PaperParcelable
 
+@PaperParcel
 @JsonClass(generateAdapter = true)
 data class CryptoCurrency  (
 		@Json(name = "Id")
@@ -20,9 +23,14 @@ data class CryptoCurrency  (
 		@Json(name = "FullName")
 		val FullName: String,
 		@Json(name="SortOrder")
-		val SortOrder : String) : Comparable<CryptoCurrency> {
+		val SortOrder : String) : Comparable<CryptoCurrency>, PaperParcelable {
 
 	override fun compareTo(other: CryptoCurrency): Int {
 		return SortOrder.toInt()  - other.SortOrder.toInt()
+
+	}
+
+	companion object {
+			@JvmField val CREATOR = PaperParcelCryptoCurrency.CREATOR
 	}
 }

@@ -1,15 +1,39 @@
 package cryptomarket.eoinahern.ie.cryptomarket.data.models
 
 import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.*
+import paperparcel.PaperParcel
+import paperparcel.PaperParcelable
 
+@PaperParcel
 data class CurrencyFullPriceDataDisplay(
-		@Json(name = "TOSYMBOL")
+		@Json(name = toSymbolSyr)
 		val TOSYMBOL: String,
-		@Json(name = "PRICE")
-		val PRICE : String,
-		@Json(name = "CHANGEPCT24HOUR")
-		val CHANGEPCT24HOUR : String )
+		@Json(name = priceStr)
+		val PRICE: String,
+		@Json(name = changeStr)
+		val CHANGEPCT24HOUR: String,
+		@Json(name = highDayStr)
+		val HIGHDAY: String,
+		@Json(name = lowdayStr)
+		val LOWDAY: String,
+		@Json(name = totalVol24hStr)
+		val TOTALVOLUME24HTO: String,
+		@Json(name = marketStr)
+		val MARKET: String,
+		@Json(name = vol24hStr)
+		val VOLUME24HOURTO: String,
+		@Json(name = marketStr)
+		val MKTCAP: String,
+		@Json(name = supplyStr)
+		val SUPPLY: String)  : PaperParcelable {
 
 
-fun  CurrencyFullPriceDataDisplay.isMinus() : Boolean = (CHANGEPCT24HOUR[0]  == '-')
+	companion object {
+		@JvmField val CREATOR = PaperParcelCurrencyFullPriceDataDisplay.CREATOR
+	}
+}
+
+
+
+fun CurrencyFullPriceDataDisplay.isMinus(): Boolean = (CHANGEPCT24HOUR[0] == '-')
