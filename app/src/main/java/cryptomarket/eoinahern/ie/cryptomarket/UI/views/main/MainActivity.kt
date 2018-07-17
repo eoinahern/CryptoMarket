@@ -39,8 +39,9 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 		super.onCreate(savedInstanceState)
 		setDrawerOnState()
 		setUpRecycler()
+		menuText = getString(R.string.usd_abv)
 		presenter.attachView(this)
-		presenter.getCurrencyDataInitial()
+		presenter.getCurrencyDataInitial(menuText)
 		showLoading()
 		cryptoSearchView.isEnabled = false
 		setUpSearchListener()
@@ -77,7 +78,6 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 		menuInflater.inflate(R.menu.toolbar_currency_menu, menu)
 		menu?.getItem(0)?.isChecked = true
-		menuText = getString(R.string.usd_abv)
 		adapter.setCurrency(menuText)
 		return true
 	}

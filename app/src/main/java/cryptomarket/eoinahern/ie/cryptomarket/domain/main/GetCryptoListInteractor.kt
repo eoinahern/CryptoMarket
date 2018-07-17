@@ -17,17 +17,24 @@ class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoA
 												  private val coinMarketCapApi: CoinMarketCapApi) :
 		BaseInteractor<Pair<List<CoinMarketCrypto>, CurrencyData>>() {
 
+	private lateinit var currency: String
+
+	fun setCurrency(currency: String): GetCryptoListInteractor {
+		this.currency = currency
+		return this
+	}
+
 	override fun buildObservable(): Observable<Pair<List<CoinMarketCrypto>, CurrencyData>> {
 
 		return Observable.zip(
 
-				Observable.zip(coinMarketCapApi.getTickerData("1", "100"),
-						coinMarketCapApi.getTickerData("101", "100"),
-						coinMarketCapApi.getTickerData("201", "100"),
-						coinMarketCapApi.getTickerData("301", "100"),
-						coinMarketCapApi.getTickerData("401", "100"),
-						coinMarketCapApi.getTickerData("501", "100"),
-						coinMarketCapApi.getTickerData("601", "100"),
+				Observable.zip(coinMarketCapApi.getTickerData("1", currency),
+						coinMarketCapApi.getTickerData("101", currency),
+						coinMarketCapApi.getTickerData("201", currency),
+						coinMarketCapApi.getTickerData("301", currency),
+						coinMarketCapApi.getTickerData("401", currency),
+						coinMarketCapApi.getTickerData("501", currency),
+						coinMarketCapApi.getTickerData("601", currency),
 						Function7<CoinMarketTickerData, CoinMarketTickerData, CoinMarketTickerData,
 								CoinMarketTickerData, CoinMarketTickerData, CoinMarketTickerData,
 								CoinMarketTickerData, List<CoinMarketCrypto>> { t1, t2, t3, t4, t5, t6, t7 ->
@@ -35,13 +42,13 @@ class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoA
 									, t5.data.values, t6.data.values, t7.data.values).flatten()
 						}),
 
-				Observable.zip(coinMarketCapApi.getTickerData("701", ""),
-						coinMarketCapApi.getTickerData("801", "100"),
-						coinMarketCapApi.getTickerData("901", "100"),
-						coinMarketCapApi.getTickerData("1001", "100"),
-						coinMarketCapApi.getTickerData("1101", "100"),
-						coinMarketCapApi.getTickerData("1201", "100"),
-						coinMarketCapApi.getTickerData("1301", "100"),
+				Observable.zip(coinMarketCapApi.getTickerData("701", currency),
+						coinMarketCapApi.getTickerData("801", currency),
+						coinMarketCapApi.getTickerData("901", currency),
+						coinMarketCapApi.getTickerData("1001", currency),
+						coinMarketCapApi.getTickerData("1101", currency),
+						coinMarketCapApi.getTickerData("1201", currency),
+						coinMarketCapApi.getTickerData("1301", currency),
 						Function7<CoinMarketTickerData, CoinMarketTickerData, CoinMarketTickerData,
 								CoinMarketTickerData, CoinMarketTickerData, CoinMarketTickerData,
 								CoinMarketTickerData, List<CoinMarketCrypto>> { t1, t2, t3, t4, t5, t6, t7 ->
@@ -49,9 +56,9 @@ class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoA
 									, t5.data.values, t6.data.values, t7.data.values).flatten()
 						}),
 
-				Observable.zip(coinMarketCapApi.getTickerData("1401", "100"),
-						coinMarketCapApi.getTickerData("1501", "100"),
-						coinMarketCapApi.getTickerData("1601", "100"),
+				Observable.zip(coinMarketCapApi.getTickerData("1401", currency),
+						coinMarketCapApi.getTickerData("1501", currency),
+						coinMarketCapApi.getTickerData("1601", currency),
 						cryptoApi.getList(),
 						Function4<CoinMarketTickerData, CoinMarketTickerData, CoinMarketTickerData, CurrencyData, Pair<List<CoinMarketCrypto>, CurrencyData>>
 						{ z1, z2, z3, z4 ->

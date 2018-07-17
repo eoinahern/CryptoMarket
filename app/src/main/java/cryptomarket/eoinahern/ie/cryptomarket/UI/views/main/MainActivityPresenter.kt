@@ -14,12 +14,13 @@ import javax.inject.Inject
 class MainActivityPresenter @Inject constructor(private var getCryptoListInteractor: GetCryptoListInteractor) : BasePresenter<MainActivityView>() {
 
 
-	fun getCurrencyDataInitial() {
+	fun getCurrencyDataInitial(currency: String) {
 
-		getCryptoListInteractor.execute(object : BaseDisposableObserver<Pair<List<CoinMarketCrypto>, CurrencyData>>() {
+		getCryptoListInteractor.setCurrency(currency).execute(object : BaseDisposableObserver<Pair<List<CoinMarketCrypto>, CurrencyData>>() {
 
 			override fun onNext(t: Pair<List<CoinMarketCrypto>, CurrencyData>) {
 				getView()?.hideLoading()
+				println("num items ${t.first.size}")
 				getView()?.updateRecyclerView(t.first)
 				getView()?.initCurrencyData(t.second.cryptoWrapper)
 			}

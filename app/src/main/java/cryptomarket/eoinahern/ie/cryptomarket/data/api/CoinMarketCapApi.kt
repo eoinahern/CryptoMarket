@@ -10,6 +10,5 @@ interface CoinMarketCapApi {
 
 	@GET("ticker/")
 	fun getTickerData(@Query("start") start: String,
-					  @Query("limit") limit: String,
-					  @Query("convert") currency: String = "USD"): Observable<CoinMarketTickerData>
+					  @Query("convert") currency: String): Observable<CoinMarketTickerData>
 }
