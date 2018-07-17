@@ -62,9 +62,9 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 		super.onCreate(savedInstanceState)
 		presenter.attachView(this)
 		setUpToolbar()
-		readIntent()
 		setUpGraph()
 		showLoading()
+		readIntent()
 		initGraphButtons()
 		initLinkSelect()
 	}
@@ -83,7 +83,13 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	}
 
 	private fun readIntent() {
-		val curr = intent.getParcelableExtra<CryptoCurrency>(CURRENCY_INFO)
+		var curr = intent.getParcelableExtra<CryptoCurrency>(CURRENCY_INFO)
+
+		curr ?: run {
+			noData()
+			return
+		}
+
 		toCurrency = intent.getStringExtra(CONVERTED_TO)
 		setCryptoCurrencyToViews(curr)
 		presenter.getCoinInfo(curr.Id, curr.Symbol, toCurrency)
@@ -126,6 +132,10 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 		loadingView.setState(LoadingView.State.OTHER_ERROR)
 	}
 
+	private fun noData() {
+		loadingView.setState(LoadingView.State.NO_DATA)
+	}
+
 	/**
 	 * needs to set up programmatically.
 	 *
@@ -163,7 +173,6 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	}
 
 	override fun initGraphData(graphList: MutableList<HistoricalData?>) {
-
 		graphListCopy.addAll(graphList)
 		graphList.clear()
 
@@ -215,7 +224,6 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	}
 
 	override fun showFullPriceData(currencyFullPrice: CurrencyFullPriceDataDisplay?) {
-
 		toCurrencySymbol = currencyFullPrice?.TOSYMBOL ?: ""
 		marketcapTxt.text = currencyFullPrice?.MKTCAP
 		marketTxt.text = currencyFullPrice?.MARKET
