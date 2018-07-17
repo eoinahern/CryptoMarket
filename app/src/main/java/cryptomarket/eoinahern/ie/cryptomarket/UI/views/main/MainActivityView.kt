@@ -19,7 +19,7 @@ interface MainActivityView : MvpView {
 
 	fun showOtherError()
 
-	fun gotToDetail(crypto: CryptoCurrency?, currencyFullPrice: CurrencyFullPriceDataDisplay?)
+	fun gotToDetail(symbol: String)
 
 	fun initCurrencyData(currencyData: Map<String, CryptoCurrency>)
 }

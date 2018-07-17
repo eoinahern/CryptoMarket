@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import com.jakewharton.rxbinding2.widget.RxSearchView
@@ -15,9 +14,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.views.detail.DetailsActivity
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerActivity
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CoinMarketCrypto
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
-import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyFullPriceDataDisplay
 import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CONVERTED_TO
-import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CURRENCY_FULL_PRICE
 import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CURRENCY_INFO
 import cryptomarket.eoinahern.ie.cryptomarket.tools.decoration.BottomItemDecoration
 import cryptomarket.eoinahern.ie.cryptomarket.tools.view.LoadingView
@@ -34,7 +31,7 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	lateinit var presenter: MainActivityPresenter
 	@Inject
 	lateinit var adapter: MainActivityAdapter
-	lateinit var llmanager: LinearLayoutManager
+	private lateinit var llmanager: LinearLayoutManager
 	private lateinit var menuText: String
 	private lateinit var currencyData: Map<String, CryptoCurrency>
 
@@ -78,23 +75,21 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-
 		menuInflater.inflate(R.menu.toolbar_currency_menu, menu)
 		menu?.getItem(0)?.isChecked = true
-		menuText = getString(R.string.euro_abv)
+		menuText = getString(R.string.usd_abv)
 		adapter.setCurrency(menuText)
 		return true
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-
 		menuText = item?.title.toString()
+		item?.isChecked = true
 		adapter.setCurrency(menuText)
 		return super.onOptionsItemSelected(item)
 	}
 
 	private fun setUpRecycler() {
-
 		llmanager = LinearLayoutManager(this)
 		recycler.layoutManager = llmanager
 		recycler.setHasFixedSize(false)
@@ -104,7 +99,6 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	}
 
 	private fun setUpSearchListener() {
-
 		RxSearchView.queryTextChanges(cryptoSearchView)
 				.debounce(500, TimeUnit.MILLISECONDS)
 				.observeOn(AndroidSchedulers.mainThread())
@@ -133,14 +127,11 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 		loadingView.setState(LoadingView.State.OTHER_ERROR)
 	}
 
-	override fun gotToDetail(crypto: CryptoCurrency?, fullPriceDataDisplay: CurrencyFullPriceDataDisplay?) {
-
+	override fun gotToDetail(symbol: String) {
 		val intent = DetailsActivity.getStartIntent(this)
-
-		//intent.putExtra(CURRENCY_INFO, crypto)
-		//intent.putExtra(CONVERTED_TO, menuText)
-		//intent.putExtra(CURRENCY_FULL_PRICE, fullPriceDataDisplay)
-		//startActivity(intent)
+		intent.putExtra(CURRENCY_INFO, currencyData[symbol])
+		intent.putExtra(CONVERTED_TO, menuText)
+		startActivity(intent)
 	}
 
 	override fun onDestroy() {

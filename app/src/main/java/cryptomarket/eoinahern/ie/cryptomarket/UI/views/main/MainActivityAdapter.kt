@@ -7,11 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.Space
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.compareApiDeprecated
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.*
+import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.SPACE
 import javax.inject.Inject
 
 
@@ -27,36 +29,25 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 	}
 
 	private fun bindCryptoItemView(holder: ViewHolder, position: Int) {
-
-		/*val cryptoCurrencyData = cryptoData[position]?.first
-		val fullPriceMap = cryptoData[position]?.second
-		val currency = fullPriceMap?.get(currencyStr)*/
-
-		/*holder.name.text = cryptoCurrencyData?.Symbol
-		holder.fullName.text = cryptoCurrencyData?.FullName
-		val url = compareApiDeprecated.plus(cryptoCurrencyData?.ImageUrl)
-		holder.price.text = currency?.PRICE
-		holder.pctChange.text = String.format(context.getString(R.string.pct_format), currency?.CHANGEPCT24HOUR)
-		holder.pctChange.isSelected = currency?.isMinus() ?: false
-		holder.icon.setImageURI(url)
-		holder.itemView.setOnClickListener {
-			presenter.navigateToDetail(cryptoCurrencyData, currency)
-        }*/
-
 		val data = cryptoData[position]
-		val quote = data.quotes["USD"]
+		val quote = data.quotes[currencyStr]
 
 		holder.fullName.text = data.name
 		holder.name.text = data.symbol
 		holder.pctChange.text = String.format(context.getString(R.string.pct_format), quote?.percent_change_24h)
 		holder.pctChange.isSelected = quote?.isMinus() ?: false
-		holder.price.text = quote?.price.toString()
+		holder.price.text = String.format(context.getString(R.string.simple_price_frmt),
+				currencyStr, quote?.price.toString())
 		holder.icon.setImageURI(data.getIconUrl())
+
+		holder.itemView.setOnClickListener {
+			presenter.navigateToDetail(data.symbol)
+		}
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
-		val v = LayoutInflater.from(parent.context).inflate(R.layout.single_crypto_layout, parent, false)
+		val v = LayoutInflater.from(parent.context)
+				.inflate(R.layout.single_crypto_layout, parent, false)
 		return ViewHolder(v)
 	}
 
@@ -70,7 +61,6 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 	}
 
 	fun showFilteredList(dataList: List<CoinMarketCrypto>) {
-
 		if (cryptoData.size > 0)
 			cryptoData.clear()
 
@@ -82,7 +72,6 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 
 	fun setCurrency(currecyStr: String) {
 		currencyStr = currecyStr
-		notifyDataSetChanged()
 	}
 
 	override fun getFilter(): Filter {
@@ -90,13 +79,11 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 		return object : Filter() {
 
 			override fun publishResults(searchSequence: CharSequence?, filteredResults: FilterResults?) {
-
 				var list = filteredResults?.values as List<CoinMarketCrypto>
 				showFilteredList(list)
 			}
 
 			override fun performFiltering(searchSequence: CharSequence?): FilterResults? {
-
 				var filteredResults = FilterResults()
 
 				if (searchSequence?.trim().isNullOrEmpty() || searchSequence?.trim().isNullOrBlank()) {

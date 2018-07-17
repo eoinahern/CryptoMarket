@@ -9,6 +9,7 @@ import retrofit2.http.Query
 interface CoinMarketCapApi {
 
 	@GET("ticker/")
-	fun getTickerData(@Query("start") currency: String,
-					  @Query("limit") limit: String): Observable<CoinMarketTickerData>
+	fun getTickerData(@Query("start") start: String,
+					  @Query("limit") limit: String,
+					  @Query("convert") currency: String = "USD"): Observable<CoinMarketTickerData>
 }
