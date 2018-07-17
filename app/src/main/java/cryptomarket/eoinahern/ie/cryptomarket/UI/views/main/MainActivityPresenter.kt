@@ -38,12 +38,13 @@ class MainActivityPresenter @Inject constructor(private var getCryptoListInterac
 		})
 	}
 
-	/*fun getCurrencyUpdateData(offset: Int, limit: Int) {
+	fun getCurrencyUpdateData(currency: String) {
 
-		getCryptoListInteractor.setStartLimit(offset, limit).execute(object : BaseSubscriber<List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>>() {
+		getCryptoListInteractor.setCurrency(currency).execute(object : BaseSubscriber<Pair<List<CoinMarketCrypto>, CurrencyData>>() {
 
-			override fun onNext(t: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) {
-				getView()?.updateRecyclerView(t)
+			override fun onNext(t: Pair<List<CoinMarketCrypto>, CurrencyData>) {
+				getView()?.hideLoading()
+				getView()?.updateRecyclerView(t.first)
 			}
 
 			override fun onSubscribe(d: Disposable) {
@@ -60,7 +61,7 @@ class MainActivityPresenter @Inject constructor(private var getCryptoListInterac
 				}
 			}
 		})
-	}*/
+	}
 
 	fun navigateToDetail(symbol: String) {
 		getView()?.gotToDetail(symbol)
