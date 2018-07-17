@@ -15,7 +15,7 @@ import javax.inject.Inject
 class DetailsActivityPresenter @Inject constructor(private val getGraphDataInteractor: GetGraphDataInteractor,
 												   private val getCryptoInfoInteractor: GetCryptoInfoInteractor) : BasePresenter<DetailsView>() {
 
-	fun loadDetailsData(cryptoAbv: String, toCurrency: String, id: String) {
+	private fun loadDetailsData(cryptoAbv: String, toCurrency: String) {
 
 		getGraphDataInteractor.setSearchCrypto(cryptoAbv, toCurrency)
 				.execute(object : BaseSubscriber<MutableList<Response<HistoricalData>>>() {
@@ -28,8 +28,8 @@ class DetailsActivityPresenter @Inject constructor(private val getGraphDataInter
 							}
 						}
 
+						getView()?.hideLoading()
 						getView()?.initGraphData(t.map { it.body() }.toMutableList())
-						getCoinInfo(id, cryptoAbv, toCurrency)
 					}
 
 					override fun onError(e: Throwable) {
@@ -46,14 +46,15 @@ class DetailsActivityPresenter @Inject constructor(private val getGraphDataInter
 				})
 	}
 
-	private fun getCoinInfo(id: String, cryptoAbv: String, toCurrency: String) {
+	public fun getCoinInfo(id: String, cryptoAbv: String, toCurrency: String) {
 
 		getCryptoInfoInteractor.setID(id, cryptoAbv, toCurrency).execute(object : BaseSubscriber<Pair<SnapShotData,
 				CurrencyFullPriceDataDisplay?>>() {
 			override fun onNext(data: Pair<SnapShotData, CurrencyFullPriceDataDisplay?>) {
-				getView()?.hideLoading()
 				getView()?.showGeneralCoinInfo(data.first)
 				getView()?.showFullPriceData(data.second)
+
+				loadDetailsData(cryptoAbv, toCurrency)
 			}
 
 			override fun onError(e: Throwable) {
