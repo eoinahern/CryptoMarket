@@ -2,12 +2,14 @@ package cryptomarket.eoinahern.ie.cryptomarket.DI.modules
 
 import android.content.Context
 import com.squareup.moshi.Moshi
+import cryptomarket.eoinahern.ie.cryptomarket.data.api.CoinMarketCapApi
 import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.compareApiEndPoint
 import cryptomarket.eoinahern.ie.cryptomarket.data.api.ConnectionCheckInterceptor
 import cryptomarket.eoinahern.ie.cryptomarket.data.api.CryptoApi
 import cryptomarket.eoinahern.ie.cryptomarket.data.api.CryptoApiOld
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.typeadapters.FullPriceWrapperInternalDisplayAdapter
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.typeadapters.HistoricalDataAdapter
+import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.coinMarketCapAPI
 import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.compareApiEndPointOld
 import dagger.Module
 import dagger.Provides
@@ -62,5 +64,17 @@ class NetworkModule {
 				.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 				.addConverterFactory(MoshiConverterFactory.create(moshi))
 				.build().create(CryptoApiOld::class.java)
+	}
+
+	@Singleton
+	@Provides
+	fun getCoinMarketCap(moshi: Moshi, client: OkHttpClient): CoinMarketCapApi {
+
+		return Retrofit.Builder()
+				.baseUrl(coinMarketCapAPI)
+				.client(client)
+				.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+				.addConverterFactory(MoshiConverterFactory.create(moshi))
+				.build().create(CoinMarketCapApi::class.java)
 	}
 }

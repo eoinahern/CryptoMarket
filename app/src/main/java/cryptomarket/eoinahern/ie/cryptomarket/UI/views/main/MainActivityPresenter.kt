@@ -14,13 +14,15 @@ import javax.inject.Inject
 class MainActivityPresenter @Inject constructor(private var getCryptoListInteractor: GetCryptoListInteractor) : BasePresenter<MainActivityView>() {
 
 
-	fun getCurrencyDataInitial() {
+	fun getCurrencyDataInitial(currency: String) {
 
-		getCryptoListInteractor.setStartLimit(0, 50).execute(object : BaseDisposableObserver<List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>>() {
+		getCryptoListInteractor.setCurrency(currency).execute(object : BaseDisposableObserver<Pair<List<CoinMarketCrypto>, CurrencyData>>() {
 
-			override fun onNext(t: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) {
+			override fun onNext(t: Pair<List<CoinMarketCrypto>, CurrencyData>) {
 				getView()?.hideLoading()
-				getView()?.updateRecyclerView(t)
+				println("num items ${t.first.size}")
+				getView()?.updateRecyclerView(t.first)
+				getView()?.initCurrencyData(t.second.cryptoWrapper)
 			}
 
 			override fun onError(e: Throwable) {
@@ -36,12 +38,13 @@ class MainActivityPresenter @Inject constructor(private var getCryptoListInterac
 		})
 	}
 
-	fun getCurrencyUpdateData(offset: Int, limit: Int) {
+	fun getCurrencyUpdateData(currency: String) {
 
-		getCryptoListInteractor.setStartLimit(offset, limit).execute(object : BaseSubscriber<List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>>() {
+		getCryptoListInteractor.setCurrency(currency).execute(object : BaseSubscriber<Pair<List<CoinMarketCrypto>, CurrencyData>>() {
 
-			override fun onNext(t: List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>) {
-				getView()?.updateRecyclerView(t)
+			override fun onNext(t: Pair<List<CoinMarketCrypto>, CurrencyData>) {
+				getView()?.hideLoading()
+				getView()?.updateRecyclerView(t.first)
 			}
 
 			override fun onSubscribe(d: Disposable) {
@@ -60,8 +63,8 @@ class MainActivityPresenter @Inject constructor(private var getCryptoListInterac
 		})
 	}
 
-	fun navigateToDetail(crypto: CryptoCurrency?, currencyFullPriceDataDisplay: CurrencyFullPriceDataDisplay?) {
-		getView()?.gotToDetail(crypto, currencyFullPriceDataDisplay)
+	fun navigateToDetail(symbol: String) {
+		getView()?.gotToDetail(symbol)
 	}
 
 	override fun detachView() {

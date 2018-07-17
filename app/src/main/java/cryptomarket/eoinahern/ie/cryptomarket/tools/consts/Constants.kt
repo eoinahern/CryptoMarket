@@ -3,12 +3,15 @@ package cryptomarket.eoinahern.ie.cryptomarket.tools.consts
 
 const val compareApiEndPoint: String = "https://min-api.cryptocompare.com/data/"
 const val compareApiEndPointOld: String = "https://www.cryptocompare.com/api/data/"
+const val coinMarketCapAPI = " https://api.coinmarketcap.com/v2/"
 const val compareApiDeprecated = "https://www.cryptocompare.com"
 const val TWITTER_BASE_URL = "https://twitter.com/"
 const val CURRENCY_INFO: String = "currency"
 const val CONVERTED_TO: String = "converted"
-const val CURRENCY_FULL_PRICE: String = "currency_full_price"
+const val SPACE = " "
 const val GRAPH_LINE_WIDTH: Float = 4f
+const val PNG_SUFFIX = ".png"
+const val ICON_LOCATION = "https://s2.coinmarketcap.com/static/img/coins/64x64/"
 
 const val toSymbolSyr: String = "TOSYMBOL"
 const val changeStr = "CHANGEPCT24HOUR"

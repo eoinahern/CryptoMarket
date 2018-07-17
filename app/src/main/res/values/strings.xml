@@ -16,6 +16,7 @@
 	<string name="pln_abv">PLN</string>
 	<string name="usd_abv">USD</string>
 	<string name="pct_format">%s%%</string>
+	<string name="simple_price_frmt">%s %s</string>
 	<string name="search_cryptos">Search cryptos</string>
 	<string name="twelve_hours_abv">12H</string>
 	<string name="one_month">1M</string>
@@ -39,4 +40,11 @@
 	<string name="blog_title">Blog</string>
 	<string name="website_title">Website</string>
 	<string name="whitepaper_title">White paper</string>
+	<string name="not_available">N/A</string>
+
+
+	<!--currency symbols-->
+	<string name="EUR">€</string>
+	<string name="USD">$</string>
+	<string name="GBP">£</string>
 </resources>
