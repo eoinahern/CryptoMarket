@@ -205,6 +205,7 @@
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:layout_marginTop="12dp"
+							android:text="@string/not_available"
 							app:layout_constraintEnd_toEndOf="parent"
 							app:layout_constraintTop_toBottomOf="@+id/div_1"
 							tools:text="1B" />
@@ -236,6 +237,7 @@
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:layout_marginTop="12dp"
+							android:text="@string/not_available"
 							app:layout_constraintEnd_toEndOf="parent"
 							app:layout_constraintTop_toBottomOf="@+id/div_2"
 							tools:text="A market!!" />
@@ -265,6 +267,7 @@
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:layout_marginTop="12dp"
+							android:text="@string/not_available"
 							app:layout_constraintEnd_toEndOf="parent"
 							app:layout_constraintTop_toBottomOf="@id/div_3"
 							tools:text="balls" />
@@ -294,6 +297,7 @@
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:layout_marginTop="12dp"
+							android:text="@string/not_available"
 							app:layout_constraintEnd_toEndOf="parent"
 							app:layout_constraintTop_toBottomOf="@id/div_4"
 							tools:text="1000 B" />
@@ -323,6 +327,7 @@
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:layout_marginTop="12dp"
+							android:text="@string/not_available"
 							app:layout_constraintEnd_toEndOf="parent"
 							app:layout_constraintTop_toBottomOf="@id/div_5"
 							tools:text="20 B" />
@@ -352,6 +357,7 @@
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:layout_marginTop="12dp"
+							android:text="@string/not_available"
 							app:layout_constraintEnd_toEndOf="parent"
 							app:layout_constraintTop_toBottomOf="@id/div_6"
 							tools:text="$5.00" />
@@ -381,6 +387,7 @@
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:layout_marginTop="12dp"
+							android:text="@string/not_available"
 							app:layout_constraintEnd_toEndOf="parent"
 							app:layout_constraintTop_toBottomOf="@id/div_7"
 							tools:text="$3.00" />
@@ -424,8 +431,7 @@
 							android:linksClickable="true"
 							android:textColorLink="@color/mint_green_heavy"
 							app:layout_constraintStart_toStartOf="parent"
-							app:layout_constraintTop_toBottomOf="@+id/description_title"
-							/>
+							app:layout_constraintTop_toBottomOf="@+id/description_title" />
 
 
 					</android.support.constraint.ConstraintLayout>

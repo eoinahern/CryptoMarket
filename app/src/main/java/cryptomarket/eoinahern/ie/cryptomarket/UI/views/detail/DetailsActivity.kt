@@ -87,7 +87,6 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 		val convertedTo = intent.getStringExtra(CONVERTED_TO)
 		//currencyFullPrice = intent.getParcelableExtra(CURRENCY_FULL_PRICE)
 		setCryptoCurrencyToViews(curr)
-		setPriceDataToViews()
 
 		presenter.loadDetailsData(curr.Symbol, convertedTo, curr.Id)
 	}
@@ -96,16 +95,6 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 		actionBarIcon.setImageURI(compareApiDeprecated.plus(cryptoCurrency.ImageUrl))
 		toolbarCryptoTxt.text = cryptoCurrency.FullName
 		symbolTxt.text = cryptoCurrency.Symbol
-	}
-
-	private fun setPriceDataToViews() {
-		/*marketcapTxt.text = currencyFullPrice.MKTCAP
-		marketTxt.text = currencyFullPrice.MARKET
-		supplyTxt.text = currencyFullPrice.SUPPLY
-		vol24hTxt.text = currencyFullPrice.VOLUME24HOURTO
-		totalVol24hTxt.text = currencyFullPrice.TOTALVOLUME24HTO
-		lowDayTxt.text = currencyFullPrice.LOWDAY
-		highDayTxt.text = currencyFullPrice.HIGHDAY*/
 	}
 
 	override fun inject() {
@@ -212,7 +201,6 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	}
 
 	override fun showGeneralCoinInfo(snapShotData: SnapShotData) {
-
 		val general = snapShotData.General
 		val ico = snapShotData.ico
 
@@ -229,6 +217,16 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 		blogTxt.text = ico.getBlogLink()
 
 		llayoutDetails.visibility = View.VISIBLE
+	}
+
+	override fun showFullPriceData(currencyFullPrice: CurrencyFullPriceDataDisplay?) {
+		marketcapTxt.text = currencyFullPrice?.MKTCAP
+		marketTxt.text = currencyFullPrice?.MARKET
+		supplyTxt.text = currencyFullPrice?.SUPPLY
+		vol24hTxt.text = currencyFullPrice?.VOLUME24HOURTO
+		totalVol24hTxt.text = currencyFullPrice?.TOTALVOLUME24HTO
+		lowDayTxt.text = currencyFullPrice?.LOWDAY
+		highDayTxt.text = currencyFullPrice?.HIGHDAY
 	}
 
 	private fun getLineDataSetFromGraph() = lineGraph.lineData.dataSets[0] as LineDataSet
