@@ -52,7 +52,6 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	private val detailsToolbar: Toolbar by lazy { findViewById<Toolbar>(R.id.toolbar) }
 	private val loadingView: LoadingView by lazy { findViewById<LoadingView>(R.id.loading_view) }
 	private val lineGraph: LineChart by lazy { findViewById<LineChart>(R.id.line_graph) }
-
 	private var graphListCopy: MutableList<HistoricalData?> = mutableListOf()
 	private lateinit var toCurrency: String
 	private lateinit var toCurrencySymbol: String
@@ -162,7 +161,6 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 
 	@SuppressLint("ResourceType")
 	private fun addDataSetStyling(dataSet: LineDataSet?) {
-
 		dataSet?.apply {
 			color = ContextCompat.getColor(applicationContext, R.color.mint_green_heavy)
 			lineWidth = GRAPH_LINE_WIDTH

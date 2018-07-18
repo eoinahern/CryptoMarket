@@ -46,7 +46,7 @@ class DetailsActivityPresenter @Inject constructor(private val getGraphDataInter
 				})
 	}
 
-	public fun getCoinInfo(id: String, cryptoAbv: String, toCurrency: String) {
+	fun getCoinInfo(id: String, cryptoAbv: String, toCurrency: String) {
 
 		getCryptoInfoInteractor.setID(id, cryptoAbv, toCurrency).execute(object : BaseSubscriber<Pair<SnapShotData,
 				CurrencyFullPriceDataDisplay?>>() {
@@ -58,7 +58,6 @@ class DetailsActivityPresenter @Inject constructor(private val getGraphDataInter
 			}
 
 			override fun onError(e: Throwable) {
-				getView()?.hideLoading()
 				if (e is NoConnectionException) {
 					getView()?.showNetworkError()
 				} else {
