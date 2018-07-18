@@ -8,4 +8,4 @@
 /build
 /captures
 .externalNativeBuild
-/modules/NetworkModule.kt
+app/src/main/java/cryptomarket/eoinahern/ie/cryptomarket/DI/modules/NetworkModule.kt
