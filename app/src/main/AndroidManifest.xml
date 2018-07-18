@@ -5,8 +5,7 @@
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
 
-	<!--android:windowSoftInputMode="stateHidden"-->
-
+	<!-- android:windowSoftInputMode="stateHidden" -->
 	<application
 		android:name=".MyApp"
 		android:allowBackup="true"
@@ -25,7 +24,7 @@
 		</activity>
 		<activity
 			android:name=".UI.views.alerts.AlertsActivity"
-			android:screenOrientation="portrait"></activity>
+			android:screenOrientation="portrait" />
 		<activity
 			android:name=".UI.views.currency.CurrencyActivity"
 			android:screenOrientation="portrait" />
@@ -39,14 +38,14 @@
 
 		<activity
 			android:name=".UI.views.detail.DetailsActivity"
+			android:label=""
 			android:parentActivityName=".UI.views.main.MainActivity"
-			android:screenOrientation="portrait"
-			android:label="">
-
+			android:screenOrientation="portrait">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
-				android:value=".UI.views.main.MainActivity"/>
+				android:value=".UI.views.main.MainActivity" />
 		</activity>
+		<activity android:name=".UI.views.news.NewsActivity"></activity>
 	</application>
 
 </manifest>
