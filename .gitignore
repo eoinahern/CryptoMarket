@@ -8,4 +8,4 @@
 /build
 /captures
 .externalNativeBuild
-.modules/NetworkModule.kt
+/modules/NetworkModule.kt
