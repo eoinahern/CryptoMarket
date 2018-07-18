@@ -1,2 +1,2 @@
 /build
-/modules/NetworkModule.kt
+src/main/DI/modules/NetworkModule.kt
