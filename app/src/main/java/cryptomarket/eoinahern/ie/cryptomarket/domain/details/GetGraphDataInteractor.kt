@@ -16,7 +16,6 @@ class GetGraphDataInteractor @Inject constructor(private val cryptoApi: CryptoAp
 	private lateinit var convertedTo: String
 
 	fun setSearchCrypto(cryptoAbv: String, convertedTo: String): GetGraphDataInteractor {
-
 		this.cryptoAbv = cryptoAbv
 		this.convertedTo = convertedTo
 		return this

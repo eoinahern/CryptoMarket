@@ -2,10 +2,7 @@ package cryptomarket.eoinahern.ie.cryptomarket.UI.views.detail
 
 import cryptomarket.eoinahern.ie.cryptomarket.DI.annotation.PerScreen
 import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BasePresenter
-import cryptomarket.eoinahern.ie.cryptomarket.data.models.CoinFullSnapShot
-import cryptomarket.eoinahern.ie.cryptomarket.data.models.GeneralCoinInfo
-import cryptomarket.eoinahern.ie.cryptomarket.data.models.HistoricalData
-import cryptomarket.eoinahern.ie.cryptomarket.data.models.SnapShotData
+import cryptomarket.eoinahern.ie.cryptomarket.data.models.*
 import cryptomarket.eoinahern.ie.cryptomarket.data.util.NoConnectionException
 import cryptomarket.eoinahern.ie.cryptomarket.domain.base.BaseSubscriber
 import cryptomarket.eoinahern.ie.cryptomarket.domain.details.GetCryptoInfoInteractor
@@ -18,9 +15,9 @@ import javax.inject.Inject
 class DetailsActivityPresenter @Inject constructor(private val getGraphDataInteractor: GetGraphDataInteractor,
 												   private val getCryptoInfoInteractor: GetCryptoInfoInteractor) : BasePresenter<DetailsView>() {
 
-	fun loadDetailsData(cryptoAbv: String, covertedTo: String, id: String) {
+	private fun loadDetailsData(cryptoAbv: String, toCurrency: String) {
 
-		getGraphDataInteractor.setSearchCrypto(cryptoAbv, covertedTo)
+		getGraphDataInteractor.setSearchCrypto(cryptoAbv, toCurrency)
 				.execute(object : BaseSubscriber<MutableList<Response<HistoricalData>>>() {
 
 					override fun onNext(t: MutableList<Response<HistoricalData>>) {
@@ -31,8 +28,8 @@ class DetailsActivityPresenter @Inject constructor(private val getGraphDataInter
 							}
 						}
 
+						getView()?.hideLoading()
 						getView()?.initGraphData(t.map { it.body() }.toMutableList())
-						getCoinInfo(id)
 					}
 
 					override fun onError(e: Throwable) {
@@ -49,12 +46,15 @@ class DetailsActivityPresenter @Inject constructor(private val getGraphDataInter
 				})
 	}
 
-	private fun getCoinInfo(id: String) {
+	fun getCoinInfo(id: String, cryptoAbv: String, toCurrency: String) {
 
-		getCryptoInfoInteractor.setID(id).execute(object : BaseSubscriber<SnapShotData>() {
-			override fun onNext(snapShotData: SnapShotData) {
-				getView()?.hideLoading()
-				getView()?.showGeneralCoinInfo(snapShotData)
+		getCryptoInfoInteractor.setID(id, cryptoAbv, toCurrency).execute(object : BaseSubscriber<Pair<SnapShotData,
+				CurrencyFullPriceDataDisplay?>>() {
+			override fun onNext(data: Pair<SnapShotData, CurrencyFullPriceDataDisplay?>) {
+				getView()?.showGeneralCoinInfo(data.first)
+				getView()?.showFullPriceData(data.second)
+
+				loadDetailsData(cryptoAbv, toCurrency)
 			}
 
 			override fun onError(e: Throwable) {

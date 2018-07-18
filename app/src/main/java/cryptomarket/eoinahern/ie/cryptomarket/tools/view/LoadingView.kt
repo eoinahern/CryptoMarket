@@ -56,6 +56,11 @@ class LoadingView : FrameLayout {
 				errorTxt.visibility = View.VISIBLE
 				errorTxt.text = context.getString(R.string.data_loading_error)
 			}
+			State.NO_DATA -> {
+				progressLayout.visibility = View.INVISIBLE
+				errorTxt.visibility = View.VISIBLE
+				errorTxt.text = context.getString(R.string.no_data_available)
+			}
 		}
 	}
 
@@ -66,6 +71,7 @@ class LoadingView : FrameLayout {
 	enum class State {
 		LOADING,
 		NETWORK_ERROR,
-		OTHER_ERROR
+		OTHER_ERROR,
+		NO_DATA
 	}
 }

@@ -52,18 +52,18 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	private val detailsToolbar: Toolbar by lazy { findViewById<Toolbar>(R.id.toolbar) }
 	private val loadingView: LoadingView by lazy { findViewById<LoadingView>(R.id.loading_view) }
 	private val lineGraph: LineChart by lazy { findViewById<LineChart>(R.id.line_graph) }
-
 	private var graphListCopy: MutableList<HistoricalData?> = mutableListOf()
-	private lateinit var currencyFullPrice: CurrencyFullPriceDataDisplay
+	private lateinit var toCurrency: String
+	private lateinit var toCurrencySymbol: String
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 
 		super.onCreate(savedInstanceState)
 		presenter.attachView(this)
 		setUpToolbar()
-		readIntent()
 		setUpGraph()
 		showLoading()
+		readIntent()
 		initGraphButtons()
 		initLinkSelect()
 	}
@@ -82,30 +82,22 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	}
 
 	private fun readIntent() {
+		var curr = intent.getParcelableExtra<CryptoCurrency>(CURRENCY_INFO)
 
-		val curr = intent.getParcelableExtra<CryptoCurrency>(CURRENCY_INFO)
-		val convertedTo = intent.getStringExtra(CONVERTED_TO)
-		//currencyFullPrice = intent.getParcelableExtra(CURRENCY_FULL_PRICE)
+		curr ?: run {
+			noData()
+			return
+		}
+
+		toCurrency = intent.getStringExtra(CONVERTED_TO)
 		setCryptoCurrencyToViews(curr)
-		setPriceDataToViews()
-
-		presenter.loadDetailsData(curr.Symbol, convertedTo, curr.Id)
+		presenter.getCoinInfo(curr.Id, curr.Symbol, toCurrency)
 	}
 
 	private fun setCryptoCurrencyToViews(cryptoCurrency: CryptoCurrency) {
 		actionBarIcon.setImageURI(compareApiDeprecated.plus(cryptoCurrency.ImageUrl))
 		toolbarCryptoTxt.text = cryptoCurrency.FullName
 		symbolTxt.text = cryptoCurrency.Symbol
-	}
-
-	private fun setPriceDataToViews() {
-		/*marketcapTxt.text = currencyFullPrice.MKTCAP
-		marketTxt.text = currencyFullPrice.MARKET
-		supplyTxt.text = currencyFullPrice.SUPPLY
-		vol24hTxt.text = currencyFullPrice.VOLUME24HOURTO
-		totalVol24hTxt.text = currencyFullPrice.TOTALVOLUME24HTO
-		lowDayTxt.text = currencyFullPrice.LOWDAY
-		highDayTxt.text = currencyFullPrice.HIGHDAY*/
 	}
 
 	override fun inject() {
@@ -139,13 +131,16 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 		loadingView.setState(LoadingView.State.OTHER_ERROR)
 	}
 
+	private fun noData() {
+		loadingView.setState(LoadingView.State.NO_DATA)
+	}
+
 	/**
 	 * needs to set up programmatically.
 	 *
 	 */
 
 	private fun setUpGraph() {
-
 		lineGraph.setDrawBorders(false)
 		lineGraph.onChartGestureListener = this
 		lineGraph.setOnChartValueSelectedListener(this)
@@ -166,7 +161,6 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 
 	@SuppressLint("ResourceType")
 	private fun addDataSetStyling(dataSet: LineDataSet?) {
-
 		dataSet?.apply {
 			color = ContextCompat.getColor(applicationContext, R.color.mint_green_heavy)
 			lineWidth = GRAPH_LINE_WIDTH
@@ -177,7 +171,6 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	}
 
 	override fun initGraphData(graphList: MutableList<HistoricalData?>) {
-
 		graphListCopy.addAll(graphList)
 		graphList.clear()
 
@@ -188,10 +181,10 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 		lineGraph.data = LineData(graphListCopy[0]?.LineData)
 		setLastDataEntryOnTextViews()
 		lineGraph.invalidate()
+		llayoutDetails.visibility = View.VISIBLE
 	}
 
 	private fun initGraphButtons() {
-
 		twelveHourBtn.setOnClickListener { updateGraph(0) }
 		twoFourHourBtn.setOnClickListener { updateGraph(1) }
 		oneMonthBtn.setOnClickListener { updateGraph(2) }
@@ -212,7 +205,6 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	}
 
 	override fun showGeneralCoinInfo(snapShotData: SnapShotData) {
-
 		val general = snapShotData.General
 		val ico = snapShotData.ico
 
@@ -227,8 +219,17 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 		twitterUrlTxt.text = general.getTwitterFullLink()
 		websiteTxt.text = general.websiteUrl
 		blogTxt.text = ico.getBlogLink()
+	}
 
-		llayoutDetails.visibility = View.VISIBLE
+	override fun showFullPriceData(currencyFullPrice: CurrencyFullPriceDataDisplay?) {
+		toCurrencySymbol = currencyFullPrice?.TOSYMBOL ?: ""
+		marketcapTxt.text = currencyFullPrice?.MKTCAP
+		marketTxt.text = currencyFullPrice?.MARKET
+		supplyTxt.text = currencyFullPrice?.SUPPLY
+		vol24hTxt.text = currencyFullPrice?.VOLUME24HOURTO
+		totalVol24hTxt.text = currencyFullPrice?.TOTALVOLUME24HTO
+		lowDayTxt.text = currencyFullPrice?.LOWDAY
+		highDayTxt.text = currencyFullPrice?.HIGHDAY
 	}
 
 	private fun getLineDataSetFromGraph() = lineGraph.lineData.dataSets[0] as LineDataSet
@@ -283,7 +284,7 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	}
 
 	private fun setPriceAndDate(price: String, date: Float) {
-		valueTxt.text = price  //currencyFullPrice.TOSYMBOL.plus(price)
+		valueTxt.text = toCurrencySymbol.plus(price)
 		dateTxt.text = dateUtil.getLocalDateTime(date.toLong())
 	}
 

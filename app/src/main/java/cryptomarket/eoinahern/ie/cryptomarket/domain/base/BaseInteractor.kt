@@ -14,8 +14,6 @@ open abstract class BaseInteractor<T> {
 	abstract fun buildObservable(): Observable<T>
 
 	fun execute(disp: BaseDisposableObserver<T>) {
-
-		println("execute called!!")
 		disposeObs()
 
 		disposables.add(buildObservable()
