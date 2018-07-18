@@ -6,6 +6,7 @@ const val compareApiEndPointOld: String = "https://www.cryptocompare.com/api/dat
 const val coinMarketCapAPI = " https://api.coinmarketcap.com/v2/"
 const val compareApiDeprecated = "https://www.cryptocompare.com"
 const val TWITTER_BASE_URL = "https://twitter.com/"
+const val cryptoNewsAPI = "https://cryptocontrol.io/api/v1/public/"
 const val CURRENCY_INFO: String = "currency"
 const val CONVERTED_TO: String = "converted"
 const val SPACE = " "
