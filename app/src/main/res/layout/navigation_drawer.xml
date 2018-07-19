@@ -30,7 +30,7 @@
 		</RelativeLayout>
 
 		<LinearLayout
-			android:id="@+id/drawer_main"
+			android:id="@+id/drawerMain"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_below="@id/top_view"
@@ -53,17 +53,17 @@
 		<View
 			android:layout_width="match_parent"
 			android:layout_height="1dp"
-			android:layout_below="@id/drawer_main"
+			android:layout_below="@id/drawerMain"
 			android:layout_marginLeft="12dp"
 			android:layout_marginRight="12dp"
 			android:background="@color/light_grey" />
 
 
 		<LinearLayout
-			android:id="@+id/drawer_favourites"
+			android:id="@+id/drawerFavourites"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_below="@id/drawer_main"
+			android:layout_below="@id/drawerMain"
 			android:clickable="true"
 			android:orientation="horizontal">
 
@@ -83,27 +83,27 @@
 		<View
 			android:layout_width="match_parent"
 			android:layout_height="1dp"
-			android:layout_below="@id/drawer_favourites"
+			android:layout_below="@id/drawerFavourites"
 			android:layout_marginLeft="12dp"
 			android:layout_marginRight="12dp"
 			android:background="@color/light_grey" />
 
 
 		<LinearLayout
-			android:id="@+id/drawer_alerts"
+			android:id="@+id/drawerNews"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_below="@id/drawer_favourites"
+			android:layout_below="@id/drawerFavourites"
 			android:clickable="true"
 			android:orientation="horizontal">
 
 			<TextView
-				android:id="@+id/alerts_txt"
+				android:id="@+id/news_txt"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:fontFamily="@font/quicksand"
 				android:padding="14dp"
-				android:text="@string/alerts"
+				android:text="@string/news"
 				android:textColor="@drawable/menu_item_text_selector"
 				android:textSize="16dp" />
 
@@ -113,7 +113,7 @@
 		<View
 			android:layout_width="match_parent"
 			android:layout_height="1dp"
-			android:layout_below="@id/drawer_alerts"
+			android:layout_below="@id/drawerNews"
 			android:layout_marginLeft="12dp"
 			android:layout_marginRight="12dp"
 			android:background="@color/light_grey" />

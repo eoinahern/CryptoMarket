@@ -11,11 +11,11 @@ import javax.inject.Inject
 
 class NewsActivity : NavigationDrawerActivity(), NewsView {
 
-	@Inject
-	private lateinit var presenter: NewsActivityPresenter
+	/*Inject
+	private lateinit var presenter: NewsActivityPresenter*/
 
-	@Inject
-	private lateinit var adapter: NewsActivityAdapter
+	/*@Inject
+	private lateinit var adapter: NewsActivityAdapter*/
 
 	private val layoutManager: LinearLayoutManager by lazy { LinearLayoutManager(this) }
 
