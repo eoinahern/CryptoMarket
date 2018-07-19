@@ -13,9 +13,11 @@
 		android:id="@+id/newsThumbnail"
 		android:layout_width="80dp"
 		android:layout_height="80dp"
+		app:actualImageScaleType="centerCrop"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		app:roundedCornerRadius="10dp" />
+		app:roundedCornerRadius="5dp"
+		tools:failureImage="@drawable/ic_no_image" />
 
 </android.support.constraint.ConstraintLayout>

@@ -80,10 +80,13 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_arrow_back_black_24dp" />
+                            <entry key="height" value="512" />
+                            <entry key="outputName" value="ic_no_image" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\eoin_a\Desktop\eoin icon.svg" />
+                            <entry key="sourceFile" value="C:\Users\eoin_a\Desktop\picture.svg" />
+                            <entry key="width" value="512" />
                           </map>
                         </option>
                       </PersistentState>

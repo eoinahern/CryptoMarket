@@ -15,15 +15,16 @@ import javax.inject.Inject
 class NewsActivity : NavigationDrawerActivity(), NewsView {
 
 	@Inject
-	private lateinit var presenter: NewsActivityPresenter
+	lateinit var presenter: NewsActivityPresenter
 
 	@Inject
-	private lateinit var adapter: NewsActivityAdapter
+	lateinit var adapter: NewsActivityAdapter
 
 	private val layoutManager: LinearLayoutManager by lazy { LinearLayoutManager(this) }
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+		presenter.attachView(this)
 		showLoading()
 		setUpRecyclerView()
 		getNews()
@@ -67,5 +68,10 @@ class NewsActivity : NavigationDrawerActivity(), NewsView {
 
 	override fun showOtherError() {
 		loadingView.setState(LoadingView.State.OTHER_ERROR)
+	}
+
+	override fun onDestroy() {
+		super.onDestroy()
+		presenter.detachView()
 	}
 }

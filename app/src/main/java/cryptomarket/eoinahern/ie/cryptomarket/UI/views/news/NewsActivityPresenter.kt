@@ -21,6 +21,8 @@ class NewsActivityPresenter @Inject constructor(private val getNewsInteractor: G
 			}
 
 			override fun onError(e: Throwable) {
+
+				e.printStackTrace()
 				if (e is NoConnectionException) {
 					getView()?.showConnectionError()
 				} else {

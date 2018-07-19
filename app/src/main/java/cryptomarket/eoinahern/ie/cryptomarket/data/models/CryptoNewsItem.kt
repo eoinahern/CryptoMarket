@@ -13,5 +13,5 @@ data class CryptoNewsItem(
 		val publishedAt: String,
 		val title: String,
 		val url: String,
-		val thumbnail: String,
+		var thumbnail: String?,
 		val sourceDomain: String)
