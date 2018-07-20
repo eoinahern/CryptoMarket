@@ -2,12 +2,16 @@ package cryptomarket.eoinahern.ie.cryptomarket.UI.views.news
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerActivity
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoNewsItem
+import cryptomarket.eoinahern.ie.cryptomarket.tools.decoration.BottomInsetItemDecoration
 import cryptomarket.eoinahern.ie.cryptomarket.tools.view.LoadingView
 import kotlinx.android.synthetic.main.activity_news.*
 import javax.inject.Inject
@@ -24,10 +28,17 @@ class NewsActivity : NavigationDrawerActivity(), NewsView {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+		supportActionBar?.title = getString(R.string.news)
 		presenter.attachView(this)
 		showLoading()
 		setUpRecyclerView()
 		getNews()
+	}
+
+	override fun setDrawerOnState() {
+		super.setDrawerOnState()
+		news.isSelected = true
+		newsTxt.typeface = Typeface.DEFAULT_BOLD
 	}
 
 	override fun getLayoutView(): Int = R.layout.activity_news
@@ -43,6 +54,7 @@ class NewsActivity : NavigationDrawerActivity(), NewsView {
 
 	private fun setUpRecyclerView() {
 		recyclerView.layoutManager = layoutManager
+		recyclerView.addItemDecoration(BottomInsetItemDecoration(this, R.color.colorPrimaryDark, 1f, 10f))
 		recyclerView.adapter = adapter
 	}
 

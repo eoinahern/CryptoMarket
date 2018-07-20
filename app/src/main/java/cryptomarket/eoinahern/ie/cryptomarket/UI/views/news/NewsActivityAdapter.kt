@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import cryptomarket.eoinahern.ie.cryptomarket.DI.annotation.PerScreen
 import cryptomarket.eoinahern.ie.cryptomarket.R
@@ -22,6 +23,10 @@ class NewsActivityAdapter @Inject constructor() : RecyclerView.Adapter<NewsActiv
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 		val item = newsList[position]
 		holder.thumbnail.setImageURI(item.thumbnail)
+		holder.article.text = item.description
+		//holder.date.text = item.publishedAt
+		holder.title.text = item.title
+		holder.category.text = item.primaryCategory
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsActivityAdapter.ViewHolder {
@@ -29,9 +34,7 @@ class NewsActivityAdapter @Inject constructor() : RecyclerView.Adapter<NewsActiv
 		return ViewHolder(view)
 	}
 
-	override fun getItemCount(): Int {
-		return newsList.size
-	}
+	override fun getItemCount() = newsList.size
 
 	fun updateList(newsList: List<CryptoNewsItem>) {
 
@@ -44,6 +47,11 @@ class NewsActivityAdapter @Inject constructor() : RecyclerView.Adapter<NewsActiv
 
 	class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 		val thumbnail: SimpleDraweeView by lazy { view.findViewById<SimpleDraweeView>(R.id.newsThumbnail) }
+		val title: TextView by lazy { view.findViewById<TextView>(R.id.titleText) }
+		val date: TextView by lazy { view.findViewById<TextView>(R.id.dateText) }
+		val article: TextView by lazy { view.findViewById<TextView>(R.id.articleTxt) }
+		val category: TextView by lazy { view.findViewById<TextView>(R.id.categoryTxt) }
+
 	}
 
 
