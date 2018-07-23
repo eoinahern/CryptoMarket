@@ -6,6 +6,8 @@ import android.preference.PreferenceManager.getDefaultSharedPreferences
 import com.google.gson.Gson
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.data.api.CryptoApi
+import cryptomarket.eoinahern.ie.cryptomarket.data.cache.NewsCache
+import cryptomarket.eoinahern.ie.cryptomarket.data.cache.NewsCacheIml
 import cryptomarket.eoinahern.ie.cryptomarket.tools.date.DateUtil
 import dagger.Module
 import dagger.Provides
@@ -35,5 +37,11 @@ class ApplicationModule constructor(var myApp: MyApp) {
 	@Singleton
 	@Provides
 	fun getDateUtil() = DateUtil()
+
+	@Singleton
+	@Provides
+	fun getNewsCache(): NewsCache {
+		return NewsCacheIml()
+	}
 
 }
