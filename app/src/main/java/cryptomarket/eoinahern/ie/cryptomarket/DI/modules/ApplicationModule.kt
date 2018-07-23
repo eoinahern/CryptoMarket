@@ -38,7 +38,6 @@ class ApplicationModule constructor(var myApp: MyApp) {
 	@Singleton
 	@Provides
 	fun getDB(context: Context): CryptoDatabase {
-
 		return Room.databaseBuilder(context, CryptoDatabase::class.java, DB_NAME)
 				.fallbackToDestructiveMigration()
 				.build()

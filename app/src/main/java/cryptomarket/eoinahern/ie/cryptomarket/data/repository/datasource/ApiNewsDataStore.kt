@@ -13,8 +13,9 @@ class ApiNewsDataStore @Inject constructor(private val newsApi: CryptoNewsApi,
 										   private val newsCache: NewsCache) : NewsDataStore {
 
 	override fun getNews(): Observable<List<CryptoNewsItem>> {
-		return newsApi.getNews(apiKey).doOnNext {
+		return newsApi.getNews(apiKey).flatMap {
 			newsCache.saveNews(it)
+			Observable.just(it)
 		}
 	}
 }

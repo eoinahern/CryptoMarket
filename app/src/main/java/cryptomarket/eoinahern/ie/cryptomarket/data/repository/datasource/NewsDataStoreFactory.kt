@@ -2,6 +2,7 @@ package cryptomarket.eoinahern.ie.cryptomarket.data.repository.datasource
 
 import android.content.SharedPreferences
 import cryptomarket.eoinahern.ie.cryptomarket.data.cache.news.NewsCache
+import io.reactivex.Observable
 import javax.inject.Inject
 
 
@@ -10,13 +11,14 @@ class NewsDataStoreFactory @Inject constructor(private val apiNewsDataStore: Api
 											   private val sharedPreferences: SharedPreferences,
 											   private val newsCache: NewsCache) {
 
+	fun getDataStore(): Observable<NewsDataStore> {
 
-	fun getDataStore(): NewsDataStore {
-
-		if (newsCache.hasData()) {
-			return diskNewsDataStore
-		}
-
-		return apiNewsDataStore
+		return newsCache.hasData().map {
+			if (it > 0) {
+				diskNewsDataStore
+			} else {
+				apiNewsDataStore
+			}
+		}.toObservable()
 	}
 }
