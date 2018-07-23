@@ -9,6 +9,7 @@ const val TWITTER_BASE_URL = "https://twitter.com/"
 const val cryptoNewsAPI = "https://cryptocontrol.io/api/v1/public/"
 const val CURRENCY_INFO: String = "currency"
 const val CONVERTED_TO: String = "converted"
+const val DB_NAME = "crypto_db"
 const val SPACE = " "
 const val GRAPH_LINE_WIDTH: Float = 4f
 const val PNG_SUFFIX = ".png"

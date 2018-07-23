@@ -1,7 +1,7 @@
 package cryptomarket.eoinahern.ie.cryptomarket.data.repository.datasource
 
 import android.content.SharedPreferences
-import cryptomarket.eoinahern.ie.cryptomarket.data.cache.NewsCache
+import cryptomarket.eoinahern.ie.cryptomarket.data.cache.news.NewsCache
 import javax.inject.Inject
 
 

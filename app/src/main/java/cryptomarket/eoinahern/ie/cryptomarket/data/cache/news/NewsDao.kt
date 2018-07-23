@@ -1,4 +1,4 @@
-package cryptomarket.eoinahern.ie.cryptomarket.data.cache
+package cryptomarket.eoinahern.ie.cryptomarket.data.cache.news
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Delete

@@ -1,4 +1,4 @@
-package cryptomarket.eoinahern.ie.cryptomarket.data.cache
+package cryptomarket.eoinahern.ie.cryptomarket.data.cache.news
 
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoNewsItem
 import io.reactivex.Observable

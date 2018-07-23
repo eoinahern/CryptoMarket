@@ -1,5 +1,6 @@
 package cryptomarket.eoinahern.ie.cryptomarket.data.cache
 
+import cryptomarket.eoinahern.ie.cryptomarket.data.cache.news.NewsCacheIml
 import de.jodamob.kotlin.testrunner.KotlinTestRunner
 import org.junit.Assert.*
 import org.junit.Before
@@ -18,7 +19,7 @@ class NewsCacheImlTest {
 	@Before
 	fun setUp() {
 		MockitoAnnotations.initMocks(this)
-		newsCacheImp = NewsCacheIml()
+		//newsCacheImp = NewsCacheIml()
 	}
 
 	@Test

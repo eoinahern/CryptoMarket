@@ -1,21 +1,22 @@
-package cryptomarket.eoinahern.ie.cryptomarket.data.cache
+package cryptomarket.eoinahern.ie.cryptomarket.data.cache.news
 
+import cryptomarket.eoinahern.ie.cryptomarket.data.cache.CryptoDatabase
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoNewsItem
 import io.reactivex.Observable
 
-class NewsCacheIml : NewsCache {
+class NewsCacheIml constructor(private val cryptoDatabase: CryptoDatabase) : NewsCache {
 
 	override fun saveNews(newsList: List<CryptoNewsItem>) {
-
+		cryptoDatabase.newsDao().insertNewsList(newsList)
 	}
 
 	override fun getNews(): Observable<List<CryptoNewsItem>> {
-		return Observable.fromCallable { listOf<CryptoNewsItem>() }
+		return Observable.fromCallable {
+			cryptoDatabase.newsDao().getAllNewsData()
+		}
 	}
 
 	override fun hasData(): Boolean {
-		return false
+		return cryptoDatabase.newsDao().countRows() > 0
 	}
-
-
 }
