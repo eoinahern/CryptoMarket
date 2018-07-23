@@ -18,4 +18,7 @@ interface NewsDao {
 
 	@Query("SELECT * FROM  CryptoNewsItem")
 	fun getAllNewsData(): List<CryptoNewsItem>
+
+	@Query("SELECT COUNT(*) FROM CryptoNewsItem")
+	fun countRows(): Int
 }
