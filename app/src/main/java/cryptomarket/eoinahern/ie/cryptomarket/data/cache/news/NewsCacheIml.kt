@@ -16,6 +16,10 @@ class NewsCacheIml constructor(private val cryptoDatabase: CryptoDatabase) : New
 		}
 	}
 
+	override fun deleteAllData() {
+		cryptoDatabase.newsDao().deleteAllNewsData()
+	}
+
 	override fun getNews(): Observable<List<CryptoNewsItem>> {
 		return Observable.fromCallable {
 			cryptoDatabase.newsDao().getAllNewsData()

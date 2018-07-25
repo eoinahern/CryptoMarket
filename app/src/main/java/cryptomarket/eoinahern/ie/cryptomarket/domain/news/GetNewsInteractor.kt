@@ -14,6 +14,7 @@ class GetNewsInteractor @Inject constructor(private val newsRepositoryImp: NewsR
 	//@Named("newsKey") private val cryptoKey: String) : BaseInteractor<List<CryptoNewsItem>>() {
 
 	override fun buildObservable(): Observable<List<CryptoNewsItem>> {
-		return newsRepositoryImp.getNews().flatMap { it.getNews() }
+		//return newsRepositoryImp.getNews().flatMap { it.getNews() }
+		return Observable.just(listOf())
 	}
 }

@@ -13,5 +13,6 @@ class NewsRepositoryImp @Inject constructor(private val newsDataStoreFactory: Ne
 
 	override fun getNews(): Observable<NewsDataStore> {
 		return newsDataStoreFactory.getDataStore()
+
 	}
 }

@@ -11,4 +11,6 @@ interface NewsCache {
 	fun getNews(): Observable<List<CryptoNewsItem>>
 
 	fun hasData(): Single<Int>
+
+	fun deleteAllData()
 }

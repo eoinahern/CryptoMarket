@@ -1,11 +1,11 @@
 package cryptomarket.eoinahern.ie.cryptomarket.tools.date
 
 import org.threeten.bp.Instant
+import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
 import org.threeten.bp.format.DateTimeFormatter
 import java.util.*
-
 
 class DateUtil {
 
@@ -19,4 +19,20 @@ class DateUtil {
 
 		return localtime?.format(dateFormatter)
 	}
+
+	fun checkLargerThanOneDay(date: String): Boolean {
+
+		if (date.isEmpty())
+			return false
+
+		val daySaved = LocalDate.parse(date)
+		val currentDate = LocalDate.now()
+
+		if (daySaved.isBefore(currentDate))
+			return true
+
+		return false
+	}
+
+	fun getTodaysDateStr() = LocalDate.now().toString()
 }

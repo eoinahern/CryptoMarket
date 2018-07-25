@@ -28,6 +28,10 @@ class ApplicationModule constructor(var myApp: MyApp) {
 
 	@Singleton
 	@Provides
+	fun getPrefsEditor(sharedPrefs: SharedPreferences): SharedPreferences.Editor = sharedPrefs.edit()
+
+	@Singleton
+	@Provides
 	fun getGson(): Gson = Gson()
 
 
