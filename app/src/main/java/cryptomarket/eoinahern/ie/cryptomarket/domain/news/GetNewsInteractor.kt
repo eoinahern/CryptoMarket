@@ -10,11 +10,9 @@ import javax.inject.Inject
 import javax.inject.Named
 
 @PerScreen
-class GetNewsInteractor @Inject constructor(private val newsRepositoryImp: NewsRepositoryImp) : BaseInteractor<List<CryptoNewsItem>>() {//private val cryptoNewsApi: CryptoNewsApi,
-	//@Named("newsKey") private val cryptoKey: String) : BaseInteractor<List<CryptoNewsItem>>() {
+class GetNewsInteractor @Inject constructor(private val newsRepositoryImp: NewsRepositoryImp) : BaseInteractor<List<CryptoNewsItem>>() {
 
 	override fun buildObservable(): Observable<List<CryptoNewsItem>> {
-		//return newsRepositoryImp.getNews().flatMap { it.getNews() }
-		return Observable.just(listOf())
+		return newsRepositoryImp.getNews().flatMap { it.getNews() }
 	}
 }
