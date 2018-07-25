@@ -20,7 +20,7 @@ class ApiNewsDataStore @Inject constructor(private val newsApi: CryptoNewsApi,
 	override fun getNews(): Observable<List<CryptoNewsItem>> {
 		return newsApi.getNews(apiKey).flatMap {
 			newsCache.saveNews(it)
-			sharedPrefsEdit.putString(NEWS_SAVED_DATE, dateUtil.getTodaysDateStr())
+			sharedPrefsEdit.putString(NEWS_SAVED_DATE, dateUtil.getTodaysDateStr()).apply()
 			Observable.just(it)
 		}
 	}

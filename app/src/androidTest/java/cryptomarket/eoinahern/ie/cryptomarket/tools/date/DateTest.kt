@@ -11,6 +11,7 @@ import org.threeten.bp.LocalDate
 class DateTest {
 
 	private lateinit var dateUtil: DateUtil
+	private val dateTimeStr = "2018-07-25T14:19:08.000Z"
 
 	private val context = InstrumentationRegistry.getTargetContext().applicationContext
 
@@ -29,5 +30,11 @@ class DateTest {
 		val threeDaysPrevious = LocalDate.now().minusDays(3).toString()
 		largerThanOneday = dateUtil.checkLargerThanOneDay(threeDaysPrevious)
 		Assert.assertEquals(true, largerThanOneday)
+	}
+
+	@Test
+	fun localDateFromStringTest() {
+		val localDate = dateUtil.getLocalDateFromString(dateTimeStr)
+		Assert.assertEquals("2018-07-25", localDate)
 	}
 }

@@ -1,6 +1,5 @@
 package cryptomarket.eoinahern.ie.cryptomarket.domain.repository
 
-import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoNewsItem
 import cryptomarket.eoinahern.ie.cryptomarket.data.repository.datasource.NewsDataStore
 import io.reactivex.Observable
 

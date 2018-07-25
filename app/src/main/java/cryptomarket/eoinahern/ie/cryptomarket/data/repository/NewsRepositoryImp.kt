@@ -1,6 +1,5 @@
 package cryptomarket.eoinahern.ie.cryptomarket.data.repository
 
-import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoNewsItem
 import cryptomarket.eoinahern.ie.cryptomarket.data.repository.datasource.NewsDataStore
 import cryptomarket.eoinahern.ie.cryptomarket.data.repository.datasource.NewsDataStoreFactory
 import cryptomarket.eoinahern.ie.cryptomarket.domain.repository.NewsRepository
@@ -13,6 +12,5 @@ class NewsRepositoryImp @Inject constructor(private val newsDataStoreFactory: Ne
 
 	override fun getNews(): Observable<NewsDataStore> {
 		return newsDataStoreFactory.getDataStore()
-
 	}
 }

@@ -12,6 +12,7 @@ class DateUtil {
 	private val dateFormatter: DateTimeFormatter = DateTimeFormatter
 			.ofPattern("dd/MMM/yy HH:mm a", Locale.getDefault())
 
+
 	fun getLocalDateTime(linuxTime: Long): String? {
 
 		val localtime = LocalDateTime.ofInstant(Instant.ofEpochSecond(linuxTime),
@@ -35,4 +36,9 @@ class DateUtil {
 	}
 
 	fun getTodaysDateStr() = LocalDate.now().toString()
+
+	fun getLocalDateFromString(inputDateStr: String): String {
+		val instant = Instant.parse(inputDateStr)
+		return instant.atZone(ZoneId.systemDefault()).toLocalDate().toString()
+	}
 }
