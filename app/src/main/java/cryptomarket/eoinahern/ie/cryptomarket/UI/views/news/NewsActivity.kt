@@ -28,6 +28,7 @@ class NewsActivity : NavigationDrawerActivity(), NewsView {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+		setDrawerOnState()
 		supportActionBar?.title = getString(R.string.news)
 		presenter.attachView(this)
 		showLoading()

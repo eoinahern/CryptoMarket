@@ -1,7 +1,5 @@
 package cryptomarket.eoinahern.ie.cryptomarket.UI.views.news
 
-import android.content.Context
-import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -11,12 +9,12 @@ import com.facebook.drawee.view.SimpleDraweeView
 import cryptomarket.eoinahern.ie.cryptomarket.DI.annotation.PerScreen
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoNewsItem
-import kotlinx.android.synthetic.main.single_news_recycler_layout.view.*
+import cryptomarket.eoinahern.ie.cryptomarket.tools.date.DateUtil
 import javax.inject.Inject
 
 
 @PerScreen
-class NewsActivityAdapter @Inject constructor() : RecyclerView.Adapter<NewsActivityAdapter.ViewHolder>() {
+class NewsActivityAdapter @Inject constructor(private val dateUtil: DateUtil) : RecyclerView.Adapter<NewsActivityAdapter.ViewHolder>() {
 
 	private var newsList: MutableList<CryptoNewsItem> = mutableListOf()
 
@@ -24,7 +22,7 @@ class NewsActivityAdapter @Inject constructor() : RecyclerView.Adapter<NewsActiv
 		val item = newsList[position]
 		holder.thumbnail.setImageURI(item.thumbnail)
 		holder.article.text = item.description
-		//holder.date.text = item.publishedAt
+		holder.date.text = dateUtil.getLocalDateFromString(item.publishedAt)
 		holder.title.text = item.title
 		holder.category.text = item.primaryCategory
 	}
