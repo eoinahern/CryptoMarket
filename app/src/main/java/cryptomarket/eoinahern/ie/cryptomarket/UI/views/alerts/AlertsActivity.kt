@@ -24,8 +24,8 @@ class AlertsActivity : NavigationDrawerActivity(), AlertsView {
 	override fun setDrawerOnState() {
 
 		super.setDrawerOnState()
-		alerts.isSelected = true
-		alertsTxt.typeface = Typeface.DEFAULT_BOLD
+		//alerts.isSelected = true
+		//alertsTxt.typeface = Typeface.DEFAULT_BOLD
 	}
 
 	override fun inject() {

@@ -7,16 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.Space
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
+import cryptomarket.eoinahern.ie.cryptomarket.DI.annotation.PerScreen
 import cryptomarket.eoinahern.ie.cryptomarket.R
-import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.compareApiDeprecated
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.*
-import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.SPACE
 import javax.inject.Inject
 
-
+@PerScreen
 class MainActivityAdapter @Inject constructor(private val presenter: MainActivityPresenter, val context: Context)
 	: RecyclerView.Adapter<MainActivityAdapter.ViewHolder>(), Filterable {
 
