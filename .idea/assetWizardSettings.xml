@@ -33,7 +33,9 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_back_dark" />
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="C:\Users\eoin_a\Desktop\failure_large.png" />
+                                      <entry key="outputName" value="ic_failure_large_dark" />
                                       <entry key="theme" value="HOLO_DARK" />
                                     </map>
                                   </option>

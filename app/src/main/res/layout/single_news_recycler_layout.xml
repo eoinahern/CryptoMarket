@@ -68,7 +68,8 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
 		app:roundedCornerRadius="5dp"
-		tools:failureImage="@drawable/ic_no_image" />
+		app:failureImage="@drawable/ic_failure_large_dark"
+		/>
 
 
 	<RelativeLayout
