@@ -36,7 +36,6 @@
 			android:layout_height="wrap_content"
 			android:layout_alignParentRight="true"
 			android:layout_centerVertical="true"
-			android:text="11/3/2018"
 			android:textSize="@dimen/text_standard"
 			tools:text="11/3/2018" />
 
@@ -65,11 +64,10 @@
 		android:layout_height="80dp"
 		android:layout_marginTop="8dp"
 		app:actualImageScaleType="centerCrop"
+		app:failureImage="@drawable/ic_failure_large_dark"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
-		app:roundedCornerRadius="5dp"
-		app:failureImage="@drawable/ic_failure_large_dark"
-		/>
+		app:roundedCornerRadius="5dp" />
 
 
 	<RelativeLayout
