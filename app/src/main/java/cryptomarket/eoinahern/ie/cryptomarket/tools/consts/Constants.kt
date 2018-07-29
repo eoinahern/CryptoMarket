@@ -19,6 +19,7 @@ const val DB_NAME = "crypto_db"
 
 const val GRAPH_LINE_WIDTH: Float = 4f
 const val PNG_SUFFIX = ".png"
+const val PCT_CHANGE_24H = "pct_change"
 
 //variable names used in custom json deserialization
 const val toSymbolSyr: String = "TOSYMBOL"

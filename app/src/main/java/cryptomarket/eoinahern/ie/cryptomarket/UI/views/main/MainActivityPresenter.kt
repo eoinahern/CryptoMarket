@@ -20,7 +20,6 @@ class MainActivityPresenter @Inject constructor(private var getCryptoListInterac
 
 			override fun onNext(t: Pair<List<CoinMarketCrypto>, CurrencyData>) {
 				getView()?.hideLoading()
-				println("num items ${t.first.size}")
 				getView()?.updateRecyclerView(t.first)
 				getView()?.initCurrencyData(t.second.cryptoWrapper)
 			}
@@ -45,6 +44,7 @@ class MainActivityPresenter @Inject constructor(private var getCryptoListInterac
 			override fun onNext(t: Pair<List<CoinMarketCrypto>, CurrencyData>) {
 				getView()?.hideLoading()
 				getView()?.updateRecyclerView(t.first)
+				getView()?.initCurrencyData(t.second.cryptoWrapper)
 			}
 
 			override fun onSubscribe(d: Disposable) {
@@ -61,6 +61,10 @@ class MainActivityPresenter @Inject constructor(private var getCryptoListInterac
 				}
 			}
 		})
+	}
+
+	fun cancelCurrenctCall() {
+		getCryptoListInteractor.disposeObs()
 	}
 
 	fun navigateToDetail(symbol: String) {

@@ -1,6 +1,8 @@
 package cryptomarket.eoinahern.ie.cryptomarket.UI.views.main
 
 import android.content.Context
+import android.os.Bundle
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -12,10 +14,12 @@ import com.facebook.drawee.view.SimpleDraweeView
 import cryptomarket.eoinahern.ie.cryptomarket.DI.annotation.PerScreen
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.*
+import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.PCT_CHANGE_24H
 import javax.inject.Inject
 
 @PerScreen
-class MainActivityAdapter @Inject constructor(private val presenter: MainActivityPresenter, val context: Context)
+class MainActivityAdapter @Inject constructor(private val presenter: MainActivityPresenter,
+											  private val context: Context)
 	: RecyclerView.Adapter<MainActivityAdapter.ViewHolder>(), Filterable {
 
 	private var cryptoData: MutableList<CoinMarketCrypto> = mutableListOf()
@@ -52,10 +56,11 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 	override fun getItemCount() = cryptoData.size
 
 	fun updateCryptoData(dataList: List<CoinMarketCrypto>) {
-
-		val insertIndex = cryptoData.size
+		cryptoData.clear()
 		cryptoData.addAll(dataList)
-		notifyItemRangeInserted(insertIndex, dataList.size)
+		notifyItemRangeInserted(0, dataList.size)
+		initialData.clear()
+		initialData.addAll(dataList)
 	}
 
 	fun showFilteredList(dataList: List<CoinMarketCrypto>) {
@@ -65,8 +70,6 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 		cryptoData.addAll(dataList)
 		notifyDataSetChanged()
 	}
-
-	fun setInitData(dataList: List<CoinMarketCrypto>) = initialData.addAll(dataList)
 
 	fun setCurrency(currecyStr: String) {
 		currencyStr = currecyStr
@@ -85,7 +88,6 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 				var filteredResults = FilterResults()
 
 				if (searchSequence?.trim().isNullOrEmpty() || searchSequence?.trim().isNullOrBlank()) {
-
 					filteredResults.count = initialData.size
 					filteredResults.values = initialData
 					return filteredResults
@@ -103,6 +105,13 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 				it.name.startsWith(searchStr, ignoreCase = true)
 			}
 		}
+	}
+
+	fun clear() {
+		val size = cryptoData.size
+		cryptoData.clear()
+		initialData.clear()
+		notifyItemRangeRemoved(0, size)
 	}
 
 	class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {

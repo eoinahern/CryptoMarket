@@ -27,7 +27,6 @@ class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoA
 	override fun buildObservable(): Observable<Pair<List<CoinMarketCrypto>, CurrencyData>> {
 
 		return Observable.zip(
-
 				Observable.zip(coinMarketCapApi.getTickerData("1", currency),
 						coinMarketCapApi.getTickerData("101", currency),
 						coinMarketCapApi.getTickerData("201", currency),
@@ -69,43 +68,4 @@ class GetCryptoListInteractor @Inject constructor(private val cryptoApi: CryptoA
 			Pair(listOf(x1, x2, x3.first).flatten(), x3.second)
 		})
 	}
-
-	//private var offset: Int = -1
-	//private var limit: Int = -1
-
-	/*fun setStartLimit(offset: Int, limit: Int): GetCryptoListInteractor {
-		//this.offset = offset
-		this.limit = limit
-		return this
-	}*/
-
-	/*override fun buildObservable(): Observable<List<Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>?>> {
-
-
-		return cryptoApi.getList().cache().onTerminateDetach().flatMap { currencyData ->
-			var listOfSymbols = constructList(currencyData)
-			var joinedList = listOfSymbols.joinToString(",")
-
-			cryptoApi.getFullPriceData(joinedList, "EUR,USD,BTC,PLN,GBP").map { fullPriceWrapper ->
-
-				var f = LinkedHashMap<String, Pair<CryptoCurrency?, Map<String, CurrencyFullPriceDataDisplay>?>>()
-
-				for (symbol in listOfSymbols) {
-
-					if (fullPriceWrapper.DISPLAY.contains(symbol) && currencyData.cryptoWrapper.contains(symbol)) {
-						f[symbol] = Pair(currencyData.cryptoWrapper[symbol], fullPriceWrapper.DISPLAY[symbol]?.item)
-					}
-				}
-
-				f.values.toList()
-			}
-		}
-	}*/
-
-	/*private fun constructList(currencyData: CurrencyData): List<String> {
-
-		var sortedList: List<CryptoCurrency> = currencyData.cryptoWrapper.values.toList().sorted()
-		return sortedList.map { it.Symbol }.subList(offset, limit + offset)
-	}*/
-
 }

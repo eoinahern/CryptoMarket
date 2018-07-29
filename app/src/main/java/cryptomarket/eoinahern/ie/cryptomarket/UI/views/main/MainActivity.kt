@@ -4,9 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.jakewharton.rxbinding2.widget.RxSearchView
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
@@ -31,6 +33,8 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	lateinit var presenter: MainActivityPresenter
 	@Inject
 	lateinit var adapter: MainActivityAdapter
+	@Inject
+	lateinit var diffUtil: MainActivityDiffUtil
 	private lateinit var llmanager: LinearLayoutManager
 	private lateinit var menuText: String
 	private lateinit var currencyData: Map<String, CryptoCurrency>
@@ -41,7 +45,7 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 		setUpRecycler()
 		menuText = getString(R.string.usd_abv)
 		presenter.attachView(this)
-		presenter.getCurrencyDataInitial(menuText)
+		presenter.getCurrencyUpdateData(menuText)
 		showLoading()
 		cryptoSearchView.isEnabled = false
 		setUpSearchListener()
@@ -68,10 +72,13 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	}
 
 	override fun showLoading() {
+		loadingView.visibility = View.VISIBLE
+		recycler.visibility = View.GONE
 		loadingView.setState(LoadingView.State.LOADING)
 	}
 
 	override fun hideLoading() {
+		recycler.visibility = View.VISIBLE
 		loadingView.hide()
 	}
 
@@ -86,6 +93,9 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 		menuText = item?.title.toString()
 		item?.isChecked = true
 		adapter.setCurrency(menuText)
+		adapter.clear()
+		showLoading()
+		presenter.getCurrencyUpdateData(menuText)
 		return super.onOptionsItemSelected(item)
 	}
 
@@ -111,7 +121,6 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 
 	override fun updateRecyclerView(dataList: List<CoinMarketCrypto>) {
 		adapter.updateCryptoData(dataList)
-		adapter.setInitData(dataList)
 	}
 
 	override fun initCurrencyData(currencyData: Map<String, CryptoCurrency>) {
