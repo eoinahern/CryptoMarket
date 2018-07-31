@@ -1,4 +1,4 @@
-package cryptomarket.eoinahern.ie.cryptomarket.data.repository.datasource
+package cryptomarket.eoinahern.ie.cryptomarket.data.repository.news.datasource
 
 import android.content.SharedPreferences
 import cryptomarket.eoinahern.ie.cryptomarket.data.api.CryptoNewsApi
