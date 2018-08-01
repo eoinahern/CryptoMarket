@@ -5,7 +5,6 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoNewsItem
 import io.reactivex.Flowable
-import io.reactivex.Observable
 import io.reactivex.Single
 
 

@@ -35,6 +35,22 @@ class DateUtil {
 		return false
 	}
 
+
+	fun checkLargerThanTwoDays(dateStr: String): Boolean {
+
+		if (dateStr.isEmpty())
+			return false
+
+		val savedDate = LocalDate.parse(dateStr)
+		val current = LocalDate.now()
+
+		if (savedDate.plusDays(1).isBefore(current))
+			return true
+
+		return false
+	}
+
+
 	fun getTodaysDateStr() = LocalDate.now().toString()
 
 	fun getLocalDateFromString(inputDateStr: String): String {

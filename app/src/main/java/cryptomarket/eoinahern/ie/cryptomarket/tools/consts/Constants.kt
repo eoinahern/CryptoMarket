@@ -13,6 +13,7 @@ const val ICON_LOCATION = "https://s2.coinmarketcap.com/static/img/coins/64x64/"
 const val CURRENCY_INFO: String = "currency"
 const val CONVERTED_TO: String = "converted"
 const val NEWS_SAVED_DATE = "news_saved"
+const val CURRENCY_DATA_SAVED_DATE = "currency_date"
 
 //db name
 const val DB_NAME = "crypto_db"

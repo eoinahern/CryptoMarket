@@ -12,7 +12,6 @@ class DateTest {
 
 	private lateinit var dateUtil: DateUtil
 	private val dateTimeStr = "2018-07-25T14:19:08.000Z"
-
 	private val context = InstrumentationRegistry.getTargetContext().applicationContext
 
 	@Before
@@ -36,5 +35,15 @@ class DateTest {
 	fun localDateFromStringTest() {
 		val localDate = dateUtil.getLocalDateFromString(dateTimeStr)
 		Assert.assertEquals("2018-07-25", localDate)
+	}
+
+	@Test
+	fun olderThanTwoDaysTest() {
+		val localDate = dateUtil.getTodaysDateStr()
+		var result = dateUtil.checkLargerThanTwoDays(localDate)
+		Assert.assertEquals(false, result)
+
+		result = dateUtil.checkLargerThanTwoDays(dateUtil.getLocalDateFromString(dateTimeStr))
+		Assert.assertEquals(true, result)
 	}
 }

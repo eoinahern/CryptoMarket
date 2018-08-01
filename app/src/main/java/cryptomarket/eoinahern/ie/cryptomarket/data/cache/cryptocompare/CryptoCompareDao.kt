@@ -5,7 +5,7 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
 import io.reactivex.Flowable
-import io.reactivex.Observable
+import io.reactivex.Single
 
 
 @Dao
@@ -19,4 +19,7 @@ interface CryptoCompareDao {
 
 	@Query("DELETE FROM CryptoCurrency")
 	fun deleteAll()
+
+	@Query("SELECT COUNT(*) FROM CryptoCurrency")
+	fun countRows(): Single<Int>
 }

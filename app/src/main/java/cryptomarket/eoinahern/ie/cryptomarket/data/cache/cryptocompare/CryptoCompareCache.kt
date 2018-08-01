@@ -1,8 +1,8 @@
 package cryptomarket.eoinahern.ie.cryptomarket.data.cache.cryptocompare
 
-import android.arch.persistence.room.Insert
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
 import io.reactivex.Observable
+import io.reactivex.Single
 
 
 interface CryptoCompareCache {
@@ -12,4 +12,6 @@ interface CryptoCompareCache {
 	fun getCryptoMap(): Observable<Map<String, CryptoCurrency>>
 
 	fun deleteAll()
+
+	fun countRows(): Single<Int>
 }

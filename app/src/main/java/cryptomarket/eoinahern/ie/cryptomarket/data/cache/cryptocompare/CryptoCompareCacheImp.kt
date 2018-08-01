@@ -3,6 +3,7 @@ package cryptomarket.eoinahern.ie.cryptomarket.data.cache.cryptocompare
 import cryptomarket.eoinahern.ie.cryptomarket.data.cache.CryptoDatabase
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
 import io.reactivex.Observable
+import io.reactivex.Single
 
 
 class CryptoCompareCacheImp constructor(private val cryptoDataBase: CryptoDatabase) : CryptoCompareCache {
@@ -18,6 +19,10 @@ class CryptoCompareCacheImp constructor(private val cryptoDataBase: CryptoDataba
 
 	override fun deleteAll() {
 		cryptoDataBase.cryptoCompareDao().deleteAll()
+	}
+
+	override fun countRows(): Single<Int> {
+		return cryptoDataBase.cryptoCompareDao().countRows()
 	}
 
 }

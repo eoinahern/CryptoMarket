@@ -6,6 +6,5 @@ import io.reactivex.Observable
 
 
 interface CryptoCompareDataStore {
-
 	fun getCryptoComparedata(): Observable<Map<String, CryptoCurrency>>
 }

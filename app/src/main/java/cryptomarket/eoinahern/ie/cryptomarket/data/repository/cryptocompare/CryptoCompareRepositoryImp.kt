@@ -9,7 +9,7 @@ import javax.inject.Singleton
 class CryptoCompareRepositoryImp @Inject constructor(private val cryptoCompareDataFactory: CryptoCompareDataFactory) : CryptoCompareRepository {
 
 	override fun getCoinData(): Observable<CryptoCompareDataStore> {
-		return Observable.fromCallable { cryptoCompareDataFactory.getDataStore() }
+		return  cryptoCompareDataFactory.getDataStore()
 	}
 
 
