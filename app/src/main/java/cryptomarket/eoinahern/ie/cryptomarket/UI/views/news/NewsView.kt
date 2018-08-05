@@ -17,4 +17,9 @@ interface NewsView : MvpView {
 	fun showConnectionError()
 
 	fun showOtherError()
+
+	fun navigateToLink(link: String)
+
+	fun noConnectionForLink()
+
 }
