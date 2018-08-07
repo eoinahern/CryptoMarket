@@ -13,12 +13,14 @@ const val ICON_LOCATION = "https://s2.coinmarketcap.com/static/img/coins/64x64/"
 const val CURRENCY_INFO: String = "currency"
 const val CONVERTED_TO: String = "converted"
 const val NEWS_SAVED_DATE = "news_saved"
+const val CURRENCY_DATA_SAVED_DATE = "currency_date"
 
 //db name
 const val DB_NAME = "crypto_db"
 
 const val GRAPH_LINE_WIDTH: Float = 4f
 const val PNG_SUFFIX = ".png"
+const val PCT_CHANGE_24H = "pct_change"
 
 //variable names used in custom json deserialization
 const val toSymbolSyr: String = "TOSYMBOL"

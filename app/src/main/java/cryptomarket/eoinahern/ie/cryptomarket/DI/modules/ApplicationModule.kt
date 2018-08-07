@@ -7,6 +7,8 @@ import android.preference.PreferenceManager.getDefaultSharedPreferences
 import com.google.gson.Gson
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.data.cache.CryptoDatabase
+import cryptomarket.eoinahern.ie.cryptomarket.data.cache.cryptocompare.CryptoCompareCache
+import cryptomarket.eoinahern.ie.cryptomarket.data.cache.cryptocompare.CryptoCompareCacheImp
 import cryptomarket.eoinahern.ie.cryptomarket.data.cache.news.NewsCache
 import cryptomarket.eoinahern.ie.cryptomarket.data.cache.news.NewsCacheIml
 import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.DB_NAME
@@ -51,6 +53,12 @@ class ApplicationModule constructor(var myApp: MyApp) {
 	@Provides
 	fun getNewsCache(cryptoDatabase: CryptoDatabase): NewsCache {
 		return NewsCacheIml(cryptoDatabase)
+	}
+
+	@Singleton
+	@Provides
+	fun getCryptoCompareCache(cryptoDatabase: CryptoDatabase): CryptoCompareCache {
+		return CryptoCompareCacheImp(cryptoDatabase)
 	}
 
 }

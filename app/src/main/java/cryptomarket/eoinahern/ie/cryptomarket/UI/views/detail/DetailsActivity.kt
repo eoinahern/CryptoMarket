@@ -9,7 +9,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.Toolbar
 import android.text.Html
 import android.text.method.LinkMovementMethod
-import android.util.Xml
 import android.view.MotionEvent
 import android.view.View
 import com.github.mikephil.charting.charts.LineChart

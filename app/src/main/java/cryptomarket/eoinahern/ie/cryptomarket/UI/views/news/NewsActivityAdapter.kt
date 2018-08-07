@@ -14,7 +14,8 @@ import javax.inject.Inject
 
 
 @PerScreen
-class NewsActivityAdapter @Inject constructor(private val dateUtil: DateUtil) : RecyclerView.Adapter<NewsActivityAdapter.ViewHolder>() {
+class NewsActivityAdapter @Inject constructor(private val dateUtil: DateUtil,
+											  private val presenter: NewsActivityPresenter) : RecyclerView.Adapter<NewsActivityAdapter.ViewHolder>() {
 
 	private var newsList: MutableList<CryptoNewsItem> = mutableListOf()
 
@@ -25,6 +26,8 @@ class NewsActivityAdapter @Inject constructor(private val dateUtil: DateUtil) : 
 		holder.date.text = dateUtil.getLocalDateFromString(item.publishedAt)
 		holder.title.text = item.title
 		holder.category.text = item.primaryCategory
+
+		holder.itemView.setOnClickListener { presenter.navigateToLink(item.url) }
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsActivityAdapter.ViewHolder {

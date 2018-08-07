@@ -7,7 +7,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 
-open abstract class BaseInteractor<T> {
+abstract class BaseInteractor<T> {
 
 	private val disposables: CompositeDisposable = CompositeDisposable()
 
@@ -23,21 +23,21 @@ open abstract class BaseInteractor<T> {
 	}
 
 	fun execute(disp: BaseSubscriber<T>) {
-
 		buildObservable()
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(disp)
-
 	}
 
-	fun addDisposables(d : Disposable) {
+	fun addDisposables(d: Disposable) {
+		if (disposables.size() > 0)
+			disposables.clear()
+
 		disposables.add(d)
 	}
 
 	fun disposeObs() {
-
-		if (disposables.size() != 0 && !disposables.isDisposed)
-			disposables.dispose()
+		if (disposables.size() != 0)
+			disposables.clear()
 	}
 }

@@ -4,6 +4,7 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoNewsItem
+import io.reactivex.Flowable
 import io.reactivex.Single
 
 
@@ -17,7 +18,7 @@ interface NewsDao {
 	fun deleteAllNewsData()
 
 	@Query("SELECT * FROM  CryptoNewsItem")
-	fun getAllNewsData(): List<CryptoNewsItem>
+	fun getAllNewsData(): Flowable<List<CryptoNewsItem>>
 
 	@Query("SELECT COUNT(*) FROM CryptoNewsItem")
 	fun countRows(): Single<Int>

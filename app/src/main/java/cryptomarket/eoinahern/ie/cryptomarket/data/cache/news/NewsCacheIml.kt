@@ -21,9 +21,7 @@ class NewsCacheIml constructor(private val cryptoDatabase: CryptoDatabase) : New
 	}
 
 	override fun getNews(): Observable<List<CryptoNewsItem>> {
-		return Observable.fromCallable {
-			cryptoDatabase.newsDao().getAllNewsData()
-		}
+		return cryptoDatabase.newsDao().getAllNewsData().toObservable()
 	}
 
 	override fun hasData(): Single<Int> {

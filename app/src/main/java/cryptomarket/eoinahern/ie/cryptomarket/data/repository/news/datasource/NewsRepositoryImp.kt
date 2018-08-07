@@ -1,7 +1,7 @@
-package cryptomarket.eoinahern.ie.cryptomarket.data.repository
+package cryptomarket.eoinahern.ie.cryptomarket.data.repository.news.datasource
 
-import cryptomarket.eoinahern.ie.cryptomarket.data.repository.datasource.NewsDataStore
-import cryptomarket.eoinahern.ie.cryptomarket.data.repository.datasource.NewsDataStoreFactory
+import cryptomarket.eoinahern.ie.cryptomarket.data.repository.news.datasource.NewsDataStore
+import cryptomarket.eoinahern.ie.cryptomarket.data.repository.news.datasource.NewsDataStoreFactory
 import cryptomarket.eoinahern.ie.cryptomarket.domain.repository.NewsRepository
 import io.reactivex.Observable
 import javax.inject.Inject

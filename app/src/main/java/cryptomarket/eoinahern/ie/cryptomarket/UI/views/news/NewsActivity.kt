@@ -3,14 +3,17 @@ package cryptomarket.eoinahern.ie.cryptomarket.UI.views.news
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.widget.Toast
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerActivity
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoNewsItem
+import cryptomarket.eoinahern.ie.cryptomarket.data.util.NetworkCheckUtil
 import cryptomarket.eoinahern.ie.cryptomarket.tools.decoration.BottomInsetItemDecoration
 import cryptomarket.eoinahern.ie.cryptomarket.tools.view.LoadingView
 import kotlinx.android.synthetic.main.activity_news.*
@@ -81,6 +84,14 @@ class NewsActivity : NavigationDrawerActivity(), NewsView {
 
 	override fun showOtherError() {
 		loadingView.setState(LoadingView.State.OTHER_ERROR)
+	}
+
+	override fun noConnectionForLink() {
+		Toast.makeText(this, R.string.no_network, Toast.LENGTH_LONG).show()
+	}
+
+	override fun navigateToLink(link: String) {
+		startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link)))
 	}
 
 	override fun onDestroy() {

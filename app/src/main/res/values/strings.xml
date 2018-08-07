@@ -41,6 +41,7 @@
 	<string name="website_title">Website</string>
 	<string name="whitepaper_title">White paper</string>
 	<string name="not_available">N/A</string>
+	<string name="no_network">Network no available!</string>
 
 
 	<!--currency symbols-->
