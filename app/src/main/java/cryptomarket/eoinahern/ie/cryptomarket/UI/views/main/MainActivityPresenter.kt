@@ -15,29 +15,6 @@ import javax.inject.Inject
 class MainActivityPresenter @Inject constructor(private val mainActivityCombinedInteractor: MainActivityCombinedInteractor) : BasePresenter<MainActivityView>() {
 
 
-	fun getCurrencyDataInitial(currency: String) {
-
-		/*getCryptoListInteractor.setCurrency(currency).execute(object : BaseDisposableObserver<Pair<List<CoinMarketCrypto>, CurrencyData>>() {
-
-			override fun onNext(t: Pair<List<CoinMarketCrypto>, CurrencyData>) {
-				getView()?.hideLoading()
-				getView()?.updateRecyclerView(t.first)
-				getView()?.initCurrencyData(t.second.cryptoWrapper)
-			}
-
-			override fun onError(e: Throwable) {
-				e.printStackTrace()
-				println(e.message)
-
-				if (e as? NoConnectionException != null) {
-					getView()?.showNetworkError()
-				} else {
-					getView()?.showOtherError()
-				}
-			}
-		})*/
-	}
-
 	fun getCurrencyUpdateData(currency: String) {
 
 		mainActivityCombinedInteractor.setCurrency(currency).execute(object : BaseSubscriber<Pair<List<CoinMarketCrypto>, Map<String, CryptoCurrency>>>() {

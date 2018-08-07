@@ -20,6 +20,9 @@ interface CryptoCompareDao {
 	@Query("DELETE FROM CryptoCurrency")
 	fun deleteAll()
 
+	@Query("SELECT * FROM CryptoCurrency WHERE Symbol IN(:symbols)")
+	fun getBySymbol(symbols: List<String>): Single<List<CryptoCurrency>>
+
 	@Query("SELECT COUNT(*) FROM CryptoCurrency")
 	fun countRows(): Single<Int>
 }

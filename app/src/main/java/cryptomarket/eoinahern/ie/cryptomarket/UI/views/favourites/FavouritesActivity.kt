@@ -6,7 +6,6 @@ import android.graphics.Typeface
 import android.os.Bundle
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerActivity
-import cryptomarket.eoinahern.ie.cryptomarket.UI.views.main.MainActivity
 
 class FavouritesActivity : NavigationDrawerActivity() {
 

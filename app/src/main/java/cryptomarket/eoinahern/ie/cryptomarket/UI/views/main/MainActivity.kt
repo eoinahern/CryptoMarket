@@ -33,8 +33,6 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	lateinit var presenter: MainActivityPresenter
 	@Inject
 	lateinit var adapter: MainActivityAdapter
-	@Inject
-	lateinit var diffUtil: MainActivityDiffUtil
 	private lateinit var llmanager: LinearLayoutManager
 	private lateinit var menuText: String
 	private lateinit var currencyData: Map<String, CryptoCurrency>
