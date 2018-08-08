@@ -25,7 +25,6 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 
 	private var cryptoData: MutableList<CoinMarketCrypto> = mutableListOf()
 	private var initialData: MutableList<CoinMarketCrypto> = mutableListOf()
-	private var mapPersitedCrypto: MutableMap<String, CryptoCurrency> = mutableMapOf()
 	private lateinit var currencyStr: String
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -43,14 +42,15 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 		holder.price.text = String.format(context.getString(R.string.simple_price_frmt),
 				currencyStr, quote?.price.toString())
 		holder.icon.setImageURI(data.getIconUrl())
-
 		holder.itemView.setOnClickListener {
 			presenter.navigateToDetail(data.symbol)
 		}
 
-		holder.favouriteCheckbox.setOnClickListener {
-
+		holder.favouriteCheckbox.setOnCheckedChangeListener { _, isChecked ->
+			presenter.updateCurrencyFavourite(data.symbol, isChecked)
 		}
+
+		holder.favouriteCheckbox.isChecked = presenter.getSelected(data.symbol)
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

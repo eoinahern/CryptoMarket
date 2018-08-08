@@ -35,7 +35,6 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 	lateinit var adapter: MainActivityAdapter
 	private lateinit var llmanager: LinearLayoutManager
 	private lateinit var menuText: String
-	private lateinit var currencyData: Map<String, CryptoCurrency>
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -121,11 +120,6 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 		adapter.updateCryptoData(dataList)
 	}
 
-	override fun initCurrencyData(currencyData: Map<String, CryptoCurrency>) {
-		this.currencyData = currencyData
-	}
-
-
 	override fun showNetworkError() {
 		loadingView.setState(LoadingView.State.NETWORK_ERROR)
 	}
@@ -136,7 +130,7 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 
 	override fun gotToDetail(symbol: String) {
 		val intent = DetailsActivity.getStartIntent(this)
-		intent.putExtra(CURRENCY_INFO, currencyData[symbol])
+		intent.putExtra(CURRENCY_INFO, presenter.getCurrencyMapItem(symbol))
 		intent.putExtra(CONVERTED_TO, menuText)
 		startActivity(intent)
 	}
@@ -150,5 +144,4 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 		super.onDestroy()
 		presenter.detachView()
 	}
-
 }

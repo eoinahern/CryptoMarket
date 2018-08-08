@@ -8,12 +8,15 @@ import cryptomarket.eoinahern.ie.cryptomarket.domain.base.BaseDisposableObserver
 import cryptomarket.eoinahern.ie.cryptomarket.domain.base.BaseSubscriber
 import cryptomarket.eoinahern.ie.cryptomarket.domain.main.GetCryptoListInteractor
 import cryptomarket.eoinahern.ie.cryptomarket.domain.main.MainActivityCombinedInteractor
+import cryptomarket.eoinahern.ie.cryptomarket.domain.main.SaveFavouritesDataInteractor
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 @PerScreen
-class MainActivityPresenter @Inject constructor(private val mainActivityCombinedInteractor: MainActivityCombinedInteractor) : BasePresenter<MainActivityView>() {
+class MainActivityPresenter @Inject constructor(private val mainActivityCombinedInteractor: MainActivityCombinedInteractor,
+												private val saveFavouritesDataInteractor: SaveFavouritesDataInteractor) : BasePresenter<MainActivityView>() {
 
+	private var currencyData: MutableMap<String, CryptoCurrency> = mutableMapOf()
 
 	fun getCurrencyUpdateData(currency: String) {
 
@@ -22,7 +25,7 @@ class MainActivityPresenter @Inject constructor(private val mainActivityCombined
 			override fun onNext(t: Pair<List<CoinMarketCrypto>, Map<String, CryptoCurrency>>) {
 				getView()?.hideLoading()
 				getView()?.updateRecyclerView(t.first)
-				getView()?.initCurrencyData(t.second)
+				updateCurrencyMap(t.second)
 			}
 
 			override fun onSubscribe(d: Disposable) {
@@ -41,13 +44,35 @@ class MainActivityPresenter @Inject constructor(private val mainActivityCombined
 		})
 	}
 
+	private fun updateCurrencyMap(currency: Map<String, CryptoCurrency>) {
+		currencyData.clear()
+		currencyData.putAll(currency)
+	}
+
+	fun getCurrencyMapItem(key: String) = currencyData[key]
+
+	fun updateCurrencyFavourite(key: String, state: Boolean) {
+		currencyData[key]?.let { item ->
+			item.Favourite = state
+			currencyData[key] = item
+		}
+	}
+
+	fun getSelected(key: String): Boolean = currencyData[key]?.Favourite == true
+
 	fun navigateToDetail(symbol: String) {
 		getView()?.gotToDetail(symbol)
 	}
 
 	fun persistFavourites() {
-		// save map of selected faves!!
-		// save to sharedPrefs
+		saveFavouritesDataInteractor.init(currencyData).execute(object : BaseSubscriber<Unit>() {
+			override fun onError(e: Throwable) {
+			}
+
+			override fun onNext(t: Unit) {
+				println("save complete!!")
+			}
+		})
 	}
 
 	override fun detachView() {

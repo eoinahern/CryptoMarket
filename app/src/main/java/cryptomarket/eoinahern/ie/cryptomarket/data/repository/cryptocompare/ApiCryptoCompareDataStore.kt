@@ -27,9 +27,6 @@ class ApiCryptoCompareDataStore @Inject constructor(private val cryptoApi: Crypt
 
 					x1, x2 ->
 
-					if (x2.isEmpty())
-						x1.cryptoWrapper
-
 					x2.forEach { item ->
 						x1.cryptoWrapper[item.Symbol]?.Favourite = true
 					}
