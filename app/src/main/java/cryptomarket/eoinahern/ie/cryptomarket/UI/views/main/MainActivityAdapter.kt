@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
@@ -24,6 +25,7 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 
 	private var cryptoData: MutableList<CoinMarketCrypto> = mutableListOf()
 	private var initialData: MutableList<CoinMarketCrypto> = mutableListOf()
+	private var mapPersitedCrypto: MutableMap<String, CryptoCurrency> = mutableMapOf()
 	private lateinit var currencyStr: String
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -44,6 +46,10 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 
 		holder.itemView.setOnClickListener {
 			presenter.navigateToDetail(data.symbol)
+		}
+
+		holder.favouriteCheckbox.setOnClickListener {
+
 		}
 	}
 
@@ -120,5 +126,6 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 		val fullName: TextView by lazy { item.findViewById<TextView>(R.id.full_name) }
 		val price: TextView by lazy { item.findViewById<TextView>(R.id.price) }
 		val pctChange: TextView by lazy { item.findViewById<TextView>(R.id.percent_txt) }
+		val favouriteCheckbox: CheckBox by lazy { item.findViewById<CheckBox>(R.id.favourites) }
 	}
 }

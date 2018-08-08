@@ -45,6 +45,11 @@ class MainActivityPresenter @Inject constructor(private val mainActivityCombined
 		getView()?.gotToDetail(symbol)
 	}
 
+	fun persistFavourites() {
+		// save map of selected faves!!
+		// save to sharedPrefs
+	}
+
 	override fun detachView() {
 		super.detachView()
 		mainActivityCombinedInteractor.disposeObs()

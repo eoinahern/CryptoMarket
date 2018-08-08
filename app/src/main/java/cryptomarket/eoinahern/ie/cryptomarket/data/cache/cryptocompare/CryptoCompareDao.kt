@@ -25,4 +25,7 @@ interface CryptoCompareDao {
 
 	@Query("SELECT COUNT(*) FROM CryptoCurrency")
 	fun countRows(): Single<Int>
+
+	@Query("SELECT * FROM CryptoCurrency WHERE Favourite = :state")
+	fun getFavourites(state: Boolean = true): Flowable<List<CryptoCurrency>>
 }

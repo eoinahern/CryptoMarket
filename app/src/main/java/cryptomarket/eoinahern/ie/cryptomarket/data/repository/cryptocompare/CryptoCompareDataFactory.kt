@@ -28,6 +28,7 @@ class CryptoCompareDataFactory @Inject constructor(private val apiCryptoCompareD
 			if (it > 0 && !dateUtil.checkLargerThanTwoDays(dateStr)) {
 				diskCryptoCompareDataStore
 			} else {
+				cryptoCompareCache.deleteAll()
 				apiCryptoCompareDataStore
 			}
 

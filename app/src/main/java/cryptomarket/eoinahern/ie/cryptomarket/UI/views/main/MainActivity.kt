@@ -141,6 +141,11 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 		startActivity(intent)
 	}
 
+	override fun onPause() {
+		super.onPause()
+		presenter.persistFavourites()
+	}
+
 	override fun onDestroy() {
 		super.onDestroy()
 		presenter.detachView()
