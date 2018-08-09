@@ -1,8 +1,5 @@
 package cryptomarket.eoinahern.ie.cryptomarket.UI.views.main
 
-import android.content.Context
-import android.os.Bundle
-import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +12,6 @@ import com.facebook.drawee.view.SimpleDraweeView
 import cryptomarket.eoinahern.ie.cryptomarket.DI.annotation.PerScreen
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.*
-import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.PCT_CHANGE_24H
 import javax.inject.Inject
 
 @PerScreen
