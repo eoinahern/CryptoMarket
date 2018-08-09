@@ -11,6 +11,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.data.cache.cryptocompare.CryptoCom
 import cryptomarket.eoinahern.ie.cryptomarket.data.cache.cryptocompare.CryptoCompareCacheImp
 import cryptomarket.eoinahern.ie.cryptomarket.data.cache.news.NewsCache
 import cryptomarket.eoinahern.ie.cryptomarket.data.cache.news.NewsCacheIml
+import cryptomarket.eoinahern.ie.cryptomarket.data.cache.sharedprefs.SharedPrefsHelper
 import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.DB_NAME
 import cryptomarket.eoinahern.ie.cryptomarket.tools.date.DateUtil
 import dagger.Module
@@ -34,8 +35,9 @@ class ApplicationModule constructor(var myApp: MyApp) {
 
 	@Singleton
 	@Provides
-	fun getGson(): Gson = Gson()
-
+	fun getSharedPrefsHelper(sharedPrefs: SharedPreferences, sharePrefsEdit: SharedPreferences.Editor): SharedPrefsHelper {
+		return SharedPrefsHelper(sharedPrefs, sharePrefsEdit)
+	}
 
 	@Singleton
 	@Provides

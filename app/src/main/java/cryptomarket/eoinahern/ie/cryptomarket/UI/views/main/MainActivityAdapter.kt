@@ -19,8 +19,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.PCT_CHANGE_24H
 import javax.inject.Inject
 
 @PerScreen
-class MainActivityAdapter @Inject constructor(private val presenter: MainActivityPresenter,
-											  private val context: Context)
+class MainActivityAdapter @Inject constructor(private val presenter: MainActivityPresenter)
 	: RecyclerView.Adapter<MainActivityAdapter.ViewHolder>(), Filterable {
 
 	private var cryptoData: MutableList<CoinMarketCrypto> = mutableListOf()
@@ -29,17 +28,8 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 	private lateinit var itemSelectCallback: ItemSelectCallback
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-		val data = cryptoData[position]
-		val quote = data.quotes[currencyStr]
-
-		holder.fullName.text = data.name
-		holder.name.text = data.symbol
-		holder.pctChange.text = String.format(context.getString(R.string.pct_format), quote?.percent_change_24h)
-		holder.pctChange.isSelected = quote?.isMinus() ?: false
-		holder.price.text = String.format(context.getString(R.string.simple_price_frmt),
-				currencyStr, quote?.price.toString())
-		holder.icon.setImageURI(data.getIconUrl())
-		holder.favouriteCheckbox.isChecked = presenter.getSelected(data.symbol)
+		holder.bindData(cryptoData[position], currencyStr)
+		holder.favouriteCheckbox.isChecked = presenter.getSelected(cryptoData[position].symbol)
 	}
 
 	fun setCallback(itemSelect: ItemSelectCallback) {
@@ -63,9 +53,17 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 	override fun getItemCount() = cryptoData.size
 
 	fun updateCryptoData(dataList: List<CoinMarketCrypto>) {
+		updateCryptoList(dataList)
+		updateBaseList(dataList)
+	}
+
+	private fun updateCryptoList(dataList: List<CoinMarketCrypto>) {
 		cryptoData.clear()
 		cryptoData.addAll(dataList)
 		notifyItemRangeInserted(0, dataList.size)
+	}
+
+	private fun updateBaseList(dataList: List<CoinMarketCrypto>) {
 		initialData.clear()
 		initialData.addAll(dataList)
 	}
@@ -115,7 +113,7 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 	}
 
 	fun clear() {
-		val size = cryptoData.size
+		val size = itemCount
 		cryptoData.clear()
 		initialData.clear()
 		notifyItemRangeRemoved(0, size)
@@ -138,6 +136,18 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 			itemView.setOnClickListener {
 				itemSelect.cryptoSelected(adapterPosition)
 			}
+		}
+
+		fun bindData(cryptoItem: CoinMarketCrypto, currencyStr: String) {
+			val marketData = cryptoItem.quotes[currencyStr]
+			fullName.text = cryptoItem.name
+			name.text = cryptoItem.symbol
+			pctChange.text = String.format(itemView.context.getString(R.string.pct_format),
+					marketData?.percent_change_24h)
+			pctChange.isSelected = marketData?.isMinus() ?: false
+			price.text = String.format(itemView.context.getString(R.string.simple_price_frmt),
+					currencyStr, marketData?.price.toString())
+			icon.setImageURI(cryptoItem.getIconUrl())
 		}
 	}
 }

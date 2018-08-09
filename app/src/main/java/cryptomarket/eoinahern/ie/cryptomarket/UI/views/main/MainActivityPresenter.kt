@@ -2,6 +2,7 @@ package cryptomarket.eoinahern.ie.cryptomarket.UI.views.main
 
 import cryptomarket.eoinahern.ie.cryptomarket.DI.annotation.PerScreen
 import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BasePresenter
+import cryptomarket.eoinahern.ie.cryptomarket.data.cache.sharedprefs.SharedPrefsHelper
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.*
 import cryptomarket.eoinahern.ie.cryptomarket.data.util.NoConnectionException
 import cryptomarket.eoinahern.ie.cryptomarket.domain.base.BaseDisposableObserver
@@ -9,12 +10,15 @@ import cryptomarket.eoinahern.ie.cryptomarket.domain.base.BaseSubscriber
 import cryptomarket.eoinahern.ie.cryptomarket.domain.main.GetCryptoListInteractor
 import cryptomarket.eoinahern.ie.cryptomarket.domain.main.MainActivityCombinedInteractor
 import cryptomarket.eoinahern.ie.cryptomarket.domain.main.SaveFavouritesDataInteractor
+import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CONVERTED_TO
+import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CURRENCY_INFO
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 @PerScreen
 class MainActivityPresenter @Inject constructor(private val mainActivityCombinedInteractor: MainActivityCombinedInteractor,
-												private val saveFavouritesDataInteractor: SaveFavouritesDataInteractor) : BasePresenter<MainActivityView>() {
+												private val saveFavouritesDataInteractor: SaveFavouritesDataInteractor,
+												private val sharedPrefsHelper: SharedPrefsHelper) : BasePresenter<MainActivityView>() {
 
 	private var currencyData: MutableMap<String, CryptoCurrency> = mutableMapOf()
 
@@ -62,6 +66,10 @@ class MainActivityPresenter @Inject constructor(private val mainActivityCombined
 
 	fun navigateToDetail(symbol: String) {
 		getView()?.gotToDetail(symbol)
+	}
+
+	fun saveCurrencyToConvertTo(currency: String) {
+		sharedPrefsHelper.saveString(CONVERTED_TO, currency)
 	}
 
 	fun persistFavourites() {

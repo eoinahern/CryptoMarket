@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.v7.util.DiffUtil
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
@@ -15,7 +14,6 @@ import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.detail.DetailsActivity
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerActivity
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CoinMarketCrypto
-import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
 import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CONVERTED_TO
 import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CURRENCY_INFO
 import cryptomarket.eoinahern.ie.cryptomarket.tools.decoration.BottomItemDecoration
@@ -43,6 +41,7 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView, ItemSelectCal
 		menuText = getString(R.string.usd_abv)
 		presenter.attachView(this)
 		presenter.getCurrencyUpdateData(menuText)
+		presenter.saveCurrencyToConvertTo(menuText)
 		showLoading()
 		cryptoSearchView.isEnabled = false
 		setUpSearchListener()
@@ -92,6 +91,7 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView, ItemSelectCal
 		adapter.setCurrency(menuText)
 		adapter.clear()
 		showLoading()
+		presenter.saveCurrencyToConvertTo(menuText)
 		presenter.getCurrencyUpdateData(menuText)
 		return super.onOptionsItemSelected(item)
 	}
@@ -143,7 +143,6 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView, ItemSelectCal
 	override fun favouritesChecked(position: Int, isChecked: Boolean) {
 		adapter.favouritesChecked(position, isChecked)
 	}
-
 
 	override fun onPause() {
 		super.onPause()
