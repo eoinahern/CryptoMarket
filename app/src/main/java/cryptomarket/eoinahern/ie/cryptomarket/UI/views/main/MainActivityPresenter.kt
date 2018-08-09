@@ -67,10 +67,11 @@ class MainActivityPresenter @Inject constructor(private val mainActivityCombined
 	fun persistFavourites() {
 		saveFavouritesDataInteractor.init(currencyData).execute(object : BaseSubscriber<Unit>() {
 			override fun onError(e: Throwable) {
+				//not used
 			}
 
 			override fun onNext(t: Unit) {
-				println("save complete!!")
+				//not used
 			}
 		})
 	}

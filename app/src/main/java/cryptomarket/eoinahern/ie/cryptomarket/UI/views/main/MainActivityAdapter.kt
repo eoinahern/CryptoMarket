@@ -26,12 +26,9 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 	private var cryptoData: MutableList<CoinMarketCrypto> = mutableListOf()
 	private var initialData: MutableList<CoinMarketCrypto> = mutableListOf()
 	private lateinit var currencyStr: String
+	private lateinit var itemSelectCallback: ItemSelectCallback
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-		bindCryptoItemView(holder, position)
-	}
-
-	private fun bindCryptoItemView(holder: ViewHolder, position: Int) {
 		val data = cryptoData[position]
 		val quote = data.quotes[currencyStr]
 
@@ -42,21 +39,25 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 		holder.price.text = String.format(context.getString(R.string.simple_price_frmt),
 				currencyStr, quote?.price.toString())
 		holder.icon.setImageURI(data.getIconUrl())
-		holder.itemView.setOnClickListener {
-			presenter.navigateToDetail(data.symbol)
-		}
-
-		holder.favouriteCheckbox.setOnCheckedChangeListener { _, isChecked ->
-			presenter.updateCurrencyFavourite(data.symbol, isChecked)
-		}
-
 		holder.favouriteCheckbox.isChecked = presenter.getSelected(data.symbol)
+	}
+
+	fun setCallback(itemSelect: ItemSelectCallback) {
+		itemSelectCallback = itemSelect
+	}
+
+	fun navigateToDetail(position: Int) {
+		presenter.navigateToDetail(cryptoData[position].symbol)
+	}
+
+	fun favouritesChecked(position: Int, isChecked: Boolean) {
+		presenter.updateCurrencyFavourite(cryptoData[position].symbol, isChecked)
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 		val v = LayoutInflater.from(parent.context)
 				.inflate(R.layout.single_crypto_layout, parent, false)
-		return ViewHolder(v)
+		return ViewHolder(v, itemSelectCallback)
 	}
 
 	override fun getItemCount() = cryptoData.size
@@ -120,12 +121,23 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 		notifyItemRangeRemoved(0, size)
 	}
 
-	class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
+	class ViewHolder(item: View, var itemSelect: ItemSelectCallback) : RecyclerView.ViewHolder(item) {
+
 		val icon: SimpleDraweeView by lazy { item.findViewById<SimpleDraweeView>(R.id.crypto_icon) }
 		val name: TextView by lazy { item.findViewById<TextView>(R.id.name_abbr) }
 		val fullName: TextView by lazy { item.findViewById<TextView>(R.id.full_name) }
 		val price: TextView by lazy { item.findViewById<TextView>(R.id.price) }
 		val pctChange: TextView by lazy { item.findViewById<TextView>(R.id.percent_txt) }
 		val favouriteCheckbox: CheckBox by lazy { item.findViewById<CheckBox>(R.id.favourites) }
+
+		init {
+			favouriteCheckbox.setOnCheckedChangeListener { _, isChecked ->
+				itemSelect.favouritesChecked(adapterPosition, isChecked)
+			}
+
+			itemView.setOnClickListener {
+				itemSelect.cryptoSelected(adapterPosition)
+			}
+		}
 	}
 }

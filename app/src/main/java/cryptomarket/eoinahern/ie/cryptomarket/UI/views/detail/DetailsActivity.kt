@@ -68,10 +68,8 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	}
 
 	private fun setUpToolbar() {
-
 		setSupportActionBar(detailsToolbar)
 		supportActionBar?.apply {
-
 			this.setDisplayHomeAsUpEnabled(true)
 			this.setHomeButtonEnabled(true)
 			this.setHomeAsUpIndicator(R.drawable.ic_back_dark)

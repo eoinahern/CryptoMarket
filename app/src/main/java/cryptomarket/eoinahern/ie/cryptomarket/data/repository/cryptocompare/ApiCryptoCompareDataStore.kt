@@ -23,14 +23,12 @@ class ApiCryptoCompareDataStore @Inject constructor(private val cryptoApi: Crypt
 
 		return Observable.zip(cryptoApi.getList(),
 				cryptoCompareCache.getFavourites(),
-				BiFunction<CurrencyData, List<CryptoCurrency>, Map<String, CryptoCurrency>> {
-
-					x1, x2 ->
-
+				BiFunction<CurrencyData, List<CryptoCurrency>, Map<String, CryptoCurrency>> { x1, x2 ->
 					x2.forEach { item ->
 						x1.cryptoWrapper[item.Symbol]?.Favourite = true
 					}
 
+					cryptoCompareCache.deleteAll()
 					cryptoCompareCache.saveCryptoData(x1.cryptoWrapper.map { it.value })
 					sharedPrefsEdit.putString(CURRENCY_DATA_SAVED_DATE, dateUtil.getTodaysDateStr()).apply()
 					x1.cryptoWrapper

@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class MainActivity : NavigationDrawerActivity(), MainActivityView {
+class MainActivity : NavigationDrawerActivity(), MainActivityView, ItemSelectCallback {
 
 	@Inject
 	lateinit var presenter: MainActivityPresenter
@@ -101,6 +101,7 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 		recycler.layoutManager = llmanager
 		recycler.setHasFixedSize(false)
 		recycler.addItemDecoration(BottomItemDecoration(this, R.color.dark_gray, 3f))
+		adapter.setCallback(this)
 		recycler.adapter = adapter
 		cryptoSearchView.isEnabled = true
 	}
@@ -134,6 +135,15 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView {
 		intent.putExtra(CONVERTED_TO, menuText)
 		startActivity(intent)
 	}
+
+	override fun cryptoSelected(position: Int) {
+		adapter.navigateToDetail(position)
+	}
+
+	override fun favouritesChecked(position: Int, isChecked: Boolean) {
+		adapter.favouritesChecked(position, isChecked)
+	}
+
 
 	override fun onPause() {
 		super.onPause()
