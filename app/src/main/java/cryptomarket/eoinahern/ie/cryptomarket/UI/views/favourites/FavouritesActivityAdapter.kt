@@ -33,7 +33,6 @@ class FavouritesActivityAdapter @Inject constructor(private val presenter: Favou
 		this.itemSelectCallback = itemSelectCallback
 	}
 
-
 	class ViewHolder(v: View, itemSelectCallback: ItemSelectCallback) : RecyclerView.ViewHolder(v), FavouriteRowView {
 
 		private val favouritesIcon: SimpleDraweeView by lazy { v.findViewById<SimpleDraweeView>(R.id.favouriteIcon) }

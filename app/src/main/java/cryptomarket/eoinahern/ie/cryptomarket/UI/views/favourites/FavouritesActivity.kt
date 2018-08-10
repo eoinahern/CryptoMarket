@@ -11,6 +11,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.UI.views.detail.DetailsActivity
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.drawer.NavigationDrawerActivity
 import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CONVERTED_TO
 import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CURRENCY_INFO
+import cryptomarket.eoinahern.ie.cryptomarket.tools.decoration.BottomItemDecoration
 import cryptomarket.eoinahern.ie.cryptomarket.tools.view.LoadingView
 import kotlinx.android.synthetic.main.activity_favourites.*
 import javax.inject.Inject
@@ -50,6 +51,7 @@ class FavouritesActivity : NavigationDrawerActivity(), FavouritesActivityView, I
 
 	private fun setUpRecycler() {
 		recycler.layoutManager = LinearLayoutManager(this)
+		recycler.addItemDecoration(BottomItemDecoration(this, R.color.dark_gray, 3f))
 		adapter.setCallback(this)
 		recycler.adapter = adapter
 	}
