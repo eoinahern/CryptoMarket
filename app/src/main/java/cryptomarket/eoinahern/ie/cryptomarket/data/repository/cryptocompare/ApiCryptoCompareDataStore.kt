@@ -20,7 +20,6 @@ class ApiCryptoCompareDataStore @Inject constructor(private val cryptoApi: Crypt
 
 	override fun getCryptoComparedata(): Observable<Map<String, CryptoCurrency>> {
 
-
 		return Observable.zip(cryptoApi.getList(),
 				cryptoCompareCache.getFavourites(),
 				BiFunction<CurrencyData, List<CryptoCurrency>, Map<String, CryptoCurrency>> { x1, x2 ->
@@ -28,7 +27,6 @@ class ApiCryptoCompareDataStore @Inject constructor(private val cryptoApi: Crypt
 						x1.cryptoWrapper[item.Symbol]?.Favourite = true
 					}
 
-					cryptoCompareCache.deleteAll()
 					cryptoCompareCache.saveCryptoData(x1.cryptoWrapper.map { it.value })
 					sharedPrefsEdit.putString(CURRENCY_DATA_SAVED_DATE, dateUtil.getTodaysDateStr()).apply()
 					x1.cryptoWrapper

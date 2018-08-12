@@ -21,8 +21,8 @@ class SaveFavouritesDataInteractor @Inject constructor(private val cryptoCompare
 
 	override fun buildObservable(): Observable<Unit> {
 		return Observable.fromCallable {
-			cryptoCompareCache.deleteAll()
-			cryptoCompareCache.saveCryptoData(currencyData.map { it.value })
+			if (currencyData.isNotEmpty())
+				cryptoCompareCache.saveCryptoData(currencyData.map { it.value })
 			Unit
 		}
 	}

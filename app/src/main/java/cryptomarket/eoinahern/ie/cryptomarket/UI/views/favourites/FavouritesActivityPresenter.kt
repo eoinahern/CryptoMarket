@@ -6,6 +6,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
 import cryptomarket.eoinahern.ie.cryptomarket.domain.base.BaseSubscriber
 import cryptomarket.eoinahern.ie.cryptomarket.domain.favourites.GetFavouritesInteractor
 import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.compareApiDeprecated
+import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 
@@ -22,6 +23,10 @@ class FavouritesActivityPresenter @Inject constructor(private val getFavouritesI
 			override fun onNext(t: List<CryptoCurrency>) {
 				getView()?.hideLoading()
 				initCryptoList(t)
+			}
+
+			override fun onSubscribe(d: Disposable) {
+				getFavouritesInteractor.addDisposables(d)
 			}
 
 			override fun onError(e: Throwable) {
