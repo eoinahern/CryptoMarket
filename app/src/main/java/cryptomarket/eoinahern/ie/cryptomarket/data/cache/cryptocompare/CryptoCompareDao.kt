@@ -29,4 +29,7 @@ interface CryptoCompareDao {
 
 	@Query("SELECT * FROM CryptoCurrency WHERE Favourite = :state")
 	fun getFavourites(state: Boolean = true): Flowable<List<CryptoCurrency>>
+
+	@Query("UPDATE CryptoCurrency SET Favourite = :state WHERE Symbol = :symbol")
+	fun setFavourite(state: Boolean, symbol: String)
 }

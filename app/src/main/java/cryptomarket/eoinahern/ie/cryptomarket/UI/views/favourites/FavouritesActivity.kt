@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
+import com.afollestad.materialdialogs.MaterialDialog
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.UI.views.detail.DetailsActivity
@@ -87,6 +89,25 @@ class FavouritesActivity : NavigationDrawerActivity(), FavouritesActivityView, I
 		intent.putExtra(CURRENCY_INFO, presenter.getCrypto(position))
 		intent.putExtra(CONVERTED_TO, "EUR")
 		startActivity(intent)
+	}
+
+	override fun deleteFavourite(position: Int) {
+		showConfirmDialog()
+	}
+
+	private fun showConfirmDialog() {
+		MaterialDialog.Builder(this)
+				.title(R.string.delete_title)
+				.content(R.string.delete_content)
+				.positiveText(R.string.agree)
+				.negativeText(R.string.cancel)
+				.onPositive { dialog, _ ->
+					dialog.dismiss()
+				}
+				.onNegative { _, _ ->
+					presenter.deleteFromFavourites()
+				}
+				.show()
 	}
 
 	override fun onDestroy() {

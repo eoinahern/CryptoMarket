@@ -41,11 +41,12 @@ class FavouritesActivityAdapter @Inject constructor(private val presenter: Favou
 		private val symbolTxt: TextView by lazy { v.findViewById<TextView>(R.id.symbol_txt) }
 
 		init {
-			itemView.setOnClickListener { itemSelectCallback.selectFavourite(adapterPosition) }
-
+			itemView.setOnClickListener {
+				itemSelectCallback.selectFavourite(adapterPosition)
+			}
 
 			deleteButton.setOnClickListener {
-				//delete item from list??
+				itemSelectCallback.deleteFavourite(adapterPosition)
 			}
 		}
 

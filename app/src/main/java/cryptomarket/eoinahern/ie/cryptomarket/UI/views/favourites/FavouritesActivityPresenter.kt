@@ -35,6 +35,10 @@ class FavouritesActivityPresenter @Inject constructor(private val getFavouritesI
 		})
 	}
 
+	fun deleteFromFavourites() {
+
+	}
+
 	fun initCryptoList(cryptoList: List<CryptoCurrency>) {
 		this.cryptoList.clear()
 		this.cryptoList.addAll(cryptoList)
