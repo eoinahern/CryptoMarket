@@ -92,22 +92,26 @@ class FavouritesActivity : NavigationDrawerActivity(), FavouritesActivityView, I
 	}
 
 	override fun deleteFavourite(position: Int) {
-		showConfirmDialog()
+		showConfirmDialog(position)
 	}
 
-	private fun showConfirmDialog() {
+	private fun showConfirmDialog(position: Int) {
 		MaterialDialog.Builder(this)
 				.title(R.string.delete_title)
 				.content(R.string.delete_content)
 				.positiveText(R.string.agree)
 				.negativeText(R.string.cancel)
-				.onPositive { dialog, _ ->
+				.onNegative { dialog, _ ->
 					dialog.dismiss()
 				}
-				.onNegative { _, _ ->
-					presenter.deleteFromFavourites()
+				.onPositive { _, _ ->
+					presenter.deleteFromFavourites(position)
 				}
 				.show()
+	}
+
+	override fun onDeleteComplete(position: Int) {
+		adapter.removeItem(position)
 	}
 
 	override fun onDestroy() {

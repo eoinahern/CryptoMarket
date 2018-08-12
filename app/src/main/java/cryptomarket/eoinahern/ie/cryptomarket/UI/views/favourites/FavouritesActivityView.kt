@@ -11,4 +11,6 @@ interface FavouritesActivityView : MvpView {
 	fun showFavourites()
 
 	fun errorLoadingFavourites()
+
+	fun onDeleteComplete(position: Int)
 }

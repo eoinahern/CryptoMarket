@@ -29,6 +29,11 @@ class FavouritesActivityAdapter @Inject constructor(private val presenter: Favou
 		presenter.initView(position, holder)
 	}
 
+	fun removeItem(position: Int) {
+		presenter.deleteFromList(position)
+		notifyItemRemoved(position)
+	}
+
 	fun setCallback(itemSelectCallback: ItemSelectCallback) {
 		this.itemSelectCallback = itemSelectCallback
 	}

@@ -4,6 +4,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.DI.annotation.PerScreen
 import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BasePresenter
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.CryptoCurrency
 import cryptomarket.eoinahern.ie.cryptomarket.domain.base.BaseSubscriber
+import cryptomarket.eoinahern.ie.cryptomarket.domain.favourites.DeleteFavouritesInteractor
 import cryptomarket.eoinahern.ie.cryptomarket.domain.favourites.GetFavouritesInteractor
 import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.compareApiDeprecated
 import io.reactivex.disposables.Disposable
@@ -11,7 +12,8 @@ import javax.inject.Inject
 
 
 @PerScreen
-class FavouritesActivityPresenter @Inject constructor(private val getFavouritesInteractor: GetFavouritesInteractor) : BasePresenter<FavouritesActivityView>() {
+class FavouritesActivityPresenter @Inject constructor(private val getFavouritesInteractor: GetFavouritesInteractor,
+													  private val deleteFavouritesInteractor: DeleteFavouritesInteractor) : BasePresenter<FavouritesActivityView>() {
 
 	private var cryptoList: MutableList<CryptoCurrency> = mutableListOf()
 
@@ -35,8 +37,17 @@ class FavouritesActivityPresenter @Inject constructor(private val getFavouritesI
 		})
 	}
 
-	fun deleteFromFavourites() {
+	fun deleteFromFavourites(position: Int) {
+		deleteFavouritesInteractor.init(cryptoList[position].Symbol).execute(object : BaseSubscriber<Unit>() {
 
+			override fun onNext(t: Unit) {
+				getView()?.onDeleteComplete(position)
+			}
+
+			override fun onError(e: Throwable) {
+
+			}
+		})
 	}
 
 	fun initCryptoList(cryptoList: List<CryptoCurrency>) {
@@ -56,10 +67,14 @@ class FavouritesActivityPresenter @Inject constructor(private val getFavouritesI
 
 	fun getCount(): Int = cryptoList.size
 
+	fun deleteFromList(position: Int) {
+		cryptoList.removeAt(position)
+	}
 
 	override fun detachView() {
 		super.detachView()
 		getFavouritesInteractor.disposeObs()
+		deleteFavouritesInteractor.disposeObs()
 	}
 
 }
