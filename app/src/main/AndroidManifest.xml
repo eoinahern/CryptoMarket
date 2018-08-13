@@ -9,8 +9,8 @@
 	<application
 		android:name=".MyApp"
 		android:allowBackup="true"
-		android:icon="@mipmap/ic_launcher"
-		android:roundIcon="@mipmap/ic_launcher_round"
+		android:icon="@drawable/ic_icon"
+		android:label="CryptoMarket"
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme">
 		<activity
@@ -24,9 +24,6 @@
 		</activity>
 		<activity
 			android:name=".UI.views.alerts.AlertsActivity"
-			android:screenOrientation="portrait" />
-		<activity
-			android:name=".UI.views.currency.CurrencyActivity"
 			android:screenOrientation="portrait" />
 		<activity
 			android:name=".UI.views.favourites.FavouritesActivity"
@@ -46,6 +43,10 @@
 				android:value=".UI.views.main.MainActivity" />
 		</activity>
 		<activity android:name=".UI.views.news.NewsActivity"></activity>
+
+		<meta-data
+			android:name="io.fabric.ApiKey"
+			android:value="4e43df0d73e30fd6ae7c6875f313c6195b26dc00" />
 	</application>
 
 </manifest>
