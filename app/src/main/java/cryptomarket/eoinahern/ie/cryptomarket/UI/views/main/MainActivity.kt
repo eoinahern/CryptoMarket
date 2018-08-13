@@ -45,6 +45,7 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView, ItemSelectCal
 		showLoading()
 		cryptoSearchView.isEnabled = false
 		setUpSearchListener()
+		setUpSwipeRefresh()
 	}
 
 	override fun setDrawerOnState() {
@@ -70,11 +71,13 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView, ItemSelectCal
 	override fun showLoading() {
 		loadingView.visibility = View.VISIBLE
 		recycler.visibility = View.GONE
+		refreshEnabled(false)
 		loadingView.setState(LoadingView.State.LOADING)
 	}
 
 	override fun hideLoading() {
 		recycler.visibility = View.VISIBLE
+		refreshEnabled(true)
 		loadingView.hide()
 	}
 
@@ -89,7 +92,6 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView, ItemSelectCal
 		menuText = item?.title.toString()
 		item?.isChecked = true
 		adapter.setCurrency(menuText)
-		adapter.clear()
 		showLoading()
 		presenter.saveCurrencyToConvertTo(menuText)
 		presenter.getCurrencyUpdateData(menuText)
@@ -117,8 +119,24 @@ class MainActivity : NavigationDrawerActivity(), MainActivityView, ItemSelectCal
 				})
 	}
 
+	private fun setUpSwipeRefresh() {
+		swipeRefresh.setOnRefreshListener {
+			presenter.getCurrencyUpdateData(menuText)
+		}
+	}
+
+	private fun refreshEnabled(enabled: Boolean) {
+		swipeRefresh.isEnabled = enabled
+	}
+
+	private fun hideRefreshView() {
+		swipeRefresh.isRefreshing = false
+	}
+
 	override fun updateRecyclerView(dataList: List<CoinMarketCrypto>) {
+		adapter.clear()
 		adapter.updateCryptoData(dataList)
+		hideRefreshView()
 	}
 
 	override fun showNetworkError() {
