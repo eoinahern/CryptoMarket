@@ -23,6 +23,12 @@ class FavouritesActivityPresenter @Inject constructor(private val getFavouritesI
 
 		getFavouritesInteractor.execute(object : BaseSubscriber<List<CryptoCurrency>>() {
 			override fun onNext(t: List<CryptoCurrency>) {
+
+				if (t.isEmpty()) {
+					getView()?.showEmpty()
+					return
+				}
+
 				getView()?.hideLoading()
 				initCryptoList(t)
 			}
@@ -41,11 +47,15 @@ class FavouritesActivityPresenter @Inject constructor(private val getFavouritesI
 		deleteFavouritesInteractor.init(cryptoList[position].Symbol).execute(object : BaseSubscriber<Unit>() {
 
 			override fun onNext(t: Unit) {
-				getView()?.onDeleteComplete(position)
+				if (cryptoList.isEmpty())
+					getView()?.showEmpty()
+				else {
+					getView()?.onDeleteComplete(position)
+				}
 			}
 
 			override fun onError(e: Throwable) {
-
+				getView()?.onDeleteFailed()
 			}
 		})
 	}
@@ -76,5 +86,4 @@ class FavouritesActivityPresenter @Inject constructor(private val getFavouritesI
 		getFavouritesInteractor.disposeObs()
 		deleteFavouritesInteractor.disposeObs()
 	}
-
 }

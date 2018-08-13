@@ -6,6 +6,8 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
+import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
 import cryptomarket.eoinahern.ie.cryptomarket.MyApp
 import cryptomarket.eoinahern.ie.cryptomarket.R
@@ -84,6 +86,11 @@ class FavouritesActivity : NavigationDrawerActivity(), FavouritesActivityView, I
 		loadingView.setState(LoadingView.State.NO_DATA)
 	}
 
+	override fun showEmpty() {
+		loadingView.visibility = View.VISIBLE
+		loadingView.setState(LoadingView.State.NO_DATA)
+	}
+
 	override fun selectFavourite(position: Int) {
 		val intent = DetailsActivity.getStartIntent(this)
 		intent.putExtra(CURRENCY_INFO, presenter.getCrypto(position))
@@ -112,6 +119,10 @@ class FavouritesActivity : NavigationDrawerActivity(), FavouritesActivityView, I
 
 	override fun onDeleteComplete(position: Int) {
 		adapter.removeItem(position)
+	}
+
+	override fun onDeleteFailed() {
+		Toast.makeText(this, R.string.delete_failed, Toast.LENGTH_LONG).show()
 	}
 
 	override fun onDestroy() {

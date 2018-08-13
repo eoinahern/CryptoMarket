@@ -67,6 +67,4 @@ class FavouritesActivityAdapter @Inject constructor(private val presenter: Favou
 			nameTxt.text = name
 		}
 	}
-
-
 }
