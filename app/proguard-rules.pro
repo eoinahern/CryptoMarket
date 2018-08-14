@@ -67,4 +67,7 @@
 -keep class cryptomarket.eoinahern.ie.cryptomarket.data.models.** { *;}
 -keep class cryptomarket.eoinahern.ie.cryptomarket.UI.views.** { *;}
 
+-dontwarn sun.misc.Unsafe
+-dontwarn org.w3c.dom.bootstrap.DOMImplementationRegistry
+
 
