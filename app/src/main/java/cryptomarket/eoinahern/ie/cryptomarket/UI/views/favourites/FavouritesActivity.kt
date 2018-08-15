@@ -94,7 +94,7 @@ class FavouritesActivity : NavigationDrawerActivity(), FavouritesActivityView, I
 	override fun selectFavourite(position: Int) {
 		val intent = DetailsActivity.getStartIntent(this)
 		intent.putExtra(CURRENCY_INFO, presenter.getCrypto(position))
-		intent.putExtra(CONVERTED_TO, "EUR")
+		intent.putExtra(CONVERTED_TO, presenter.getConvertToString())
 		startActivity(intent)
 	}
 
