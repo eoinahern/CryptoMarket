@@ -25,4 +25,12 @@ class CryptoCompareCacheImp constructor(private val cryptoDataBase: CryptoDataba
 		return cryptoDataBase.cryptoCompareDao().countRows()
 	}
 
+	override fun getFavourites(): Observable<List<CryptoCurrency>> {
+		return cryptoDataBase.cryptoCompareDao().getFavourites().toObservable()
+	}
+
+	override fun setFavoutite(state: Boolean, symbol: String) {
+		cryptoDataBase.cryptoCompareDao().setFavourite(state, symbol)
+	}
+
 }

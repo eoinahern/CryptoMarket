@@ -7,10 +7,9 @@ import dagger.Module
 import dagger.Subcomponent
 
 @PerScreen
-@Subcomponent(modules = arrayOf(MainActivityComponent.MainActivityModule::class))
+@Subcomponent(modules = [MainActivityComponent.MainActivityModule::class])
 interface MainActivityComponent : BaseActivityComponent<MainActivity> {
 
 	@Module
-	class MainActivityModule(activity : MainActivity) : BaseActivityModule<MainActivity>(activity)
-
+	class MainActivityModule(activity: MainActivity) : BaseActivityModule<MainActivity>(activity)
 }

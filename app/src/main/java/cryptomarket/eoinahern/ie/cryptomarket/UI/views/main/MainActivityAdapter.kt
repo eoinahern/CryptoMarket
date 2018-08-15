@@ -1,12 +1,10 @@
 package cryptomarket.eoinahern.ie.cryptomarket.UI.views.main
 
-import android.content.Context
-import android.os.Bundle
-import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
@@ -14,51 +12,54 @@ import com.facebook.drawee.view.SimpleDraweeView
 import cryptomarket.eoinahern.ie.cryptomarket.DI.annotation.PerScreen
 import cryptomarket.eoinahern.ie.cryptomarket.R
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.*
-import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.PCT_CHANGE_24H
 import javax.inject.Inject
 
 @PerScreen
-class MainActivityAdapter @Inject constructor(private val presenter: MainActivityPresenter,
-											  private val context: Context)
+class MainActivityAdapter @Inject constructor(private val presenter: MainActivityPresenter)
 	: RecyclerView.Adapter<MainActivityAdapter.ViewHolder>(), Filterable {
 
 	private var cryptoData: MutableList<CoinMarketCrypto> = mutableListOf()
 	private var initialData: MutableList<CoinMarketCrypto> = mutableListOf()
 	private lateinit var currencyStr: String
+	private lateinit var itemSelectCallback: ItemSelectCallback
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-		bindCryptoItemView(holder, position)
+		holder.bindData(cryptoData[position], currencyStr)
+		holder.favouriteCheckbox.isChecked = presenter.getSelected(cryptoData[position].symbol)
 	}
 
-	private fun bindCryptoItemView(holder: ViewHolder, position: Int) {
-		val data = cryptoData[position]
-		val quote = data.quotes[currencyStr]
+	fun setCallback(itemSelect: ItemSelectCallback) {
+		itemSelectCallback = itemSelect
+	}
 
-		holder.fullName.text = data.name
-		holder.name.text = data.symbol
-		holder.pctChange.text = String.format(context.getString(R.string.pct_format), quote?.percent_change_24h)
-		holder.pctChange.isSelected = quote?.isMinus() ?: false
-		holder.price.text = String.format(context.getString(R.string.simple_price_frmt),
-				currencyStr, quote?.price.toString())
-		holder.icon.setImageURI(data.getIconUrl())
+	fun navigateToDetail(position: Int) {
+		presenter.navigateToDetail(cryptoData[position].symbol)
+	}
 
-		holder.itemView.setOnClickListener {
-			presenter.navigateToDetail(data.symbol)
-		}
+	fun favouritesChecked(position: Int, isChecked: Boolean) {
+		presenter.updateCurrencyFavourite(cryptoData[position].symbol, isChecked)
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 		val v = LayoutInflater.from(parent.context)
 				.inflate(R.layout.single_crypto_layout, parent, false)
-		return ViewHolder(v)
+		return ViewHolder(v, itemSelectCallback)
 	}
 
 	override fun getItemCount() = cryptoData.size
 
 	fun updateCryptoData(dataList: List<CoinMarketCrypto>) {
+		updateCryptoList(dataList)
+		updateBaseList(dataList)
+	}
+
+	private fun updateCryptoList(dataList: List<CoinMarketCrypto>) {
 		cryptoData.clear()
 		cryptoData.addAll(dataList)
 		notifyItemRangeInserted(0, dataList.size)
+	}
+
+	private fun updateBaseList(dataList: List<CoinMarketCrypto>) {
 		initialData.clear()
 		initialData.addAll(dataList)
 	}
@@ -108,17 +109,41 @@ class MainActivityAdapter @Inject constructor(private val presenter: MainActivit
 	}
 
 	fun clear() {
-		val size = cryptoData.size
+		val size = itemCount
 		cryptoData.clear()
 		initialData.clear()
 		notifyItemRangeRemoved(0, size)
 	}
 
-	class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
+	class ViewHolder(item: View, var itemSelect: ItemSelectCallback) : RecyclerView.ViewHolder(item) {
+
 		val icon: SimpleDraweeView by lazy { item.findViewById<SimpleDraweeView>(R.id.crypto_icon) }
 		val name: TextView by lazy { item.findViewById<TextView>(R.id.name_abbr) }
 		val fullName: TextView by lazy { item.findViewById<TextView>(R.id.full_name) }
 		val price: TextView by lazy { item.findViewById<TextView>(R.id.price) }
 		val pctChange: TextView by lazy { item.findViewById<TextView>(R.id.percent_txt) }
+		val favouriteCheckbox: CheckBox by lazy { item.findViewById<CheckBox>(R.id.favourites) }
+
+		init {
+			favouriteCheckbox.setOnCheckedChangeListener { _, isChecked ->
+				itemSelect.favouritesChecked(adapterPosition, isChecked)
+			}
+
+			itemView.setOnClickListener {
+				itemSelect.cryptoSelected(adapterPosition)
+			}
+		}
+
+		fun bindData(cryptoItem: CoinMarketCrypto, currencyStr: String) {
+			val marketData = cryptoItem.quotes[currencyStr]
+			fullName.text = cryptoItem.name
+			name.text = cryptoItem.symbol
+			pctChange.text = String.format(itemView.context.getString(R.string.pct_format),
+					marketData?.percent_change_24h)
+			pctChange.isSelected = marketData?.isMinus() ?: false
+			price.text = String.format(itemView.context.getString(R.string.simple_price_frmt),
+					currencyStr, marketData?.price.toString())
+			icon.setImageURI(cryptoItem.getIconUrl())
+		}
 	}
 }

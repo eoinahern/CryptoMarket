@@ -50,4 +50,9 @@
 	<string name="GBP">£</string>
 	<string name="no_data_available">No data available</string>
 	<string name="news">News</string>
+	<string name="delete_title">Delete Favourite?</string>
+	<string name="delete_content">Are you sure you want to delete from favourites?</string>
+	<string name="agree">OK</string>
+	<string name="cancel">Cancel</string>
+	<string name="delete_failed">delete favourite failed!</string>
 </resources>

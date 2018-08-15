@@ -8,6 +8,7 @@ import cryptomarket.eoinahern.ie.cryptomarket.data.models.CurrencyData
 import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CURRENCY_DATA_SAVED_DATE
 import cryptomarket.eoinahern.ie.cryptomarket.tools.date.DateUtil
 import io.reactivex.Observable
+import io.reactivex.functions.BiFunction
 import javax.inject.Inject
 
 
@@ -18,10 +19,17 @@ class ApiCryptoCompareDataStore @Inject constructor(private val cryptoApi: Crypt
 
 
 	override fun getCryptoComparedata(): Observable<Map<String, CryptoCurrency>> {
-		return cryptoApi.getList().map {
-			cryptoCompareCache.saveCryptoData(it.cryptoWrapper.map { it.value })
-			sharedPrefsEdit.putString(CURRENCY_DATA_SAVED_DATE, dateUtil.getTodaysDateStr()).apply()
-			it.cryptoWrapper
-		}
+
+		return Observable.zip(cryptoApi.getList(),
+				cryptoCompareCache.getFavourites(),
+				BiFunction<CurrencyData, List<CryptoCurrency>, Map<String, CryptoCurrency>> { x1, x2 ->
+					x2.forEach { item ->
+						x1.cryptoWrapper[item.Symbol]?.Favourite = true
+					}
+
+					cryptoCompareCache.saveCryptoData(x1.cryptoWrapper.map { it.value })
+					sharedPrefsEdit.putString(CURRENCY_DATA_SAVED_DATE, dateUtil.getTodaysDateStr()).apply()
+					x1.cryptoWrapper
+				})
 	}
 }

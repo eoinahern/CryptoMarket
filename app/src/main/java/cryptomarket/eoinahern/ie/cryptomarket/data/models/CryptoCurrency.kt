@@ -23,6 +23,8 @@ data class CryptoCurrency(
 		@PrimaryKey
 		@Json(name = "Symbol")
 		val Symbol: String,
+		@Json(name="favourite")
+		var Favourite : Boolean = false,
 		@Json(name = "CoinName")
 		val CoinName: String,
 		@Json(name = "FullName")

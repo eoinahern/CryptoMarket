@@ -2,41 +2,25 @@ package cryptomarket.eoinahern.ie.cryptomarket.UI.views.main
 
 import cryptomarket.eoinahern.ie.cryptomarket.DI.annotation.PerScreen
 import cryptomarket.eoinahern.ie.cryptomarket.UI.base.BasePresenter
+import cryptomarket.eoinahern.ie.cryptomarket.data.cache.sharedprefs.SharedPrefsHelper
 import cryptomarket.eoinahern.ie.cryptomarket.data.models.*
 import cryptomarket.eoinahern.ie.cryptomarket.data.util.NoConnectionException
 import cryptomarket.eoinahern.ie.cryptomarket.domain.base.BaseDisposableObserver
 import cryptomarket.eoinahern.ie.cryptomarket.domain.base.BaseSubscriber
 import cryptomarket.eoinahern.ie.cryptomarket.domain.main.GetCryptoListInteractor
 import cryptomarket.eoinahern.ie.cryptomarket.domain.main.MainActivityCombinedInteractor
+import cryptomarket.eoinahern.ie.cryptomarket.domain.main.SaveFavouritesDataInteractor
+import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CONVERTED_TO
+import cryptomarket.eoinahern.ie.cryptomarket.tools.consts.CURRENCY_INFO
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 @PerScreen
-class MainActivityPresenter @Inject constructor(private val mainActivityCombinedInteractor: MainActivityCombinedInteractor) : BasePresenter<MainActivityView>() {
+class MainActivityPresenter @Inject constructor(private val mainActivityCombinedInteractor: MainActivityCombinedInteractor,
+												private val saveFavouritesDataInteractor: SaveFavouritesDataInteractor,
+												private val sharedPrefsHelper: SharedPrefsHelper) : BasePresenter<MainActivityView>() {
 
-
-	fun getCurrencyDataInitial(currency: String) {
-
-		/*getCryptoListInteractor.setCurrency(currency).execute(object : BaseDisposableObserver<Pair<List<CoinMarketCrypto>, CurrencyData>>() {
-
-			override fun onNext(t: Pair<List<CoinMarketCrypto>, CurrencyData>) {
-				getView()?.hideLoading()
-				getView()?.updateRecyclerView(t.first)
-				getView()?.initCurrencyData(t.second.cryptoWrapper)
-			}
-
-			override fun onError(e: Throwable) {
-				e.printStackTrace()
-				println(e.message)
-
-				if (e as? NoConnectionException != null) {
-					getView()?.showNetworkError()
-				} else {
-					getView()?.showOtherError()
-				}
-			}
-		})*/
-	}
+	private var currencyData: MutableMap<String, CryptoCurrency> = mutableMapOf()
 
 	fun getCurrencyUpdateData(currency: String) {
 
@@ -45,7 +29,7 @@ class MainActivityPresenter @Inject constructor(private val mainActivityCombined
 			override fun onNext(t: Pair<List<CoinMarketCrypto>, Map<String, CryptoCurrency>>) {
 				getView()?.hideLoading()
 				getView()?.updateRecyclerView(t.first)
-				getView()?.initCurrencyData(t.second)
+				updateCurrencyMap(t.second)
 			}
 
 			override fun onSubscribe(d: Disposable) {
@@ -64,8 +48,40 @@ class MainActivityPresenter @Inject constructor(private val mainActivityCombined
 		})
 	}
 
+	private fun updateCurrencyMap(currency: Map<String, CryptoCurrency>) {
+		currencyData.clear()
+		currencyData.putAll(currency)
+	}
+
+	fun getCurrencyMapItem(key: String) = currencyData[key]
+
+	fun updateCurrencyFavourite(key: String, state: Boolean) {
+		currencyData[key]?.let { item ->
+			item.Favourite = state
+			currencyData[key] = item
+		}
+	}
+
+	fun getSelected(key: String): Boolean = currencyData[key]?.Favourite == true
+
 	fun navigateToDetail(symbol: String) {
 		getView()?.gotToDetail(symbol)
+	}
+
+	fun saveCurrencyToConvertTo(currency: String) {
+		sharedPrefsHelper.saveString(CONVERTED_TO, currency)
+	}
+
+	fun persistFavourites() {
+		saveFavouritesDataInteractor.init(currencyData).execute(object : BaseSubscriber<Unit>() {
+			override fun onError(e: Throwable) {
+				//not used
+			}
+
+			override fun onNext(t: Unit) {
+				//not used
+			}
+		})
 	}
 
 	override fun detachView() {

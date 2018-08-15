@@ -14,4 +14,8 @@ interface CryptoCompareCache {
 	fun deleteAll()
 
 	fun countRows(): Single<Int>
+
+	fun getFavourites(): Observable<List<CryptoCurrency>>
+
+	fun setFavoutite(state: Boolean, symbol: String)
 }

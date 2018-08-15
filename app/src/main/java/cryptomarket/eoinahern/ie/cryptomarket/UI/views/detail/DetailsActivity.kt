@@ -68,10 +68,8 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	}
 
 	private fun setUpToolbar() {
-
 		setSupportActionBar(detailsToolbar)
 		supportActionBar?.apply {
-
 			this.setDisplayHomeAsUpEnabled(true)
 			this.setHomeButtonEnabled(true)
 			this.setHomeAsUpIndicator(R.drawable.ic_back_dark)
@@ -184,6 +182,7 @@ class DetailsActivity : BaseActivity(), DetailsView, OnChartGestureListener, OnC
 	}
 
 	private fun initGraphButtons() {
+		twelveHourBtn.isChecked = true
 		twelveHourBtn.setOnClickListener { updateGraph(0) }
 		twoFourHourBtn.setOnClickListener { updateGraph(1) }
 		oneMonthBtn.setOnClickListener { updateGraph(2) }
